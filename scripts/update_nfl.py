@@ -20,8 +20,9 @@ def main() -> int:
     decoded=payload.decode('utf-8-sig')
     reader=csv.DictReader(io.StringIO(decoded))
     if not reader.fieldnames: raise ValueError('Source has no header')
-    required={'player_display_name','season','week','recent_team'}
-    if not required.issubset(reader.fieldnames): raise ValueError(f'Missing source columns: {required-set(reader.fieldnames)}')
+    required={'player_display_name','season','week'}
+    if not required.issubset(reader.fieldnames): raise ValueError(f'Missing source columns: {required-set(reader.fieldnames)}; actual columns: {reader.fieldnames[:25]}')
+    if not ({'team','recent_team'} & set(reader.fieldnames)): raise ValueError(f'Missing both team and recent_team columns; actual columns: {reader.fieldnames[:25]}')
     if not {'receiving_yards','rushing_yards','passing_yards'}.issubset(reader.fieldnames): raise ValueError('Missing core stat columns')
     output=io.StringIO(newline='')
     writer=csv.DictWriter(output,fieldnames=COLUMNS,lineterminator='\n')
@@ -30,7 +31,7 @@ def main() -> int:
     for row in reader:
         if row.get('season_type') not in ('REG',None,''):continue
         if row.get('season')!=str(YEAR):continue
-        name=row.get('player_display_name','').strip();team=row.get('recent_team','').strip();pid=row.get('player_id','').strip()
+        name=row.get('player_display_name','').strip();team=(row.get('recent_team') or row.get('team') or '').strip();pid=(row.get('player_id') or '').strip()
         try: week=int(row.get('week',''))
         except ValueError: continue
         if not name or not team or not 1<=week<=22:continue
@@ -38,7 +39,9 @@ def main() -> int:
         key=(identity,week)
         if key in unique:continue
         unique.add(key);players.add(identity)
-        writer.writerow({k:row.get(k,'') for k in COLUMNS})
+        clean={k:row.get(k,'') for k in COLUMNS}
+        clean['recent_team']=team
+        writer.writerow(clean)
         count+=1
     if count<100 or len(players)<30:raise ValueError(f'Source dataset incomplete: {count} rows, {len(players)} players. Keep previous published version.')
     TARGET.parent.mkdir(parents=True,exist_ok=True)
