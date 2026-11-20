@@ -23,18 +23,18 @@
 /* V1.2 data importer */
 .import-panel{border:1px solid #304966;border-radius:17px;background:#121e30;padding:18px;margin:0 0 15px}.import-actions{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:16px}.file-button{cursor:pointer;color:#07190d;background:var(--accent);border-radius:9px;padding:11px 14px;font-weight:800;font-size:13px}#csvfile{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}.import-status{color:#c0cfe0;font-size:12px;line-height:1.7;margin-top:12px;white-space:pre-line}.field-help{color:#b9c8dc;font-size:12px;margin-top:12px;line-height:1.6}.field-help summary{cursor:pointer;color:#83d8ac}.field-help code{color:#d7f5dd}.sourcechip{font-size:10px;color:#93cbf0;background:#182e42;border:1px solid #375b7b;border-radius:6px;padding:3px 6px;display:inline-block;margin-top:6px}.warnings{color:#f7b976}.rowlabels{margin-top:8px;color:#aebbd0;font-size:11px;line-height:1.6}
 </style></head><body>
-<div class="layout"><header class="top"><div><div class="logo">PROP <em>LOCK</em></div><div class="subtitle">PERSONAL PLAYER PROP RESEARCH</div></div><div class="pill">● PUBLIC DEMO V1.3</div></header>
+<div class="layout"><header class="top"><div><div class="logo">PROP <em>LOCK</em></div><div class="subtitle">PERSONAL PLAYER PROP RESEARCH</div></div><div class="pill">● PUBLIC DEMO V1.4</div></header>
 <section class="hero"><div><h1>Find the prop. Research the matchup.</h1><p>Explore multi-sport player props and see how Deep Dive, Scenarios, and Trait Match fit together.</p></div><div class="hero-tag">$0 prototype</div></section>
 <nav class="tabs" id="sports" aria-label="Select sport"></nav>
 <div class="toolbar"><input class="search" id="search" type="search" placeholder="Search player, team, or prop..." aria-label="Search props"/><select class="filter" id="category" aria-label="Select prop category"><option value="All">All Prop Categories</option></select></div>
 <div class="row"><div class="summary"><strong id="count">0 example props</strong><span class="muted"> · </span><span class="muted" id="sportText">NFL</span></div><div class="toggle"><button class="export" id="showSaved">☆ Saved only</button><button class="export" id="export">Export watchlist</button></div></div>
-<section class="import-panel" aria-label="NFL data importing"><div class="row" style="flex-wrap:wrap"><div><div class="eyebrow">V1.3 RESEARCH FOUNDATION</div><h2 style="margin:7px 0">NFL game-log CSV importer</h2><p class="small">Import your own nflverse weekly player-stats CSV or a compatible file. No server or API key. The site itself is public; CSV processing stays in this browser session.</p></div><span class="pill">LOCAL · FREE</span></div>
-<div class="import-actions"><label for="csvfile" class="file-button">Choose NFL CSV</label><input id="csvfile" type="file" accept=".csv,text/csv" aria-label="Import NFL weekly stats CSV"/><button class="export" id="demoMode" type="button">Show sample data</button><button class="export" id="importMode" type="button" disabled>Show imported data</button><button class="export" id="clearData" type="button" disabled>Clear imported data</button></div>
-<div class="import-status" id="importStatus" role="status">Sample mode active. Select a CSV to load real historical game logs. A selected line is only a research threshold, not a sportsbook price.</div>
+<section class="import-panel" aria-label="NFL data importing"><div class="row" style="flex-wrap:wrap"><div><div class="eyebrow">V1.4 NFL DATA FOUNDATION</div><h2 style="margin:7px 0">NFL historical player statistics</h2><p class="small">Try automatic 2026 NFL weekly stats from a public nflverse snapshot hosted with this site, or import your own compatible CSV. No API key or paid server. The website and shared stats are public; personal settings stay in your browser.</p></div><span class="pill">LOCAL · FREE</span></div>
+<div class="import-actions"><button class="file-button" id="autoNFL" type="button">Load NFL stats automatically</button><label for="csvfile" class="file-button">Choose NFL CSV</label><input id="csvfile" type="file" accept=".csv,text/csv" aria-label="Import NFL weekly stats CSV"/><button class="export" id="demoMode" type="button">Show sample data</button><button class="export" id="importMode" type="button" disabled>Show imported data</button><button class="export" id="clearData" type="button" disabled>Clear imported data</button></div>
+<div class="import-status" id="importStatus" role="status">Sample mode active. Checking whether the free 2026 NFL dataset has been published. Manual CSV import remains available.</div>
 <details class="field-help"><summary>Accepted CSV columns and import rules</summary><p>Supports nflverse weekly stats with <code>player_display_name</code>, <code>player_id</code>, <code>season</code>, <code>week</code>, <code>season_type</code>, <code>recent_team</code>, <code>opponent_team</code>, and stat fields such as <code>receiving_yards</code>, <code>passing_yards</code>, <code>rushing_yards</code>, <code>receptions</code>, <code>targets</code>, <code>passing_tds</code>, <code>rushing_tds</code>, or <code>receiving_tds</code>. Also accepts <code>player_name</code> or <code>player</code>, and <code>team</code> instead of <code>recent_team</code>. REG rows only. Players are matched by a stable ID when present; otherwise name and team. Rows without required fields are excluded.</p><p>No odds or matchup context is inferred from these game logs. Imported data is user-supplied, not independently verified.</p></details>
 </section>
 <div class="notice" id="dataBanner">SAMPLE MODE — Fictional players and logs. No live odds or modeled probabilities.</div>
-<main class="workspace"><div class="cards" id="cards"></div><aside class="research" id="research"><div class="eyebrow">RESEARCH WORKSPACE</div><h2>Choose a player prop</h2><p class="muted">Select a card to see the three-step research process.</p></aside></main><footer class="foot">Prop Lock V1.2 is a local-only demonstration. Your watchlist and custom lines are saved locally. Imported CSV records stay in memory until the page is closed; no file is transmitted. Data imports are not independently verified, and this app does not supply live sportsbook lines or calibrated predictions.</footer></div>
+<main class="workspace"><div class="cards" id="cards"></div><aside class="research" id="research"><div class="eyebrow">RESEARCH WORKSPACE</div><h2>Choose a player prop</h2><p class="muted">Select a card to see the three-step research process.</p></aside></main><footer class="foot">Prop Lock V1.2 is a local-only demonstration. Your watchlist and custom lines remain in this browser. The site can retrieve a publicly hosted NFL statistical snapshot; manually imported CSVs remain in memory and are never uploaded. External source correctness is not independently verified, and this app does not supply live sportsbook lines or calibrated predictions.</footer></div>
 <script>
 'use strict';
 // Fictional records deliberately separate demonstration from live sports data.
@@ -48,7 +48,7 @@ const demoProps=[
 {id:'nhl-shots',sport:'NHL',name:'Sample Winger',team:'Northern Ice',opp:'Capital Ice',stat:'Shots on Goal',line:2.5,logs:[3,4,2,5,1,3,2,4,3,2],usage:'Ice time and shot attempts',scenario:'Account for power-play time and changing line assignments.',trait:'Compare shot locations against opponent defensive suppression patterns.'},
 {id:'ncaab-pts',sport:'NCAAB',name:'Sample College Guard',team:'State College',opp:'City College',stat:'Points',line:16.5,logs:[17,20,13,18,21,16,14,19,22,15],usage:'Minutes and offensive share',scenario:'Test pace, foul risk, and rotation volatility.',trait:'Match offensive role against opponent zone/man tendencies.'},
 {id:'ncaaf-pass',sport:'NCAAF',name:'Sample College QB',team:'Western U',opp:'Eastern U',stat:'Passing Yards',line:215.5,logs:[232,198,241,218,176,265,223,207,254,219],usage:'Dropbacks and offensive tempo',scenario:'Compare tempo, weather, and game script.',trait:'Compare passing design with opponent coverage and pass rush.'}];
-let importedProps=[];let useImported=false;let scenarioMultiplier=1;const sports=['NFL','NBA','MLB','NHL','NCAAB','NCAAF'];let currentSport='NFL',currentCategory='All',query='',selectedId='nfl-wr',savedOnly=false;let saved=[];let lineOverrides={};let chartWindow=10;try{lineOverrides=JSON.parse(localStorage.getItem('prop-lock-lines-v11')||'{}')||{}}catch{lineOverrides={}}try{saved=JSON.parse(localStorage.getItem('prop-lock-watchlist')||'[]');if(!Array.isArray(saved))saved=[]}catch{saved=[]}
+let importedProps=[];let useImported=false;let nflSource='none',nflUpdated='',manualOverride=false,autoInProgress=false;let scenarioMultiplier=1;const sports=['NFL','NBA','MLB','NHL','NCAAB','NCAAF'];let currentSport='NFL',currentCategory='All',query='',selectedId='nfl-wr',savedOnly=false;let saved=[];let lineOverrides={};let chartWindow=10;try{lineOverrides=JSON.parse(localStorage.getItem('prop-lock-lines-v11')||'{}')||{}}catch{lineOverrides={}}try{saved=JSON.parse(localStorage.getItem('prop-lock-watchlist')||'[]');if(!Array.isArray(saved))saved=[]}catch{saved=[]}
 const propsForView=()=>useImported?importedProps:demoProps;const $=id=>document.getElementById(id);const escapeHtml=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function sportNav(){$('sports').innerHTML=sports.map(s=>`<button class="tab ${s===currentSport?'active':''}" data-sport="${s}" aria-pressed="${s===currentSport}">${s}</button>`).join('');document.querySelectorAll('[data-sport]').forEach(b=>b.onclick=()=>{currentSport=b.dataset.sport;currentCategory='All';selectedId=null;query='';$('search').value='';categories();render()});}
 function categories(){let a=[...new Set(propsForView().filter(p=>p.sport===currentSport).map(p=>p.stat))];$('category').innerHTML='<option value="All">All Prop Categories</option>'+a.map(s=>`<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`).join('');$('category').value=currentCategory;}
@@ -119,7 +119,7 @@ function renderResearch(){
  const [min,max]=lineBounds(p),isSaved=saved.includes(p.id),avg=mean(data);
  $('research').innerHTML=`
  <div class="row"><div class="eyebrow">THREE-STEP RESEARCH</div><span class="tag">${p.sport}</span></div>
- <h2>${escapeHtml(p.name)}</h2><p class="small">${escapeHtml(p.team)} vs ${escapeHtml(p.opp)} • ${escapeHtml(p.stat)}</p><div class="sourcechip">${p.source==='imported'?'USER-IMPORTED · NOT VERIFIED':'FICTIONAL DEMO'}</div>${p.source==='imported'?`<div class="rowlabels">${escapeHtml(p.gameLabels.slice(-chartWindow).join(' · '))}</div>`:''}
+ <h2>${escapeHtml(p.name)}</h2><p class="small">${escapeHtml(p.team)} vs ${escapeHtml(p.opp)} • ${escapeHtml(p.stat)}</p><div class="sourcechip">${p.source==='imported'?(nflSource==='hosted'?'NFLVERSE PUBLIC SNAPSHOT · HISTORICAL':'USER-IMPORTED · NOT VERIFIED'):'FICTIONAL DEMO'}</div>${p.source==='imported'?`<div class="rowlabels">${escapeHtml(p.gameLabels.slice(-chartWindow).join(' · '))}</div>`:''}
  <div class="panel"><div class="panel-head"><h3>Adjust your prop line</h3><span class="metricchip">V1.3</span></div>
  <div class="line-controls"><label for="lineNumber" class="sublabel">Research threshold (Over / Under)</label><input id="lineNumber" class="line-input" type="number" min="0" step=".5" value="${fmt(line)}" aria-label="Adjust player prop line"/></div>
  <input id="lineRange" class="line-range" type="range" min="${min}" max="${max}" step="1" value="${Math.min(max,Math.max(min,line))}" aria-label="Adjust prop line slider"/>
@@ -192,16 +192,54 @@ function convertCsvToProps(text){
  if(!imported.length)throw Error('No usable weekly stats were found. Check the CSV columns and values.');
  return {imported,summary:`Loaded ${imported.length.toLocaleString()} player/stat profiles from ${rowsUsed.toLocaleString()} unique regular-season player-week rows.\nSkipped: ${excluded} invalid rows, ${nonReg} non-REG rows, ${duplicates} duplicate player-week rows. ${missingOpp} rows lacked an opponent; ${withoutId} lacked a stable player ID (matched by name + team).\nImported stats are not independently verified. Enter your own research threshold; 0.5 is only a placeholder.`};
 }
-function setMode(v){useImported=v&&importedProps.length>0;currentSport='NFL';currentCategory='All';query='';$('search').value='';selectedId=null;categories();$('importMode').disabled=!importedProps.length;$('clearData').disabled=!importedProps.length;$('dataBanner').textContent=useImported?'IMPORTED MODE — User-supplied weekly NFL stats. Not independently verified; no live sportsbook lines or model probabilities.':'SAMPLE MODE — Fictional players and logs. No live odds or modeled probabilities.';render()}
+function setMode(v){useImported=v&&importedProps.length>0;currentSport='NFL';currentCategory='All';query='';$('search').value='';selectedId=null;categories();$('importMode').disabled=!importedProps.length;$('clearData').disabled=!importedProps.length;$('dataBanner').textContent=useImported?(nflSource==='hosted'?'HISTORICAL NFL DATA — Public nflverse weekly stats, not live sportsbook lines. Opponent is historical, not the next matchup.':'IMPORTED MODE — User-supplied weekly NFL stats. Not independently verified; no live sportsbook lines or model probabilities.'):'SAMPLE MODE — Fictional players and logs. No live odds or modeled probabilities.';render()}
 $('csvfile').onchange=async e=>{
  const file=e.target.files&&e.target.files[0];if(!file)return;
  if(file.size>25*1024*1024){$('importStatus').textContent='File exceeds 25 MB. Split the CSV into smaller seasons.';return}
- try{const content=await file.text();const {imported,summary}=convertCsvToProps(content);importedProps=imported;$('importStatus').textContent=`${file.name}\n${summary}`;setMode(true)}
+ try{const content=await file.text();const {imported,summary}=convertCsvToProps(content);importedProps=imported;nflSource='manual';manualOverride=true;$('importStatus').textContent=`${file.name}\n${summary}`;setMode(true)}
  catch(err){$('importStatus').textContent='Import failed: '+(err&&err.message?err.message:String(err))}
  e.target.value='';
 };
-$('demoMode').onclick=()=>setMode(false);
-$('importMode').onclick=()=>setMode(true);
-$('clearData').onclick=()=>{importedProps=[];$('importStatus').textContent='Imported data cleared from memory. Sample mode active.';setMode(false)};
+$('demoMode').onclick=()=>{manualOverride=true;setMode(false)};
+$('importMode').onclick=()=>{manualOverride=true;setMode(true)};
+$('clearData').onclick=()=>{manualOverride=true;nflSource='none';importedProps=[];$('importStatus').textContent='Imported data cleared from memory. Sample mode active.';setMode(false)};
 $('search').addEventListener('input',e=>{query=e.target.value;render()});$('category').onchange=e=>{currentCategory=e.target.value;render()};$('showSaved').onclick=()=>{savedOnly=!savedOnly;render()};$('export').onclick=()=>{const rows=[['sport','player','team','opponent','prop','research_line_not_odds'],...[...demoProps,...importedProps].filter(p=>saved.includes(p.id)).map(p=>[p.sport,p.name,p.team,p.opp,p.stat,lineFor(p)])];const csv=rows.map(row=>row.map(v=>'"'+String(v).replaceAll('"','""')+'"').join(',')).join('\r\n');const url=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));const a=document.createElement('a');a.href=url;a.download='prop-lock-watchlist.csv';a.click();URL.revokeObjectURL(url)};categories();render();
+
+// NFL data is published as a public static snapshot by GitHub Actions, not obtained
+// through a sportsbook API. Browser cache is best effort; no background tracking.
+const NFL_DATA_PATH='./data/nfl_2026.csv', NFL_CACHE_KEY='prop-lock-nfl-2026-v14';
+function dbOpen(){return new Promise((resolve,reject)=>{if(!('indexedDB' in window)){reject(Error('No IndexedDB'));return}const req=indexedDB.open('prop-lock-public-stats-v1',1);req.onupgradeneeded=()=>{if(!req.result.objectStoreNames.contains('snapshots'))req.result.createObjectStore('snapshots')};req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)})}
+async function cacheRead(){try{const db=await dbOpen();return await new Promise((resolve,reject)=>{const tx=db.transaction('snapshots','readonly'),r=tx.objectStore('snapshots').get(NFL_CACHE_KEY);r.onsuccess=()=>resolve(r.result||null);r.onerror=()=>reject(r.error);tx.oncomplete=()=>db.close()})}catch{return null}}
+async function cacheWrite(record){try{const db=await dbOpen();await new Promise((resolve,reject)=>{const tx=db.transaction('snapshots','readwrite');tx.objectStore('snapshots').put(record,NFL_CACHE_KEY);tx.oncomplete=()=>resolve();tx.onerror=()=>reject(tx.error)});db.close()}catch{}}
+function markNFLStatus(s){$('importStatus').textContent=s}
+async function loadAutomaticNFL(force=false){
+ if(autoInProgress)return;autoInProgress=true;$('autoNFL').disabled=true;
+ const cached=await cacheRead();let csv=null,fromCache=false,warning='';
+ if(!force&&cached?.csv&&Date.now()-cached.savedAt<12*60*60*1000){csv=cached.csv;fromCache=true}
+ if(!csv){
+  markNFLStatus('Checking free NFL stats snapshot…');
+  try{
+   const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),18000);
+   let response;try{response=await fetch(NFL_DATA_PATH+(force?'?refresh='+Date.now():''),{cache:force?'no-store':'default',signal:controller.signal})}finally{clearTimeout(timer)}
+   if(!response.ok)throw Error(response.status===404?'The scheduled data file is not published yet (404).':'Website data request failed (HTTP '+response.status+').');
+   const len=Number(response.headers.get('content-length')||0);if(len>15*1024*1024)throw Error('Dataset exceeds the safe 15 MB limit.');
+   csv=await response.text();if(csv.length>15*1024*1024)throw Error('Dataset exceeds the safe 15 MB limit.');
+   if(!csv.startsWith('player_display_name,')&&!csv.startsWith('player_display_name\r\n')){ // validate with importer too
+      if(!csv.slice(0,300).includes('player_display_name'))throw Error('The hosted file has an unexpected header.');
+   }
+  }catch(e){warning=e.message||String(e);if(cached?.csv){csv=cached.csv;fromCache=true}}
+ }
+ if(csv){
+  try{
+   const {imported,summary}=convertCsvToProps(csv);
+   if(!fromCache)await cacheWrite({csv,savedAt:Date.now()});
+   if(!manualOverride){importedProps=imported;nflSource='hosted';nflUpdated=new Date(fromCache?cached.savedAt:Date.now()).toLocaleString();if(currentSport==='NFL')setMode(true);else{categories();render()}}
+   markNFLStatus(`NFL 2026 weekly stats ${fromCache?'loaded from your device cache':'loaded from the public site'} (${nflUpdated||'this session'}).\n${summary}\n${warning?'Note: '+warning+'\n':''}These are completed games, not upcoming opponent matchups. Source: nflverse. No live lines or predictive probability.`);
+  }catch(e){markNFLStatus('NFL auto-load validation failed: '+(e.message||String(e))+'. You can still import a CSV manually.');}
+ }else{markNFLStatus('Automatic NFL data unavailable: '+(warning||'No published dataset.')+'\nGitHub Actions must publish data/nfl_2026.csv first. You can still import a CSV manually.');}
+ autoInProgress=false;$('autoNFL').disabled=false;
+}
+$('autoNFL').onclick=()=>{manualOverride=false;loadAutomaticNFL(true)};
+// Do not overwrite a manual upload if an automatic request resolves later.
+loadAutomaticNFL();
 </script></body></html>
