@@ -9,7 +9,7 @@ import sys
 
 YEAR = 2026
 URL = f'https://github.com/nflverse/nflverse-data/releases/download/stats_player/stats_player_week_{YEAR}.csv'
-COLUMNS = ['player_display_name','player_id','recent_team','opponent_team','season','week','season_type','passing_yards','rushing_yards','receiving_yards','receptions','targets','passing_tds','rushing_tds','receiving_tds','passing_interceptions','carries']
+COLUMNS = ['player_display_name','player_id','recent_team','opponent_team','season','week','season_type','attempts','passing_yards','rushing_yards','receiving_yards','receptions','targets','passing_tds','rushing_tds','receiving_tds','passing_interceptions','carries']
 TARGET = Path('data') / f'nfl_{YEAR}.csv'
 
 def main() -> int:
@@ -41,6 +41,9 @@ def main() -> int:
         unique.add(key);players.add(identity)
         clean={k:row.get(k,'') for k in COLUMNS}
         clean['recent_team']=team
+        # nflverse calls QB pass-attempt opportunities 'attempts'.
+        # Preserve unavailable values as blank rather than guessing zero.
+        clean['attempts']=row.get('attempts','') if 'attempts' in reader.fieldnames else ''
         writer.writerow(clean)
         count+=1
     if count<100 or len(players)<30:raise ValueError(f'Source dataset incomplete: {count} rows, {len(players)} players. Keep previous published version.')
