@@ -110,3 +110,56 @@ function independentValidation(profiles,holdoutWeeks=2){
  return {ready:true,cutoff,holdoutWeeks,groups,
   selectedGroups:groups.filter(g=>g.selected).length,evaluatedGroups:groups.filter(g=>g.ready).length};
 }
+
+// V2.3: volume × efficiency estimator, evaluated with preceding weeks only.
+// Targets/carries/pass attempts are opportunity proxies, not snaps/routes/air yards.
+const OPPORTUNITY_MARKETS={'Passing Yards':'Passing Attempts','Passing TDs':'Passing Attempts','Interceptions':'Passing Attempts','Rushing Yards':'Carries','Rushing TDs':'Carries','Receiving Yards':'Targets','Receptions':'Targets','Receiving TDs':'Targets'};
+function opportunityBacktest(profiles,holdoutWeeks=2){
+ const profileLookup=new Map();
+ for(const p of profiles){
+  if(!p.records||!p.playerKey)continue;
+  if(!profileLookup.has(p.playerKey))profileLookup.set(p.playerKey,new Map());
+  profileLookup.get(p.playerKey).set(p.stat,p);
+ }
+ const allWeeks=[...new Set(profiles.flatMap(p=>(p.records||[]).map(r=>r.season*100+r.week)).filter(Number.isFinite))].sort((a,b)=>a-b);
+ if(allWeeks.length<holdoutWeeks+6)return {ready:false,reason:'Not enough dated NFL weeks for a separate comparison.',groups:[]};
+ const cutoff=allWeeks[allWeeks.length-holdoutWeeks];
+ const groups=new Map();let pairedProfiles=0;
+ for(const p of profiles){
+  const oppName=OPPORTUNITY_MARKETS[p.stat];if(!oppName||!p.records||!p.playerKey)continue;
+  const opp=profileLookup.get(p.playerKey)?.get(oppName);if(!opp?.records)continue;
+  const lookup=new Map(opp.records.map(r=>[r.season+':'+r.week,r.value]));
+  const series=[...p.records].sort((a,b)=>a.season-b.season||a.week-b.week).map(r=>({season:r.season,week:r.week,actual:r.value,volume:lookup.get(r.season+':'+r.week)}));
+  if(series.filter(r=>Number.isFinite(r.volume)&&r.volume>0).length<6)continue;
+  pairedProfiles++;
+  if(!groups.has(p.stat))groups.set(p.stat,{stat:p.stat,opportunity:oppName,development:[],holdout:[],players:new Set()});
+  const group=groups.get(p.stat);group.players.add(p.playerKey);
+  for(let i=5;i<series.length;i++){
+   const current=series[i];if(!Number.isFinite(current.actual))continue;
+   const previous=series.slice(0,i).filter(r=>Number.isFinite(r.actual)&&Number.isFinite(r.volume)&&r.volume>0);
+   if(previous.length<5)continue;
+   const ten=previous.slice(-10),five=previous.slice(-5);
+   const sumVolume=ten.reduce((n,r)=>n+r.volume,0);if(sumVolume<=0)continue;
+   const rate=ten.reduce((n,r)=>n+r.actual,0)/sumVolume;
+   const projectedVolume=mean(five.map(r=>r.volume));
+   const estimate=Math.max(0,rate*projectedVolume);
+   const benchmark=mean(previous.map(r=>r.actual));
+   const date=current.season*100+current.week;
+   const record={player:p.playerKey,date,actual:current.actual,estimate,benchmark,rate,projectedVolume};
+   (date<cutoff?group.development:group.holdout).push(record);
+  }
+ }
+ const summarized=[...groups.values()].map(g=>{
+  const devPlayers=new Set(g.development.map(r=>r.player)).size;
+  const holdPlayers=new Set(g.holdout.map(r=>r.player)).size;
+  const errors=(a,key)=>a.length?mean(a.map(r=>Math.abs(r[key]-r.actual))):null;
+  const devMae=errors(g.development,'estimate'),devBenchmarkMae=errors(g.development,'benchmark');
+  const holdoutMae=errors(g.holdout,'estimate'),holdoutBenchmarkMae=errors(g.holdout,'benchmark');
+  const developmentEnough=g.development.length>=30&&devPlayers>=10;
+  const holdoutEnough=g.holdout.length>=20&&holdPlayers>=10;
+  const holdoutChange=holdoutMae!==null&&holdoutBenchmarkMae>0?(1-holdoutMae/holdoutBenchmarkMae)*100:null;
+  return {stat:g.stat,opportunity:g.opportunity,players:g.players.size,devTests:g.development.length,devPlayers,holdTests:g.holdout.length,holdPlayers,devMae,devBenchmarkMae,holdoutMae,holdoutBenchmarkMae,holdoutChange,
+   ready:developmentEnough&&holdoutEnough,status:!developmentEnough?'DEVELOPMENT SAMPLE LIMITED':!holdoutEnough?'HOLDOUT SAMPLE LIMITED':'DESCRIPTIVE COMPARISON'};
+ }).sort((a,b)=>b.holdTests-a.holdTests||a.stat.localeCompare(b.stat));
+ return {ready:true,cutoff,holdoutWeeks,pairedProfiles,groups:summarized,evaluatedGroups:summarized.filter(g=>g.ready).length};
+}
