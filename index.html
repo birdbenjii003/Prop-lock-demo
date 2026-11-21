@@ -53,7 +53,7 @@ const propsForView=()=>useImported?importedProps:demoProps;const $=id=>document.
 function sportNav(){$('sports').innerHTML=sports.map(s=>`<button class="tab ${s===currentSport?'active':''}" data-sport="${s}" aria-pressed="${s===currentSport}">${s}</button>`).join('');document.querySelectorAll('[data-sport]').forEach(b=>b.onclick=()=>{currentSport=b.dataset.sport;currentCategory='All';selectedId=null;query='';$('search').value='';categories();render()});}
 function categories(){let a=[...new Set(propsForView().filter(p=>p.sport===currentSport).map(p=>p.stat))];$('category').innerHTML='<option value="All">All Prop Categories</option>'+a.map(s=>`<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`).join('');$('category').value=currentCategory;}
 function visible(){return propsForView().filter(p=>p.sport===currentSport&&(currentCategory==='All'||p.stat===currentCategory)&&(!savedOnly||saved.includes(p.id))&&[p.name,p.team,p.opp,p.stat].join(' ').toLowerCase().includes(query.toLowerCase()))}
-function render(){sportNav();const list=visible();$('count').textContent=`${list.length} ${useImported?'imported':'sample'} prop${list.length===1?'':'s'}`;$('sportText').textContent=currentSport;$('showSaved').textContent=savedOnly?'★ Saved only':'☆ Saved only';$('cards').innerHTML=list.length?list.map(p=>`<button class="prop ${p.id===selectedId?'selected':''}" data-id="${p.id}"><div class="upper"><div><div class="name">${escapeHtml(p.name)} ${saved.includes(p.id)?'★':''}</div><div class="small">${escapeHtml(p.team)} vs ${escapeHtml(p.opp)}</div><div class="metric">${escapeHtml(p.stat)} · <span>Over / Under available in research</span></div></div><div><div class="line">${fmt(lineFor(p))}</div><div class="small" style="text-align:right">${lineOverrides[p.id]!==undefined?'Custom research line':useImported?'Placeholder, set your line':'Example line'}</div></div></div></button>`).join(''):'<div class="empty">No props match this selection. Try another sport, category, or search.</div>';document.querySelectorAll('[data-id]').forEach(b=>b.onclick=()=>{selectedId=b.dataset.id;render()});renderResearch()}
+function render(){sportNav();const list=visible();$('count').textContent=`${list.length} ${useImported?'imported':'sample'} prop${list.length===1?'':'s'}`;$('sportText').textContent=currentSport;$('showSaved').textContent=savedOnly?'★ Saved only':'☆ Saved only';$('cards').innerHTML=list.length?list.map(p=>`<button class="prop ${p.id===selectedId?'selected':''}" data-id="${p.id}"><div class="upper"><div><div class="name">${escapeHtml(p.name)} ${saved.includes(p.id)?'★':''}</div><div class="small">${escapeHtml(p.team)} vs ${escapeHtml(p.opp)}</div><div class="metric">${escapeHtml(p.stat)} · <span>Historical research only</span></div></div><div><div class="line">${fmt(lineFor(p))}</div><div class="small" style="text-align:right">${lineOverrides[p.id]!==undefined?'Custom research line':useImported?'Placeholder, set your line':'Example line'}</div></div></div></button>`).join(''):'<div class="empty">No props match this selection. Try another sport, category, or search.</div>';document.querySelectorAll('[data-id]').forEach(b=>b.onclick=()=>{selectedId=b.dataset.id;render()});renderResearch()}
 
 function mean(a){return a.length?a.reduce((t,x)=>t+x,0)/a.length:0}
 function lineFor(p){const n=Number(lineOverrides[p.id]);return Number.isFinite(n)&&n>=0&&lineOverrides[p.id]!==undefined?n:p.line}
@@ -184,8 +184,29 @@ function convertCsvToProps(text){
    const g=grouped.get(k);g.records.push({season,week,value:v,team,opp});
   }
  }
+ // Only display plausible player/market combinations. A weekly stats feed reports
+ // zero values for every column for every player, even when they never play that role.
+ // Keep all valid game rows within each eligible profile, including zero outcomes.
+ const roleWeeks=new Map();
+ for(const [key,g] of grouped){
+  if(!roleWeeks.has(g.identity))roleWeeks.set(g.identity,{passing:0,rushing:0,receiving:0,targets:0,any:0});
+  const r=roleWeeks.get(g.identity);
+  if(g.stat==='passing_yards')r.passing=g.records.filter(x=>x.value>=50).length;
+  if(g.stat==='carries')r.rushing=g.records.filter(x=>x.value>=3).length;
+  if(g.stat==='targets')r.targets=g.records.filter(x=>x.value>=2).length;
+  if(g.stat==='receiving_yards')r.receiving=g.records.filter(x=>x.value>=5).length;
+ }
+ const eligible=(g)=>{
+  const role=roleWeeks.get(g.identity)||{};
+  if(g.records.length<2)return false;
+  if(['passing_yards','passing_tds','passing_interceptions'].includes(g.stat))return role.passing>=2;
+  if(['rushing_yards','rushing_tds','carries'].includes(g.stat))return role.rushing>=2;
+  if(['receiving_yards','receptions','receiving_tds','targets'].includes(g.stat))return (role.targets>=2||role.receiving>=2);
+  return g.records.some(x=>x.value>0);
+ };
  const imported=[];
  for(const [key,g] of grouped){
+  if(!eligible(g))continue;
   g.records.sort((a,b)=>a.season-b.season||a.week-b.week);const last=g.records[g.records.length-1];
   imported.push({id:'import-'+encodeURIComponent(key),sport:'NFL',name:g.name,team:last.team,opp:last.opp||'Opponent unavailable',stat:g.colName,line:0.5,logs:g.records.map(x=>x.value),gameLabels:g.records.map(x=>x.season+' W'+x.week),records:g.records,usage:'Historical '+g.colName.toLowerCase()+' by week',scenario:'Scenario adjustments require game environment and opportunity inputs, which are not yet connected.',trait:'Opponent matchup adjustments require opponent defensive profiles, which are not yet connected.',source:'imported'});
  }
