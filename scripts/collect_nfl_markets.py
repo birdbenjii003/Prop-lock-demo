@@ -54,7 +54,7 @@ def extract(payload, timestamp):
             if stat not in ALLOWED or odd.get('periodID') != 'game' or odd.get('betTypeID') != 'ou':
                 continue
             side = odd.get('sideID')
-            player_id = str(odd.get('playerID') or odd.get('statEntityID') or '').strip()
+            player_id = str(odd.get('playerID') or '').strip()
             if side not in ('over', 'under') or not player_id:
                 continue
             by_book = odd.get('byBookmaker') or {}
