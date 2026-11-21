@@ -27,8 +27,9 @@
 .baseline-panel{background:#142536;border:1px solid #38666b;border-radius:14px;padding:15px;margin:12px 0}.baseline-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.baseline-value{color:#8cf1b6;font-size:24px;font-weight:800}.baseline-label{color:#b9cbdc;font-size:11px}.baseline-note{font-size:12px;color:#e5bd83;line-height:1.6;margin-top:10px}
 .scenario-preset-row,.scenario-results{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin:12px 0}.scenario-preset-row button{border:1px solid #395c6c;background:#1b2d3b;color:#d9eced;border-radius:10px;padding:10px 4px}.scenario-preset-row button.active{border-color:#72f3a2;color:#72f3a2}.scenario-results>div{background:#1a2b3b;border:1px solid #345165;border-radius:10px;padding:8px 4px;text-align:center}.scenario-results b{color:#72f3a2;font-size:19px;display:block}.scenario-results span{color:#c3cbd8;font-size:10px;display:block}.scenario-note{font-size:12px;color:#f5bf7c;line-height:1.65;margin-top:12px}.trait-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin:12px 0}.trait-stats>div{border:1px solid #345269;background:#162b3d;border-radius:10px;padding:10px 5px;text-align:center}.trait-stats b{font-size:20px;color:#8be4c3;display:block}.trait-stats span{font-size:10px;color:#c2d1dc;display:block;line-height:1.4}.trait-note{color:#eec28c;font-size:12px;line-height:1.6;margin-top:10px}.trait-tag{font-size:11px;color:#a9d5e8;margin:9px 0}
 .estimator-panel{border:1px solid #54708b;border-radius:14px;background:#132436;padding:16px;margin:15px 0}.estimator-title{font-size:17px;font-weight:800;margin:0 0 7px}.estimator-status{display:inline-block;border-radius:7px;background:#3a3021;color:#ffd799;padding:5px 9px;font-size:11px;font-weight:750}.estimator-evidence{display:grid;gap:8px;margin-top:12px}.estimator-evidence>div{display:flex;gap:10px;justify-content:space-between;align-items:start;background:#1c2e40;padding:10px;border-radius:9px;font-size:12px}.estimator-evidence span{color:#9db1c9;text-align:right;max-width:62%}.estimator-issues{font-size:12px;line-height:1.7;color:#f0c89b;margin-top:11px}.estimator-outcome{font-size:15px;font-weight:800;color:#f6ca87;margin-top:12px}
+.validation-panel{border:1px solid #53778c;border-radius:14px;background:#112538;padding:15px;margin:13px 0}.validation-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:13px 0}.validation-grid>div{background:#1b3044;border:1px solid #36526b;border-radius:10px;padding:12px 9px}.validation-grid b{display:block;color:#91eac8;font-size:22px}.validation-grid span{display:block;color:#bbccdc;font-size:11px;line-height:1.4}.validation-copy{font-size:12px;line-height:1.6;color:#c3d5e4}.validation-warning{color:#f2c78d;font-size:12px;line-height:1.65;margin-top:9px}.validation-detail summary{font-size:12px;color:#9dddbf;cursor:pointer}.validation-detail table{width:100%;margin-top:8px;border-collapse:collapse;font-size:10px}.validation-detail th,.validation-detail td{border-bottom:1px solid #2c435a;padding:6px 3px;text-align:left}
 </style></head><body>
-<div class="layout"><header class="top"><div><div class="logo">PROP <em>LOCK</em></div><div class="subtitle">PERSONAL PLAYER PROP RESEARCH</div></div><div class="pill">● PUBLIC DEMO V1.9</div></header>
+<div class="layout"><header class="top"><div><div class="logo">PROP <em>LOCK</em></div><div class="subtitle">PERSONAL PLAYER PROP RESEARCH</div></div><div class="pill">● PUBLIC DEMO V2.0</div></header>
 <section class="hero"><div><h1>Find the prop. Research the matchup.</h1><p>Explore multi-sport player props and see how Deep Dive, Scenarios, and Trait Match fit together.</p></div><div class="hero-tag">$0 prototype</div></section>
 <nav class="tabs" id="sports" aria-label="Select sport"></nav>
 <div class="toolbar"><input class="search" id="search" type="search" placeholder="Search NFL player, team, or stat..." aria-label="Search players"/><select class="filter" id="category" aria-label="Select prop category"><option value="All">All Stat Categories</option></select><select class="filter" id="position" aria-label="Filter by inferred NFL role"><option value="All">All player roles</option></select></div>
@@ -40,6 +41,7 @@
 </section>
 <div class="notice" id="dataBanner">SAMPLE MODE — Fictional players and logs. No live odds or modeled probabilities.</div>
 <main class="workspace"><div class="cards" id="cards"></div><aside class="research" id="research"><div class="eyebrow">RESEARCH WORKSPACE</div><h2>Choose a player prop</h2><p class="muted">Select a card to see the three-step research process.</p></aside></main><footer class="foot">Prop Lock V1.2 is a local-only demonstration. Your watchlist and custom lines remain in this browser. The site can retrieve a publicly hosted NFL statistical snapshot; manually imported CSVs remain in memory and are never uploaded. External source correctness is not independently verified, and this app does not supply live sportsbook lines or calibrated predictions.</footer></div>
+<script src="./scripts/backtest.js"></script>
 <script>
 'use strict';
 // Fictional records deliberately separate demonstration from live sports data.
@@ -254,7 +256,7 @@ function estimatorEvidence(p,line){
  if(!cohort?.enough)issues.push('Insufficient comparable opponent allowance history.');
  issues.push('No verified upcoming opponent, lineup, injuries, or game-environment forecast.');
  issues.push('Scenario controls are hypothetical and not probabilities.');
- issues.push('Historical estimator has not passed out-of-sample calibration or backtesting.');
+ issues.push('Rolling historical checks are available, but independent validation and probability calibration are still missing.');
  if(!thresholdCustom)issues.push('Selected line is a suggested historical threshold, not an actual sportsbook line.');
  return {games,coverage,validSource,historicalBaseline,opportunity:opp,cohort,issues,thresholdCustom,status:'PASS — NOT VALIDATED',overProbability:null,underProbability:null};
 }
@@ -296,6 +298,7 @@ function renderResearch(){
  ${scenarioPanel(p,line)}
  ${traitPanel(p)}
  ${estimatorPanel(p,line)}
+ ${validationPanel(p)}
  <div class="panel"><div class="panel-head"><h3>Research conclusion</h3><span class="metricchip">PASS — NOT VALIDATED</span></div><p><b>No validated Over/Under recommendation.</b> Deep Dive is now calculated from the loaded logs. Scenario stress tests are hypothetical, and opponent history is not defensive Trait Match. The historical blend is unvalidated. Defensive allowance is descriptive rather than a full trait matchup. A calibrated outcome probability requires more data and backtesting.</p></div>
  <button class="save ${isSaved?'saved':''}" id="save">${isSaved?'★ Remove from watchlist':'☆ Save to watchlist'}</button>
  <p class="caution">${p.source==='imported'?'Imported historical stats only. Data is user-supplied, not independently verified. Opponent, injury, upcoming game, and odds feeds are not connected.':'Demo only: fictional players and game logs.'} This is not live betting information.</p>`;
