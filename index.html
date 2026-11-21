@@ -26,8 +26,9 @@
 .profile-meta{color:var(--muted);font-size:12px;margin:5px 0}.profile-chips,.stat-pills{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}.profile-chips span,.stat-pills button{font-size:11px;color:#b9eecf;background:#19342d;border:1px solid #325d4c;border-radius:8px;padding:6px 9px}.stat-pills button.active{background:#387355;color:#fff;border-color:#7af0ae}.role-note{font-size:11px;color:#f5bf7c;line-height:1.5;margin-top:9px}.profile-average{font-size:12px;color:#b3d9ef;margin-top:8px}
 .baseline-panel{background:#142536;border:1px solid #38666b;border-radius:14px;padding:15px;margin:12px 0}.baseline-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.baseline-value{color:#8cf1b6;font-size:24px;font-weight:800}.baseline-label{color:#b9cbdc;font-size:11px}.baseline-note{font-size:12px;color:#e5bd83;line-height:1.6;margin-top:10px}
 .scenario-preset-row,.scenario-results{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin:12px 0}.scenario-preset-row button{border:1px solid #395c6c;background:#1b2d3b;color:#d9eced;border-radius:10px;padding:10px 4px}.scenario-preset-row button.active{border-color:#72f3a2;color:#72f3a2}.scenario-results>div{background:#1a2b3b;border:1px solid #345165;border-radius:10px;padding:8px 4px;text-align:center}.scenario-results b{color:#72f3a2;font-size:19px;display:block}.scenario-results span{color:#c3cbd8;font-size:10px;display:block}.scenario-note{font-size:12px;color:#f5bf7c;line-height:1.65;margin-top:12px}.trait-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin:12px 0}.trait-stats>div{border:1px solid #345269;background:#162b3d;border-radius:10px;padding:10px 5px;text-align:center}.trait-stats b{font-size:20px;color:#8be4c3;display:block}.trait-stats span{font-size:10px;color:#c2d1dc;display:block;line-height:1.4}.trait-note{color:#eec28c;font-size:12px;line-height:1.6;margin-top:10px}.trait-tag{font-size:11px;color:#a9d5e8;margin:9px 0}
+.estimator-panel{border:1px solid #54708b;border-radius:14px;background:#132436;padding:16px;margin:15px 0}.estimator-title{font-size:17px;font-weight:800;margin:0 0 7px}.estimator-status{display:inline-block;border-radius:7px;background:#3a3021;color:#ffd799;padding:5px 9px;font-size:11px;font-weight:750}.estimator-evidence{display:grid;gap:8px;margin-top:12px}.estimator-evidence>div{display:flex;gap:10px;justify-content:space-between;align-items:start;background:#1c2e40;padding:10px;border-radius:9px;font-size:12px}.estimator-evidence span{color:#9db1c9;text-align:right;max-width:62%}.estimator-issues{font-size:12px;line-height:1.7;color:#f0c89b;margin-top:11px}.estimator-outcome{font-size:15px;font-weight:800;color:#f6ca87;margin-top:12px}
 </style></head><body>
-<div class="layout"><header class="top"><div><div class="logo">PROP <em>LOCK</em></div><div class="subtitle">PERSONAL PLAYER PROP RESEARCH</div></div><div class="pill">● PUBLIC DEMO V1.8</div></header>
+<div class="layout"><header class="top"><div><div class="logo">PROP <em>LOCK</em></div><div class="subtitle">PERSONAL PLAYER PROP RESEARCH</div></div><div class="pill">● PUBLIC DEMO V1.9</div></header>
 <section class="hero"><div><h1>Find the prop. Research the matchup.</h1><p>Explore multi-sport player props and see how Deep Dive, Scenarios, and Trait Match fit together.</p></div><div class="hero-tag">$0 prototype</div></section>
 <nav class="tabs" id="sports" aria-label="Select sport"></nav>
 <div class="toolbar"><input class="search" id="search" type="search" placeholder="Search NFL player, team, or stat..." aria-label="Search players"/><select class="filter" id="category" aria-label="Select prop category"><option value="All">All Stat Categories</option></select><select class="filter" id="position" aria-label="Filter by inferred NFL role"><option value="All">All player roles</option></select></div>
@@ -234,6 +235,45 @@ function traitPanel(p){
  '<p class="rowlabels">Selected player has '+own.length+' recorded game(s) against this defense.'+(own.length>=3?' Historical personal average: '+fmt(mean(own.map(r=>r.value)))+'.':' Personal sample too small for a matchup conclusion.')+'</p>'+
  '<p class="trait-note">This is an observed statistical allowance, not a defensive scheme/coverage trait, future matchup prediction, or opponent adjustment. Role labels are inferred from player activity; the cohort may mix starters and reserves. No injuries, lineups, upcoming schedule, coverage assignments, or market lines are included.</p></div>';
 }
+// Evidence assembly does not treat overlapping method indicators as independent votes.
+// This version intentionally emits no forecast probability or Over/Under recommendation.
+function estimatorEvidence(p,line){
+ const logs=p.logs.filter(Number.isFinite);
+ const games=logs.length,latest=logs.slice(-10);
+ const validSource=p.source==='imported';
+ const coverage=games>=10?'adequate descriptive sample':games>=5?'limited sample':'insufficient sample';
+ const opp=opportunityBaseline(p);
+ const defense=traitSelections[p.id]||p.opp;
+ const cohort=validSource&&defense?defensiveCohort(p.stat,p.position||'Unknown',defense):null;
+ const historicalBaseline=latest.length?(0.55*mean(latest)+0.30*mean(latest.slice(-5))+0.15*mean(logs)):null;
+ const thresholdCustom=lineOverrides[p.id]!==undefined;
+ const issues=[];
+ if(!validSource)issues.push('Sample-only data: import real NFL weekly statistics.');
+ if(games<10)issues.push('Only '+games+' historical game(s); fewer than ten.');
+ if(opp.value===null)issues.push('No reliable paired production/opportunity baseline for this stat.');
+ if(!cohort?.enough)issues.push('Insufficient comparable opponent allowance history.');
+ issues.push('No verified upcoming opponent, lineup, injuries, or game-environment forecast.');
+ issues.push('Scenario controls are hypothetical and not probabilities.');
+ issues.push('Historical estimator has not passed out-of-sample calibration or backtesting.');
+ if(!thresholdCustom)issues.push('Selected line is a suggested historical threshold, not an actual sportsbook line.');
+ return {games,coverage,validSource,historicalBaseline,opportunity:opp,cohort,issues,thresholdCustom,status:'PASS — NOT VALIDATED',overProbability:null,underProbability:null};
+}
+function estimatorPanel(p,line){
+ const x=estimatorEvidence(p,line);
+ const e=v=>escapeHtml(v);
+ return '<div class="estimator-panel"><div class="estimator-title">Statistical Estimator · V1.9</div>'+
+ '<span class="estimator-status">RESEARCH ONLY · UNCALIBRATED</span>'+
+ '<p class="rowlabels">Aggregates readiness checks from all three methods without averaging their overlapping indicators or inventing confidence.</p>'+
+ '<div class="estimator-evidence">'+
+ '<div><b>Deep Dive</b><span>'+x.games+' games · '+e(x.coverage)+' · historical blend '+(x.historicalBaseline===null?'N/A':fmt(x.historicalBaseline))+'</span></div>'+
+ '<div><b>Scenarios</b><span>Three hypothetical conditions available · future game script unverified</span></div>'+
+ '<div><b>Trait Match</b><span>'+(x.cohort?.enough?'Descriptive defensive cohort available':'Defensive comparison incomplete')+'</span></div>'+
+ '<div><b>Opportunity baseline</b><span>'+(x.opportunity.value===null?'Missing paired opportunity evidence':fmt(x.opportunity.value)+' (descriptive, not forecast)')+'</span></div>'+
+ '<div><b>Market threshold</b><span>'+(x.thresholdCustom?'User-selected research line':'Suggested historical median, not a market line')+'</span></div></div>'+
+ '<div class="estimator-issues"><b>Validation blockers</b><ul>'+x.issues.map(i=>'<li>'+e(i)+'</li>').join('')+'</ul></div>'+
+ '<div class="estimator-outcome">'+x.status+'</div>'+
+ '<p class="rowlabels">Over probability: unavailable · Under probability: unavailable. No pick is issued until real next-game context and separately tested calibration are added.</p></div>';
+}
 function renderResearch(){
  const p=propsForView().find(p=>p.id===selectedId&&p.sport===currentSport);
  if(!p||useImported&&!activeProfile){$('research').innerHTML='<div class="eyebrow">RESEARCH WORKSPACE</div><h2>Choose a player prop</h2><p class="muted">Select a card to see your three-step analysis workflow.</p>';return}
@@ -255,7 +295,8 @@ function renderResearch(){
  <div class="panel"><div class="panel-head"><h3>01 · Deep Dive</h3><span class="metricchip">LIVE CALCULATIONS</span></div><p>Actual historical calculations from the available ${p.source==='imported'?'user-supplied':'fictional'} records: median, sample volatility, L5 trend, recency-weighted average, and full-data over/under counts.</p>${metricsPanel(p,line)}</div>
  ${scenarioPanel(p,line)}
  ${traitPanel(p)}
- <div class="panel"><div class="panel-head"><h3>Research conclusion</h3><span class="metricchip">PASS — INSUFFICIENT EVIDENCE</span></div><p><b>No validated Over/Under recommendation.</b> Deep Dive is now calculated from the loaded logs. Scenario stress tests are hypothetical, and opponent history is not defensive Trait Match. The historical blend is unvalidated. Defensive allowance is descriptive rather than a full trait matchup. A calibrated outcome probability requires more data and backtesting.</p></div>
+ ${estimatorPanel(p,line)}
+ <div class="panel"><div class="panel-head"><h3>Research conclusion</h3><span class="metricchip">PASS — NOT VALIDATED</span></div><p><b>No validated Over/Under recommendation.</b> Deep Dive is now calculated from the loaded logs. Scenario stress tests are hypothetical, and opponent history is not defensive Trait Match. The historical blend is unvalidated. Defensive allowance is descriptive rather than a full trait matchup. A calibrated outcome probability requires more data and backtesting.</p></div>
  <button class="save ${isSaved?'saved':''}" id="save">${isSaved?'★ Remove from watchlist':'☆ Save to watchlist'}</button>
  <p class="caution">${p.source==='imported'?'Imported historical stats only. Data is user-supplied, not independently verified. Opponent, injury, upcoming game, and odds feeds are not connected.':'Demo only: fictional players and game logs.'} This is not live betting information.</p>`;
  const update=n=>{if(!Number.isFinite(n)||n<0)return;lineOverrides[p.id]=Math.round(n*2)/2;persistLines();renderResearch()};
