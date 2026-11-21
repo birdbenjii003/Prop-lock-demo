@@ -22,11 +22,13 @@
 
 /* V1.2 data importer */
 .import-panel{border:1px solid #304966;border-radius:17px;background:#121e30;padding:18px;margin:0 0 15px}.import-actions{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:16px}.file-button{cursor:pointer;color:#07190d;background:var(--accent);border-radius:9px;padding:11px 14px;font-weight:800;font-size:13px}#csvfile{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}.import-status{color:#c0cfe0;font-size:12px;line-height:1.7;margin-top:12px;white-space:pre-line}.field-help{color:#b9c8dc;font-size:12px;margin-top:12px;line-height:1.6}.field-help summary{cursor:pointer;color:#83d8ac}.field-help code{color:#d7f5dd}.sourcechip{font-size:10px;color:#93cbf0;background:#182e42;border:1px solid #375b7b;border-radius:6px;padding:3px 6px;display:inline-block;margin-top:6px}.warnings{color:#f7b976}.rowlabels{margin-top:8px;color:#aebbd0;font-size:11px;line-height:1.6}
+/* V1.5 grouped player profiles */
+.profile-meta{color:var(--muted);font-size:12px;margin:5px 0}.profile-chips,.stat-pills{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}.profile-chips span,.stat-pills button{font-size:11px;color:#b9eecf;background:#19342d;border:1px solid #325d4c;border-radius:8px;padding:6px 9px}.stat-pills button.active{background:#387355;color:#fff;border-color:#7af0ae}.role-note{font-size:11px;color:#f5bf7c;line-height:1.5;margin-top:9px}.profile-average{font-size:12px;color:#b3d9ef;margin-top:8px}
 </style></head><body>
-<div class="layout"><header class="top"><div><div class="logo">PROP <em>LOCK</em></div><div class="subtitle">PERSONAL PLAYER PROP RESEARCH</div></div><div class="pill">● PUBLIC DEMO V1.4</div></header>
+<div class="layout"><header class="top"><div><div class="logo">PROP <em>LOCK</em></div><div class="subtitle">PERSONAL PLAYER PROP RESEARCH</div></div><div class="pill">● PUBLIC DEMO V1.5</div></header>
 <section class="hero"><div><h1>Find the prop. Research the matchup.</h1><p>Explore multi-sport player props and see how Deep Dive, Scenarios, and Trait Match fit together.</p></div><div class="hero-tag">$0 prototype</div></section>
 <nav class="tabs" id="sports" aria-label="Select sport"></nav>
-<div class="toolbar"><input class="search" id="search" type="search" placeholder="Search player, team, or prop..." aria-label="Search props"/><select class="filter" id="category" aria-label="Select prop category"><option value="All">All Prop Categories</option></select></div>
+<div class="toolbar"><input class="search" id="search" type="search" placeholder="Search NFL player, team, or stat..." aria-label="Search players"/><select class="filter" id="category" aria-label="Select prop category"><option value="All">All Stat Categories</option></select><select class="filter" id="position" aria-label="Filter by inferred NFL role"><option value="All">All player roles</option></select></div>
 <div class="row"><div class="summary"><strong id="count">0 example props</strong><span class="muted"> · </span><span class="muted" id="sportText">NFL</span></div><div class="toggle"><button class="export" id="showSaved">☆ Saved only</button><button class="export" id="export">Export watchlist</button></div></div>
 <section class="import-panel" aria-label="NFL data importing"><div class="row" style="flex-wrap:wrap"><div><div class="eyebrow">V1.4 NFL DATA FOUNDATION</div><h2 style="margin:7px 0">NFL historical player statistics</h2><p class="small">Try automatic 2026 NFL weekly stats from a public nflverse snapshot hosted with this site, or import your own compatible CSV. No API key or paid server. The website and shared stats are public; personal settings stay in your browser.</p></div><span class="pill">LOCAL · FREE</span></div>
 <div class="import-actions"><button class="file-button" id="autoNFL" type="button">Load NFL stats automatically</button><label for="csvfile" class="file-button">Choose NFL CSV</label><input id="csvfile" type="file" accept=".csv,text/csv" aria-label="Import NFL weekly stats CSV"/><button class="export" id="demoMode" type="button">Show sample data</button><button class="export" id="importMode" type="button" disabled>Show imported data</button><button class="export" id="clearData" type="button" disabled>Clear imported data</button></div>
@@ -48,12 +50,60 @@ const demoProps=[
 {id:'nhl-shots',sport:'NHL',name:'Sample Winger',team:'Northern Ice',opp:'Capital Ice',stat:'Shots on Goal',line:2.5,logs:[3,4,2,5,1,3,2,4,3,2],usage:'Ice time and shot attempts',scenario:'Account for power-play time and changing line assignments.',trait:'Compare shot locations against opponent defensive suppression patterns.'},
 {id:'ncaab-pts',sport:'NCAAB',name:'Sample College Guard',team:'State College',opp:'City College',stat:'Points',line:16.5,logs:[17,20,13,18,21,16,14,19,22,15],usage:'Minutes and offensive share',scenario:'Test pace, foul risk, and rotation volatility.',trait:'Match offensive role against opponent zone/man tendencies.'},
 {id:'ncaaf-pass',sport:'NCAAF',name:'Sample College QB',team:'Western U',opp:'Eastern U',stat:'Passing Yards',line:215.5,logs:[232,198,241,218,176,265,223,207,254,219],usage:'Dropbacks and offensive tempo',scenario:'Compare tempo, weather, and game script.',trait:'Compare passing design with opponent coverage and pass rush.'}];
-let importedProps=[];let useImported=false;let nflSource='none',nflUpdated='',manualOverride=false,autoInProgress=false;let scenarioMultiplier=1;const sports=['NFL','NBA','MLB','NHL','NCAAB','NCAAF'];let currentSport='NFL',currentCategory='All',query='',selectedId='nfl-wr',savedOnly=false;let saved=[];let lineOverrides={};let chartWindow=10;try{lineOverrides=JSON.parse(localStorage.getItem('prop-lock-lines-v11')||'{}')||{}}catch{lineOverrides={}}try{saved=JSON.parse(localStorage.getItem('prop-lock-watchlist')||'[]');if(!Array.isArray(saved))saved=[]}catch{saved=[]}
+let importedProps=[];let useImported=false;let nflSource='none',nflUpdated='',manualOverride=false,autoInProgress=false;let scenarioMultiplier=1;let selectedPosition='All';let activeProfile=null;const sports=['NFL','NBA','MLB','NHL','NCAAB','NCAAF'];let currentSport='NFL',currentCategory='All',query='',selectedId='nfl-wr',savedOnly=false;let saved=[];let lineOverrides={};let chartWindow=10;try{lineOverrides=JSON.parse(localStorage.getItem('prop-lock-lines-v11')||'{}')||{}}catch{lineOverrides={}}try{saved=JSON.parse(localStorage.getItem('prop-lock-watchlist')||'[]');if(!Array.isArray(saved))saved=[]}catch{saved=[]}
 const propsForView=()=>useImported?importedProps:demoProps;const $=id=>document.getElementById(id);const escapeHtml=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-function sportNav(){$('sports').innerHTML=sports.map(s=>`<button class="tab ${s===currentSport?'active':''}" data-sport="${s}" aria-pressed="${s===currentSport}">${s}</button>`).join('');document.querySelectorAll('[data-sport]').forEach(b=>b.onclick=()=>{currentSport=b.dataset.sport;currentCategory='All';selectedId=null;query='';$('search').value='';categories();render()});}
+function sportNav(){$('sports').innerHTML=sports.map(s=>`<button class="tab ${s===currentSport?'active':''}" data-sport="${s}" aria-pressed="${s===currentSport}">${s}</button>`).join('');document.querySelectorAll('[data-sport]').forEach(b=>b.onclick=()=>{currentSport=b.dataset.sport;currentCategory='All';selectedId=null;activeProfile=null;query='';$('search').value='';categories();render()});}
 function categories(){let a=[...new Set(propsForView().filter(p=>p.sport===currentSport).map(p=>p.stat))];$('category').innerHTML='<option value="All">All Prop Categories</option>'+a.map(s=>`<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`).join('');$('category').value=currentCategory;}
-function visible(){return propsForView().filter(p=>p.sport===currentSport&&(currentCategory==='All'||p.stat===currentCategory)&&(!savedOnly||saved.includes(p.id))&&[p.name,p.team,p.opp,p.stat].join(' ').toLowerCase().includes(query.toLowerCase()))}
-function render(){sportNav();const list=visible();$('count').textContent=`${list.length} ${useImported?'imported':'sample'} prop${list.length===1?'':'s'}`;$('sportText').textContent=currentSport;$('showSaved').textContent=savedOnly?'★ Saved only':'☆ Saved only';$('cards').innerHTML=list.length?list.map(p=>`<button class="prop ${p.id===selectedId?'selected':''}" data-id="${p.id}"><div class="upper"><div><div class="name">${escapeHtml(p.name)} ${saved.includes(p.id)?'★':''}</div><div class="small">${escapeHtml(p.team)} vs ${escapeHtml(p.opp)}</div><div class="metric">${escapeHtml(p.stat)} · <span>Historical research only</span></div></div><div><div class="line">${fmt(lineFor(p))}</div><div class="small" style="text-align:right">${lineOverrides[p.id]!==undefined?'Custom research line':useImported?'Placeholder, set your line':'Example line'}</div></div></div></button>`).join(''):'<div class="empty">No props match this selection. Try another sport, category, or search.</div>';document.querySelectorAll('[data-id]').forEach(b=>b.onclick=()=>{selectedId=b.dataset.id;render()});renderResearch()}
+function playerGroups(){
+ const profiles=new Map();
+ for(const p of importedProps){
+  if(p.sport!=='NFL')continue;
+  const key=p.playerKey||p.name+'|'+p.team;
+  if(!profiles.has(key))profiles.set(key,{key,name:p.name,team:p.team,position:p.position||'Unknown',props:[]});
+  profiles.get(key).props.push(p);
+ }
+ return [...profiles.values()].sort((a,b)=>a.name.localeCompare(b.name));
+}
+function visible(){
+ return propsForView().filter(p=>p.sport===currentSport&&(currentCategory==='All'||p.stat===currentCategory)&&(!savedOnly||saved.includes(p.id))&&[p.name,p.team,p.opp,p.stat].join(' ').toLowerCase().includes(query.toLowerCase())&&(!useImported||selectedPosition==='All'||p.position===selectedPosition));
+}
+function renderPositions(){
+ const select=$('position');if(!select)return;
+ select.style.display=useImported&&currentSport==='NFL'?'':'none';
+ const roles=[...new Set(importedProps.map(p=>p.position||'Unknown'))].sort();
+ select.innerHTML='<option value="All">All inferred roles</option>'+roles.map(r=>'<option value="'+escapeHtml(r)+'">'+escapeHtml(r)+'</option>').join('');
+ if(!roles.includes(selectedPosition))selectedPosition='All';
+ select.value=selectedPosition;
+}
+function render(){
+ sportNav();renderPositions();const list=visible();
+ $('count').textContent=useImported?([...new Set(list.map(p=>p.playerKey||p.name+'|'+p.team))].length+' NFL player profiles'):list.length+' sample props';
+ $('sportText').textContent=currentSport;
+ $('showSaved').textContent=savedOnly?'★ Saved only':'☆ Saved only';
+ if(useImported){
+  const matches=new Set(list.map(p=>p.playerKey));
+  const grouped=playerGroups().filter(g=>matches.has(g.key));
+  $('cards').innerHTML=grouped.length?grouped.map(g=>{
+    const filtered=g.props.filter(p=>list.some(x=>x.id===p.id));
+    const initial=filtered[0];
+    const selected=g.key===activeProfile;
+    return '<button class="prop '+(selected?'selected':'')+'" data-profile="'+encodeURIComponent(g.key)+'"><div class="upper"><div><div class="name">'+escapeHtml(g.name)+'</div><div class="profile-meta">'+escapeHtml(g.team)+' · '+escapeHtml(g.position)+' (inferred from activity)</div><div class="profile-chips">'+filtered.slice(0,5).map(p=>'<span>'+escapeHtml(p.stat)+'</span>').join('')+(filtered.length>5?'<span>+'+(filtered.length-5)+' more</span>':'')+'</div><div class="profile-average">Choose a stat to review historical averages and game logs</div></div><div style="color:#72f3a2;font-size:24px">›</div></div></button>';
+  }).join(''):'<div class="empty">No matching NFL player profiles. Try another role or search.</div>';
+  document.querySelectorAll('[data-profile]').forEach(b=>b.onclick=()=>{
+    const key=decodeURIComponent(b.dataset.profile),g=playerGroups().find(p=>p.key===key);
+    if(!g)return;
+    activeProfile=key;
+    if(!g.props.some(p=>p.id===selectedId))selectedId=g.props[0].id;
+    render();
+    $('research').scrollIntoView({behavior:'smooth',block:'start'});
+  });
+  if(activeProfile&&!grouped.some(g=>g.key===activeProfile)){activeProfile=null;selectedId=null}
+ }else{
+  $('cards').innerHTML=list.length?list.map(p=>'<button class="prop '+(p.id===selectedId?'selected':'')+'" data-id="'+p.id+'"><div class="upper"><div><div class="name">'+escapeHtml(p.name)+'</div><div class="small">'+escapeHtml(p.team)+' vs '+escapeHtml(p.opp)+'</div><div class="metric">'+escapeHtml(p.stat)+'</div></div><div><div class="line">'+fmt(lineFor(p))+'</div><div class="small">Example line</div></div></div></button>').join(''):'<div class="empty">No props match this selection.</div>';
+  document.querySelectorAll('[data-id]').forEach(b=>b.onclick=()=>{selectedId=b.dataset.id;render()});
+ }
+ renderResearch();
+}
 
 function mean(a){return a.length?a.reduce((t,x)=>t+x,0)/a.length:0}
 function lineFor(p){const n=Number(lineOverrides[p.id]);return Number.isFinite(n)&&n>=0&&lineOverrides[p.id]!==undefined?n:p.line}
@@ -114,12 +164,12 @@ function traitPanel(p){
 }
 function renderResearch(){
  const p=propsForView().find(p=>p.id===selectedId&&p.sport===currentSport);
- if(!p){$('research').innerHTML='<div class="eyebrow">RESEARCH WORKSPACE</div><h2>Choose a player prop</h2><p class="muted">Select a card to see your three-step analysis workflow.</p>';return}
+ if(!p||useImported&&!activeProfile){$('research').innerHTML='<div class="eyebrow">RESEARCH WORKSPACE</div><h2>Choose a player prop</h2><p class="muted">Select a card to see your three-step analysis workflow.</p>';return}
  const line=lineFor(p),data=getPeriodData(p),hits=data.filter(n=>n>line).length,unders=data.filter(n=>n<line).length,ties=data.length-hits-unders;
  const [min,max]=lineBounds(p),isSaved=saved.includes(p.id),avg=mean(data);
  $('research').innerHTML=`
  <div class="row"><div class="eyebrow">THREE-STEP RESEARCH</div><span class="tag">${p.sport}</span></div>
- <h2>${escapeHtml(p.name)}</h2><p class="small">${escapeHtml(p.team)} vs ${escapeHtml(p.opp)} • ${escapeHtml(p.stat)}</p><div class="sourcechip">${p.source==='imported'?(nflSource==='hosted'?'NFLVERSE PUBLIC SNAPSHOT · HISTORICAL':'USER-IMPORTED · NOT VERIFIED'):'FICTIONAL DEMO'}</div>${p.source==='imported'?`<div class="rowlabels">${escapeHtml(p.gameLabels.slice(-chartWindow).join(' · '))}</div>`:''}
+ <h2>${escapeHtml(p.name)}</h2>${useImported?`<div class="role-note">${escapeHtml(p.position||'Unknown')} is an inferred activity role, not an official roster position. Historical stats only.</div><div class="stat-pills">${playerGroups().find(g=>g.key===activeProfile)?.props.map(x=>`<button type="button" data-stat-id="${escapeHtml(x.id)}" class="${x.id===selectedId?'active':''}">${escapeHtml(x.stat)}</button>`).join('')||''}</div><div class="profile-average">Last 10 recorded games: ${fmt(mean(p.logs.slice(-10)))} ${escapeHtml(p.stat.toLowerCase())} on average. This is not a betting line.</div>`:''}<p class="small">${escapeHtml(p.team)} vs ${escapeHtml(p.opp)} • ${escapeHtml(p.stat)}</p><div class="sourcechip">${p.source==='imported'?(nflSource==='hosted'?'NFLVERSE PUBLIC SNAPSHOT · HISTORICAL':'USER-IMPORTED · NOT VERIFIED'):'FICTIONAL DEMO'}</div>${p.source==='imported'?`<div class="rowlabels">${escapeHtml(p.gameLabels.slice(-chartWindow).join(' · '))}</div>`:''}
  <div class="panel"><div class="panel-head"><h3>Adjust your prop line</h3><span class="metricchip">V1.3</span></div>
  <div class="line-controls"><label for="lineNumber" class="sublabel">Research threshold (Over / Under)</label><input id="lineNumber" class="line-input" type="number" min="0" step=".5" value="${fmt(line)}" aria-label="Adjust player prop line"/></div>
  <input id="lineRange" class="line-range" type="range" min="${min}" max="${max}" step="1" value="${Math.min(max,Math.max(min,line))}" aria-label="Adjust prop line slider"/>
@@ -136,6 +186,7 @@ function renderResearch(){
  <button class="save ${isSaved?'saved':''}" id="save">${isSaved?'★ Remove from watchlist':'☆ Save to watchlist'}</button>
  <p class="caution">${p.source==='imported'?'Imported historical stats only. Data is user-supplied, not independently verified. Opponent, injury, upcoming game, and odds feeds are not connected.':'Demo only: fictional players and game logs.'} This is not live betting information.</p>`;
  const update=n=>{if(!Number.isFinite(n)||n<0)return;lineOverrides[p.id]=Math.round(n*2)/2;persistLines();renderResearch()};
+ document.querySelectorAll('[data-stat-id]').forEach(b=>b.onclick=()=>{selectedId=b.dataset.statId;renderResearch()});
  $('lineNumber').onchange=e=>update(Number(e.target.value));
  $('lineRange').oninput=e=>update(Number(e.target.value));
  $('minusLine').onclick=()=>update(Math.max(0,line-1));
@@ -208,12 +259,14 @@ function convertCsvToProps(text){
  for(const [key,g] of grouped){
   if(!eligible(g))continue;
   g.records.sort((a,b)=>a.season-b.season||a.week-b.week);const last=g.records[g.records.length-1];
-  imported.push({id:'import-'+encodeURIComponent(key),sport:'NFL',name:g.name,team:last.team,opp:last.opp||'Opponent unavailable',stat:g.colName,line:0.5,logs:g.records.map(x=>x.value),gameLabels:g.records.map(x=>x.season+' W'+x.week),records:g.records,usage:'Historical '+g.colName.toLowerCase()+' by week',scenario:'Scenario adjustments require game environment and opportunity inputs, which are not yet connected.',trait:'Opponent matchup adjustments require opponent defensive profiles, which are not yet connected.',source:'imported'});
+  const role=roleWeeks.get(g.identity)||{};
+  const inferredPosition=role.passing>=2?'QB':(role.rushing>=2 && role.targets>=2?'RB / receiver':role.rushing>=2?'RB':role.targets>=2||role.receiving>=2?'Receiver':'Unknown');
+  imported.push({id:'import-'+encodeURIComponent(key),playerKey:g.identity,sport:'NFL',name:g.name,team:last.team,opp:last.opp||'Opponent unavailable',position:inferredPosition,stat:g.colName,line:0.5,logs:g.records.map(x=>x.value),gameLabels:g.records.map(x=>x.season+' W'+x.week),records:g.records,usage:'Historical '+g.colName.toLowerCase()+' by week',scenario:'Scenario adjustments require game environment and opportunity inputs, which are not yet connected.',trait:'Opponent matchup adjustments require opponent defensive profiles, which are not yet connected.',source:'imported'});
  }
  if(!imported.length)throw Error('No usable weekly stats were found. Check the CSV columns and values.');
  return {imported,summary:`Loaded ${imported.length.toLocaleString()} player/stat profiles from ${rowsUsed.toLocaleString()} unique regular-season player-week rows.\nSkipped: ${excluded} invalid rows, ${nonReg} non-REG rows, ${duplicates} duplicate player-week rows. ${missingOpp} rows lacked an opponent; ${withoutId} lacked a stable player ID (matched by name + team).\nImported stats are not independently verified. Enter your own research threshold; 0.5 is only a placeholder.`};
 }
-function setMode(v){useImported=v&&importedProps.length>0;currentSport='NFL';currentCategory='All';query='';$('search').value='';selectedId=null;categories();$('importMode').disabled=!importedProps.length;$('clearData').disabled=!importedProps.length;$('dataBanner').textContent=useImported?(nflSource==='hosted'?'HISTORICAL NFL DATA — Public nflverse weekly stats, not live sportsbook lines. Opponent is historical, not the next matchup.':'IMPORTED MODE — User-supplied weekly NFL stats. Not independently verified; no live sportsbook lines or model probabilities.'):'SAMPLE MODE — Fictional players and logs. No live odds or modeled probabilities.';render()}
+function setMode(v){useImported=v&&importedProps.length>0;currentSport='NFL';currentCategory='All';query='';$('search').value='';selectedId=null;activeProfile=null;selectedPosition='All';categories();$('importMode').disabled=!importedProps.length;$('clearData').disabled=!importedProps.length;$('dataBanner').textContent=useImported?(nflSource==='hosted'?'HISTORICAL NFL DATA — Public nflverse weekly stats, not live sportsbook lines. Opponent is historical, not the next matchup.':'IMPORTED MODE — User-supplied weekly NFL stats. Not independently verified; no live sportsbook lines or model probabilities.'):'SAMPLE MODE — Fictional players and logs. No live odds or modeled probabilities.';render()}
 $('csvfile').onchange=async e=>{
  const file=e.target.files&&e.target.files[0];if(!file)return;
  if(file.size>25*1024*1024){$('importStatus').textContent='File exceeds 25 MB. Split the CSV into smaller seasons.';return}
@@ -224,7 +277,7 @@ $('csvfile').onchange=async e=>{
 $('demoMode').onclick=()=>{manualOverride=true;setMode(false)};
 $('importMode').onclick=()=>{manualOverride=true;setMode(true)};
 $('clearData').onclick=()=>{manualOverride=true;nflSource='none';importedProps=[];$('importStatus').textContent='Imported data cleared from memory. Sample mode active.';setMode(false)};
-$('search').addEventListener('input',e=>{query=e.target.value;render()});$('category').onchange=e=>{currentCategory=e.target.value;render()};$('showSaved').onclick=()=>{savedOnly=!savedOnly;render()};$('export').onclick=()=>{const rows=[['sport','player','team','opponent','prop','research_line_not_odds'],...[...demoProps,...importedProps].filter(p=>saved.includes(p.id)).map(p=>[p.sport,p.name,p.team,p.opp,p.stat,lineFor(p)])];const csv=rows.map(row=>row.map(v=>'"'+String(v).replaceAll('"','""')+'"').join(',')).join('\r\n');const url=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));const a=document.createElement('a');a.href=url;a.download='prop-lock-watchlist.csv';a.click();URL.revokeObjectURL(url)};categories();render();
+$('search').addEventListener('input',e=>{query=e.target.value;render()});$('category').onchange=e=>{currentCategory=e.target.value;render()};$('position').onchange=e=>{selectedPosition=e.target.value;activeProfile=null;selectedId=null;render()};$('showSaved').onclick=()=>{savedOnly=!savedOnly;render()};$('export').onclick=()=>{const rows=[['sport','player','team','opponent','prop','research_line_not_odds'],...[...demoProps,...importedProps].filter(p=>saved.includes(p.id)).map(p=>[p.sport,p.name,p.team,p.opp,p.stat,lineFor(p)])];const csv=rows.map(row=>row.map(v=>'"'+String(v).replaceAll('"','""')+'"').join(',')).join('\r\n');const url=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));const a=document.createElement('a');a.href=url;a.download='prop-lock-watchlist.csv';a.click();URL.revokeObjectURL(url)};categories();render();
 
 // NFL data is published as a public static snapshot by GitHub Actions, not obtained
 // through a sportsbook API. Browser cache is best effort; no background tracking.
