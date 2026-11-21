@@ -24,8 +24,9 @@
 .import-panel{border:1px solid #304966;border-radius:17px;background:#121e30;padding:18px;margin:0 0 15px}.import-actions{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:16px}.file-button{cursor:pointer;color:#07190d;background:var(--accent);border-radius:9px;padding:11px 14px;font-weight:800;font-size:13px}#csvfile{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}.import-status{color:#c0cfe0;font-size:12px;line-height:1.7;margin-top:12px;white-space:pre-line}.field-help{color:#b9c8dc;font-size:12px;margin-top:12px;line-height:1.6}.field-help summary{cursor:pointer;color:#83d8ac}.field-help code{color:#d7f5dd}.sourcechip{font-size:10px;color:#93cbf0;background:#182e42;border:1px solid #375b7b;border-radius:6px;padding:3px 6px;display:inline-block;margin-top:6px}.warnings{color:#f7b976}.rowlabels{margin-top:8px;color:#aebbd0;font-size:11px;line-height:1.6}
 /* V1.5 grouped player profiles */
 .profile-meta{color:var(--muted);font-size:12px;margin:5px 0}.profile-chips,.stat-pills{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}.profile-chips span,.stat-pills button{font-size:11px;color:#b9eecf;background:#19342d;border:1px solid #325d4c;border-radius:8px;padding:6px 9px}.stat-pills button.active{background:#387355;color:#fff;border-color:#7af0ae}.role-note{font-size:11px;color:#f5bf7c;line-height:1.5;margin-top:9px}.profile-average{font-size:12px;color:#b3d9ef;margin-top:8px}
+.baseline-panel{background:#142536;border:1px solid #38666b;border-radius:14px;padding:15px;margin:12px 0}.baseline-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.baseline-value{color:#8cf1b6;font-size:24px;font-weight:800}.baseline-label{color:#b9cbdc;font-size:11px}.baseline-note{font-size:12px;color:#e5bd83;line-height:1.6;margin-top:10px}
 </style></head><body>
-<div class="layout"><header class="top"><div><div class="logo">PROP <em>LOCK</em></div><div class="subtitle">PERSONAL PLAYER PROP RESEARCH</div></div><div class="pill">● PUBLIC DEMO V1.5</div></header>
+<div class="layout"><header class="top"><div><div class="logo">PROP <em>LOCK</em></div><div class="subtitle">PERSONAL PLAYER PROP RESEARCH</div></div><div class="pill">● PUBLIC DEMO V1.6</div></header>
 <section class="hero"><div><h1>Find the prop. Research the matchup.</h1><p>Explore multi-sport player props and see how Deep Dive, Scenarios, and Trait Match fit together.</p></div><div class="hero-tag">$0 prototype</div></section>
 <nav class="tabs" id="sports" aria-label="Select sport"></nav>
 <div class="toolbar"><input class="search" id="search" type="search" placeholder="Search NFL player, team, or stat..." aria-label="Search players"/><select class="filter" id="category" aria-label="Select prop category"><option value="All">All Stat Categories</option></select><select class="filter" id="position" aria-label="Filter by inferred NFL role"><option value="All">All player roles</option></select></div>
@@ -106,8 +107,13 @@ function render(){
 }
 
 function mean(a){return a.length?a.reduce((t,x)=>t+x,0)/a.length:0}
-function lineFor(p){const n=Number(lineOverrides[p.id]);return Number.isFinite(n)&&n>=0&&lineOverrides[p.id]!==undefined?n:p.line}
-function lineBounds(p){const v=[...p.logs,p.line],lo=Math.max(0,Math.floor((Math.min(...v)*.60-.5)/5)*5+.5),hi=Math.ceil((Math.max(...v)*1.4-.5)/5)*5+.5;return [lo,Math.max(hi,lo+5)]}
+function suggestedThreshold(p){
+ if(p.source!=='imported')return p.line;
+ const a=p.logs.filter(Number.isFinite).slice(-10);
+ return a.length?Math.max(0.5,Math.floor(median(a))+0.5):0.5;
+}
+function lineFor(p){const n=Number(lineOverrides[p.id]);return Number.isFinite(n)&&n>=0&&lineOverrides[p.id]!==undefined?n:suggestedThreshold(p)}
+function lineBounds(p){const v=[...p.logs,lineFor(p)],lo=Math.max(0,Math.floor((Math.min(...v)*.60-.5)/5)*5+.5),hi=Math.ceil((Math.max(...v)*1.4-.5)/5)*5+.5;return [lo,Math.max(hi,lo+5)]}
 function fmt(n){return Number(n).toFixed(1)}
 function getPeriodData(p){return p.logs.slice(-chartWindow)}
 function svgChart(data,line) {
@@ -132,6 +138,30 @@ function deepDive(p,line){
  const weighted=last10.reduce((sum,x,i)=>sum+x*(i+1),0)/(last10.length*(last10.length+1)/2);
  const pastOpponent=p.source==='imported'&&Array.isArray(p.records)?p.records.filter(x=>x.opp&&x.opp===p.opp):[];
  return {n,m,med,sd,recent,previous,weighted,above,below,ties,pastOpponent};
+}
+function opportunityBaseline(p){
+ const specs={'Rushing Yards':'Carries','Rushing TDs':'Carries','Receiving Yards':'Targets','Receptions':'Targets','Receiving TDs':'Targets'};
+ const label=specs[p.stat];
+ if(!label||p.source!=='imported'||!activeProfile)return {value:null,label:label||'opportunities',n:0};
+ const other=playerGroups().find(g=>g.key===activeProfile)?.props.find(x=>x.stat===label);
+ if(!other||!p.records||!other.records)return {value:null,label,n:0};
+ const lookup=new Map(other.records.map(r=>[r.season+':'+r.week,r.value]));
+ const paired=p.records.slice(-10).map(r=>({production:r.value,opportunity:lookup.get(r.season+':'+r.week)})).filter(r=>Number.isFinite(r.opportunity)&&r.opportunity>0);
+ if(paired.length<5)return {value:null,label,n:paired.length};
+ const rate=paired.reduce((a,r)=>a+r.production,0)/paired.reduce((a,r)=>a+r.opportunity,0);
+ return {value:rate*mean(paired.map(r=>r.opportunity)),label,n:paired.length};
+}
+function baselinePanel(p){
+ const all=p.logs.filter(Number.isFinite),ten=all.slice(-10),five=ten.slice(-5),n=ten.length;
+ if(!n)return '';
+ const historicalBlend=.55*mean(ten)+.3*mean(five)+.15*mean(all),opp=opportunityBaseline(p);
+ return `<div class="baseline-panel"><h3 style="margin:0 0 12px">Deep Dive · Historical baseline</h3>
+ <div class="baseline-grid">
+ <div><div class="baseline-value">${fmt(historicalBlend)}</div><div class="baseline-label">Exploratory historical blend (L${n}, L${five.length}, season)</div></div>
+ <div><div class="baseline-value">${fmt(stddev(ten))}</div><div class="baseline-label">L${n} volatility (standard deviation)</div></div>
+ <div><div class="baseline-value">${fmt(median(ten))}</div><div class="baseline-label">L${n} historical median</div></div>
+ <div><div class="baseline-value">${opp.value===null?'N/A':fmt(opp.value)}</div><div class="baseline-label">${opp.value===null?'Opportunity baseline unavailable':'Historical output per opportunity'}</div></div>
+ </div><p class="baseline-note">${opp.value===null?'Opportunity baseline needs at least five paired weeks with valid '+escapeHtml(opp.label)+' records.':'Opportunity baseline uses '+opp.n+' paired weeks of '+escapeHtml(opp.label)+'.'} All values are descriptive and exploratory, not validated forecasts, live sportsbook lines, or probabilities.</p></div>`;
 }
 function metricsPanel(p,line){
  const x=deepDive(p,line); const range=x.n<5?'LOW DATA — fewer than 5 games':x.n<10?'LIMITED — fewer than 10 games':'DESCRIPTIVE ONLY — not calibrated';
@@ -170,19 +200,20 @@ function renderResearch(){
  $('research').innerHTML=`
  <div class="row"><div class="eyebrow">THREE-STEP RESEARCH</div><span class="tag">${p.sport}</span></div>
  <h2>${escapeHtml(p.name)}</h2>${useImported?`<div class="role-note">${escapeHtml(p.position||'Unknown')} is an inferred activity role, not an official roster position. Historical stats only.</div><div class="stat-pills">${playerGroups().find(g=>g.key===activeProfile)?.props.map(x=>`<button type="button" data-stat-id="${escapeHtml(x.id)}" class="${x.id===selectedId?'active':''}">${escapeHtml(x.stat)}</button>`).join('')||''}</div><div class="profile-average">Last 10 recorded games: ${fmt(mean(p.logs.slice(-10)))} ${escapeHtml(p.stat.toLowerCase())} on average. This is not a betting line.</div>`:''}<p class="small">${escapeHtml(p.team)} vs ${escapeHtml(p.opp)} • ${escapeHtml(p.stat)}</p><div class="sourcechip">${p.source==='imported'?(nflSource==='hosted'?'NFLVERSE PUBLIC SNAPSHOT · HISTORICAL':'USER-IMPORTED · NOT VERIFIED'):'FICTIONAL DEMO'}</div>${p.source==='imported'?`<div class="rowlabels">${escapeHtml(p.gameLabels.slice(-chartWindow).join(' · '))}</div>`:''}
- <div class="panel"><div class="panel-head"><h3>Adjust your prop line</h3><span class="metricchip">V1.3</span></div>
+ <div class="panel"><div class="panel-head"><h3>Adjust your prop line</h3><span class="metricchip">V1.6</span></div>
  <div class="line-controls"><label for="lineNumber" class="sublabel">Research threshold (Over / Under)</label><input id="lineNumber" class="line-input" type="number" min="0" step=".5" value="${fmt(line)}" aria-label="Adjust player prop line"/></div>
  <input id="lineRange" class="line-range" type="range" min="${min}" max="${max}" step="1" value="${Math.min(max,Math.max(min,line))}" aria-label="Adjust prop line slider"/>
  <div class="range-ends"><span>${fmt(min)}</span><span>${fmt(max)}</span></div>
- <div class="line-buttons"><button id="minusLine" type="button">− 1</button><button id="plusLine" type="button">+ 1</button><button id="resetLine" type="button">Reset sample line</button></div>
- <div class="hint">${p.source==='imported'?'Historical stats are from your uploaded CSV. This threshold is not a bookmaker line.':'Changes are saved locally for this prop. Game logs remain fictional.'}</div></div>
- <div class="chart-select"><span class="sublabel">Games shown:</span><button data-window="5" class="${chartWindow===5?'active':''}">Last 5</button><button data-window="10" class="${chartWindow===10?'active':''}">Last 10</button></div>
+ <div class="line-buttons"><button id="minusLine" type="button">− 1</button><button id="plusLine" type="button">+ 1</button><button id="resetLine" type="button">Reset suggested threshold</button></div>
+ <div class="hint">${p.source==='imported'?'Historical stats are from the weekly dataset. The suggested threshold comes from the L10 median; it is NOT a sportsbook line.':'Changes are saved locally for this prop. Game logs remain fictional.'}</div></div>
+ <div class="chart-select"><span class="sublabel">Games shown:</span><button data-window="5" class="${chartWindow===5?'active':''}">Last ${Math.min(5,p.logs.length)}</button><button data-window="10" class="${chartWindow===10?'active':''}">Last ${Math.min(10,p.logs.length)}</button></div>
  <div class="statgrid"><div class="statbox"><b>${fmt(avg)}</b><span>L${data.length} average</span></div><div class="statbox"><b>${hits}/${data.length}</b><span>Over • ${(hits/data.length*100).toFixed(0)}%</span></div><div class="statbox"><b>${unders}/${data.length}</b><span>Under • ${(unders/data.length*100).toFixed(0)}%</span></div></div>
  <div class="rowlabels">${ties?ties+' result(s) exactly on the line; excluded from both over and under.':'The chart shows the most recent ' + data.length + ' recorded games.'}</div><div class="graphbox">${svgChart(data,line)}<div class="legend"><span><i style="background:#65d494"></i>Over</span><span><i style="background:#7896bd"></i>Under or equal</span><span><i style="background:#f5bf7c"></i>Selected line</span></div></div>
+ ${baselinePanel(p)}
  <div class="panel"><div class="panel-head"><h3>01 · Deep Dive</h3><span class="metricchip">LIVE CALCULATIONS</span></div><p>Actual historical calculations from the available ${p.source==='imported'?'user-supplied':'fictional'} records: median, sample volatility, L5 trend, recency-weighted average, and full-data over/under counts.</p>${metricsPanel(p,line)}</div>
  ${scenarioPanel(p,line)}
  ${traitPanel(p)}
- <div class="panel"><div class="panel-head"><h3>Research conclusion</h3><span class="metricchip">PASS — INSUFFICIENT EVIDENCE</span></div><p><b>No validated Over/Under recommendation.</b> Deep Dive is now calculated from the loaded logs. Scenario sensitivity is hypothetical, and opponent history is not defensive Trait Match. A calibrated outcome probability requires more data and backtesting.</p></div>
+ <div class="panel"><div class="panel-head"><h3>Research conclusion</h3><span class="metricchip">PASS — INSUFFICIENT EVIDENCE</span></div><p><b>No validated Over/Under recommendation.</b> Deep Dive is now calculated from the loaded logs. Scenario sensitivity is hypothetical, and opponent history is not defensive Trait Match. The historical blend is unvalidated. A calibrated outcome probability requires more data and backtesting.</p></div>
  <button class="save ${isSaved?'saved':''}" id="save">${isSaved?'★ Remove from watchlist':'☆ Save to watchlist'}</button>
  <p class="caution">${p.source==='imported'?'Imported historical stats only. Data is user-supplied, not independently verified. Opponent, injury, upcoming game, and odds feeds are not connected.':'Demo only: fictional players and game logs.'} This is not live betting information.</p>`;
  const update=n=>{if(!Number.isFinite(n)||n<0)return;lineOverrides[p.id]=Math.round(n*2)/2;persistLines();renderResearch()};
