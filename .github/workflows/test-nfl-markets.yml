@@ -1,0 +1,32 @@
+name: Test NFL market snapshot collector (opt-in)
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: prop-lock-nfl-market-manual
+  cancel-in-progress: false
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    env:
+      PROP_LOCK_MARKET_ENABLED: ${{ vars.PROP_LOCK_MARKET_ENABLED }}
+      SPORTSGAMEODDS_API_KEY: ${{ secrets.SPORTSGAMEODDS_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Collect at most two NFL events (one call, opt-in only)
+        run: python scripts/collect_nfl_markets.py
+      - name: Display safe collection status
+        if: always()
+        shell: bash
+        run: |
+          echo 'Market collection is opt-in; this workflow never commits or uploads bookmaker data.'
+          if compgen -G 'data/markets/*.jsonl' > /dev/null; then
+            echo 'Valid quotes were parsed into temporary runner files, then discarded after the job.'
+          else
+            echo 'No temporary market snapshots produced.'
+          fi
