@@ -55,3 +55,58 @@ function aggregateBacktests(profiles){
  }).sort((a,b)=>b.tests-a.tests||a.stat.localeCompare(b.stat));
  return {groups:data,totalTests,totalProfiles:profiles.length,testedProfiles:data.reduce((n,g)=>n+g.playerProfiles,0)};
 }
+
+// V2.2: predeclared candidate estimators, selected on earlier weeks only.
+// A single global temporal split prevents later-season records of other players
+// from influencing which model is selected for an earlier evaluation week.
+function candidateEstimates(history){
+ const a=history.filter(Number.isFinite),last10=a.slice(-10),last5=a.slice(-5);
+ if(a.length<5)return null;
+ return {
+  'Prior mean':mean(a),
+  'Recent L5 mean':mean(last5),
+  'Historical blend':.55*mean(last10)+.30*mean(last5)+.15*mean(a),
+  'Recent L10 median':median(last10)
+ };
+}
+function independentValidation(profiles,holdoutWeeks=2){
+ const valid=profiles.filter(p=>Array.isArray(p.records)&&p.records.length>0);
+ const dates=valid.flatMap(p=>p.records.map(r=>r.season*100+r.week)).filter(Number.isFinite);
+ const uniq=[...new Set(dates)].sort((a,b)=>a-b);
+ if(uniq.length<holdoutWeeks+6)return {ready:false,reason:'Insufficient distinct weeks for development and holdout.',groups:[],cutoff:null,holdoutWeeks};
+ const cutoff=uniq[uniq.length-holdoutWeeks];
+ const grouped=new Map(),models=['Prior mean','Recent L5 mean','Historical blend','Recent L10 median'];
+ for(const p of valid){
+  const games=[...p.records].sort((a,b)=>a.season-b.season||a.week-b.week);
+  if(!grouped.has(p.stat))grouped.set(p.stat,{stat:p.stat,development:[],holdout:[]});
+  const group=grouped.get(p.stat);
+  for(let i=5;i<games.length;i++){
+   const target=games[i],date=target.season*100+target.week;
+   if(!Number.isFinite(target.value)||!Number.isFinite(date))continue;
+   const past=games.slice(0,i).map(x=>x.value),candidate=candidateEstimates(past);
+   if(!candidate)continue;
+   const entry={player:p.playerKey||p.id,season:target.season,week:target.week,actual:target.value,candidates:candidate};
+   // Cross-group model selection uses only dates strictly before the global cutoff.
+   (date<cutoff?group.development:group.holdout).push(entry);
+  }
+ }
+ const groups=[...grouped.values()].map(group=>{
+  const devPlayers=new Set(group.development.map(x=>x.player)).size;
+  const holdPlayers=new Set(group.holdout.map(x=>x.player)).size;
+  const enoughDev=group.development.length>=30&&devPlayers>=10;
+  const enoughHold=group.holdout.length>=20&&holdPlayers>=10;
+  const developmentScores=models.map(name=>({name,mae:group.development.length?mean(group.development.map(x=>Math.abs(x.candidates[name]-x.actual))):null}));
+  // Stable candidate order resolves equal errors; no holdout feedback used here.
+  const best=enoughDev?[...developmentScores].sort((a,b)=>a.mae-b.mae)[0].name:null;
+  const evaluate=(model,rows)=>rows.length?mean(rows.map(x=>Math.abs(x.candidates[model]-x.actual))):null;
+  const chosenHoldout=best?evaluate(best,group.holdout):null;
+  const naiveHoldout=evaluate('Prior mean',group.holdout);
+  const delta=chosenHoldout!==null&&naiveHoldout>0?(1-chosenHoldout/naiveHoldout)*100:null;
+  return {stat:group.stat,devTests:group.development.length,devPlayers,holdTests:group.holdout.length,holdPlayers,selected:best,
+   devMae:best?developmentScores.find(x=>x.name===best).mae:null,holdoutMae:chosenHoldout,holdoutNaiveMae:naiveHoldout,
+   delta,ready:enoughDev&&enoughHold,developmentScores,
+   status:!enoughDev?'NOT SELECTED — development sample too small':!enoughHold?'HOLDOUT TOO SMALL':'EVALUATED — NOT CALIBRATED'};
+ }).sort((a,b)=>b.holdTests-a.holdTests||a.stat.localeCompare(b.stat));
+ return {ready:true,cutoff,holdoutWeeks,groups,
+  selectedGroups:groups.filter(g=>g.selected).length,evaluatedGroups:groups.filter(g=>g.ready).length};
+}
