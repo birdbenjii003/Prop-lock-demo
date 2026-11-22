@@ -37,8 +37,9 @@
 .matchup-audit{margin-top:15px;padding:14px;border-radius:11px;border:1px solid #55766c;background:#152e31}.matchup-audit h3{font-size:16px;margin:0 0 8px}.matchup-audit p{font-size:12px;color:#c0d6d2;line-height:1.65}.matchup-audit table{border-collapse:collapse;min-width:670px;width:100%;font-size:11px}.matchup-audit td,.matchup-audit th{border-bottom:1px solid #3b5652;padding:8px;text-align:left}.matchup-audit th{color:#9ddcca}.matchup-audit td{color:#d7e7e0}.matchup-audit .guardrail{color:#edc994;font-size:11px}
 .combined-audit{background:#182e3e;border:1px solid #547684;padding:15px;border-radius:12px;margin:15px 0}.combined-audit h3{font-size:17px;margin:0 0 9px}.combined-audit p{color:#bdcedd;font-size:12px;line-height:1.6}.combined-audit table{border-collapse:collapse;min-width:750px;width:100%;font-size:11px}.combined-audit th,.combined-audit td{padding:8px 6px;text-align:left;border-bottom:1px solid #375069}.combined-audit th{color:#b8d8ed}.combined-audit td{color:#e4edf5}.combined-audit .combined-caution{color:#e7c596}
 .actual-validation{background:#142d34;border:1px solid #3b756e;border-radius:12px;padding:16px;margin:15px 0}.actual-validation h3{font-size:17px;margin:0 0 7px}.actual-validation p{color:#b9d4d1;line-height:1.6;font-size:12px}.actual-validation table{width:100%;min-width:690px;border-collapse:collapse;font-size:11px}.actual-validation th,.actual-validation td{padding:8px 6px;border-bottom:1px solid #3a5558;text-align:left}.actual-validation th{color:#91dbc4}.actual-validation td{color:#dceae6}.actual-validation .actual-warning{color:#edc58c}.actual-validation .actual-result{font-size:14px;color:#d7ebe7;font-weight:700}
+.deep-dive-v2{background:#152935;border:1px solid #48727a;border-radius:13px;padding:16px;margin:14px 0}.deep-dive-v2 h3{font-size:17px;margin:0 0 7px}.deep-dive-v2 h4{font-size:13px;margin:12px 0 7px}.deep-dive-v2 p{font-size:12px;line-height:1.6;color:#c1d2dc}.deep-dive-v2 .dd-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:12px 0}.deep-dive-v2 .dd-grid>div{background:#1d3945;padding:11px;border:1px solid #416273;border-radius:9px}.deep-dive-v2 .dd-grid b{display:block;font-size:19px;color:#c5eadb}.deep-dive-v2 .dd-grid span{display:block;font-size:11px;color:#b6cbd6;line-height:1.3}.deep-dive-v2 .dd-warning{background:#40331f;border:1px solid #896e40;border-radius:8px;padding:10px;margin:7px 0}.deep-dive-v2 .dd-warning b{color:#f4d39a}.deep-dive-v2 .dd-warning p{margin:5px 0 0;color:#e7d7b9}.deep-dive-v2 details{border-top:1px solid #37535d;padding:10px 0}.deep-dive-v2 summary{cursor:pointer;font-weight:650;color:#d2efe8}.deep-dive-v2 .dd-guard{color:#ecd09e}
 </style></head><body>
-<div class="layout"><header class="top"><div><div class="logo">PROP <em>LOCK</em></div><div class="subtitle">PERSONAL PLAYER PROP RESEARCH</div></div><div class="pill">● PUBLIC DEMO V3.0</div></header>
+<div class="layout"><header class="top"><div><div class="logo">PROP <em>LOCK</em></div><div class="subtitle">PERSONAL PLAYER PROP RESEARCH</div></div><div class="pill">● PUBLIC DEMO V3.1</div></header>
 <section class="hero"><div><h1>Find the prop. Research the matchup.</h1><p>Explore multi-sport player props and see how Deep Dive, Scenarios, and Trait Match fit together.</p></div><div class="hero-tag">$0 prototype</div></section>
 <nav class="tabs" id="sports" aria-label="Select sport"></nav>
 <div class="toolbar"><input class="search" id="search" type="search" placeholder="Search NFL player, team, or stat..." aria-label="Search players"/><select class="filter" id="category" aria-label="Select prop category"><option value="All">All Stat Categories</option></select><select class="filter" id="position" aria-label="Filter by inferred NFL role"><option value="All">All player roles</option></select></div>
@@ -55,6 +56,7 @@
 <script src="./scripts/quality.js"></script>
 <script src="./scripts/calibration.js"></script>
 <script src="./scripts/research.js"></script>
+<script src="./scripts/deep-dive-v2.js"></script>
 <script src="./scripts/matchup-audit.js"></script>
 <script src="./scripts/combined-audit.js"></script>
 <script>
@@ -426,6 +428,22 @@ function researchUpgradePanel(p){
  '<ul>'+info.blockers.map(x=>'<li>'+escapeHtml(x)+'</li>').join('')+'</ul>'+
  '<p>No calibrated hit probabilities, market odds, or validated full-method future projections are generated. Existing backtests evaluate historical estimators, not the complete three-method research system.</p></div>';
 }
+function deepDiveV2Panel(p,line){
+ if(p.source!=='imported'||!Array.isArray(p.records))return '<section class="deep-dive-v2"><h3>Deep Dive 2.0 · Projection comparison</h3><p>Real recorded player performance is required. Fictional example profiles are excluded.</p></section>';
+ const x=deepDiveAlternatives(p,importedProps,line),n=v=>v===null?'N/A':fmt(v);
+ const relative=v=>v===null||!Number.isFinite(line)?'Comparison unavailable':(v>line?'Above line by ':v<line?'Below line by ':'Equal to line · ')+n(Math.abs(v-line));
+ const tiles=x.estimates.map(a=>'<div><b>'+n(a.value)+'</b><span>'+escapeHtml(a.label)+' · '+escapeHtml(relative(a.value))+'</span><span>'+escapeHtml(a.note)+'</span></div>').join('');
+ const history='<div class="dd-grid"><div><b>'+x.games+'</b><span>Recorded player games</span></div><div><b>'+x.over+' / '+x.under+' / '+x.equal+'</b><span>Historical over / under / equal to '+n(line)+'</span></div></div>';
+ const conflicts=x.conflicts.length?x.conflicts.map(c=>'<div class="dd-warning"><b>'+escapeHtml(c.title)+'</b><p>'+escapeHtml(c.detail)+'</p></div>').join(''):'<p>No conflicts met the implemented numerical triggers. This does not prove the evidence is consistent or reliable.</p>';
+ const band=x.band?'<p>Observed L10 middle reference band (20th–80th percentile): <b>'+n(x.band.low)+'–'+n(x.band.high)+'</b>. Line position: '+escapeHtml(x.lineRelation)+'. This is a span of previous game results, <b>not</b> a prediction interval or a chance of winning.</p>':'<p>Observed historical reference band unavailable: at least eight valid games required.</p>';
+ return '<section class="deep-dive-v2"><h3>Deep Dive 2.0 · Alternative estimates and evidence</h3>'+
+ '<p>Selected historical research threshold: <b>'+n(line)+'</b> '+escapeHtml(p.stat)+'. Evidence status: <b>'+escapeHtml(x.reliability)+'</b>. Calculations use the player’s own recorded performance and paired opportunities only.</p>'+
+ '<h4>Independent player-history estimates</h4><div class="dd-grid">'+tiles+'</div>'+
+ '<details open><summary>Historical range and selected line</summary>'+band+history+'</details>'+
+ '<details open><summary>Conflicting statistical evidence ('+x.conflicts.length+')</summary>'+conflicts+'</details>'+
+ '<details><summary>Opportunity details and data limitations</summary><p>Mapped opportunity: '+escapeHtml(x.volumeLabel||'Unavailable')+'. Matched games: '+x.pairedGames+'. Last five opportunities: '+n(x.recentVolume)+'. Previous five: '+n(x.previousVolume)+'. Last five production average: '+n(x.recentMean)+'. Previous five production average: '+n(x.previousMean)+'.</p><p>'+x.limitations.map(a=>escapeHtml(a)).join(' ')+'</p></details>'+
+ '<p class="dd-guard">Lower and upper reference values are observed quantiles, not independently simulated outcomes. Differences among estimates flag uncertainty; they are not calibrated confidence scores. No automated Over/Under pick or future-game projection is issued. Scenarios and Trait Match remain separate.</p></section>';
+}
 function renderResearch(){
  const p=propsForView().find(p=>p.id===selectedId&&p.sport===currentSport);
  if(!p||useImported&&!activeProfile){$('research').innerHTML='<div class="eyebrow">RESEARCH WORKSPACE</div><h2>Choose a player prop</h2><p class="muted">Select a card to see your three-step analysis workflow.</p>';return}
@@ -444,6 +462,7 @@ function renderResearch(){
  <div class="statgrid"><div class="statbox"><b>${fmt(avg)}</b><span>L${data.length} average</span></div><div class="statbox"><b>${hits}/${data.length}</b><span>Over • ${(hits/data.length*100).toFixed(0)}%</span></div><div class="statbox"><b>${unders}/${data.length}</b><span>Under • ${(unders/data.length*100).toFixed(0)}%</span></div></div>
  <div class="rowlabels">${ties?ties+' result(s) exactly on the line; excluded from both over and under.':'The chart shows the most recent ' + data.length + ' recorded games.'}</div><div class="graphbox">${svgChart(data,line)}<div class="legend"><span><i style="background:#65d494"></i>Over</span><span><i style="background:#7896bd"></i>Under or equal</span><span><i style="background:#f5bf7c"></i>Selected line</span></div></div>
  ${baselinePanel(p)}
+ ${deepDiveV2Panel(p,line)}
  <div class="panel"><div class="panel-head"><h3>01 · Deep Dive</h3><span class="metricchip">LIVE CALCULATIONS</span></div><p>Actual historical calculations from the available ${p.source==='imported'?'user-supplied':'fictional'} records: median, sample volatility, L5 trend, recency-weighted average, and full-data over/under counts.</p>${metricsPanel(p,line)}</div>
  ${scenarioPanel(p,line)}
  ${traitPanel(p)}
