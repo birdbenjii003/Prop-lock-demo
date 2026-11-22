@@ -1,0 +1,48 @@
+'use strict';
+// Deep Dive workspace renderer. All markup text provided by user datasets is escaped by caller.
+function ddViewHtml(p,profiles,line,tab,escape,format){
+ const x=deepDiveWorkspace(p,profiles,line);
+ const safe=v=>escape(String(v===undefined||v===null?'Unavailable':v));
+ const num=v=>v===null||v===undefined||!Number.isFinite(v)?'Unavailable':format(v);
+ const value=(v,label,sub='')=>'<div class="dd3-card"><strong>'+num(v)+'</strong><span>'+safe(label)+'</span>'+(sub?'<small>'+safe(sub)+'</small>':'')+'</div>';
+ const grid=items=>'<div class="dd3-grid">'+items.join('')+'</div>';
+ const para=t=>'<p>'+safe(t)+'</p>';
+ const missing=t=>'<div class="dd3-missing">'+safe(t)+'</div>';
+ const title=(t,d)=>'<h4>'+safe(t)+'</h4>'+para(d);
+ const alternative=x.alternatives;
+ const estimateRows=alternative?alternative.estimates.map(v=>'<tr><td>'+safe(v.label)+'</td><td>'+num(v.value)+'</td><td>'+num(v.value===null?null:v.value-line)+'</td><td>'+safe(v.note)+'</td></tr>').join(''):'';
+ const estimates='<div class="dd3-scroll"><table><thead><tr><th>Reference</th><th>Value</th><th>Vs. line</th><th>Method</th></tr></thead><tbody>'+estimateRows+'</tbody></table></div>';
+ const conflicts=alternative?.conflicts?.length?alternative.conflicts.map(v=>'<div class="dd3-conflict"><strong>'+safe(v.title)+'</strong>'+para(v.detail)+'</div>').join(''):para('No numerical conflict trigger fired. This does not establish a reliable prediction.');
+ const bounds=alternative?.band?grid([value(alternative.band.low,'L10 20th percentile'),value(alternative.band.high,'L10 80th percentile')])+para('Observed prior-game quantiles only. These are NOT a calibrated 80% future-performance interval. The line is '+alternative.lineRelation+'.'):missing('A historical range needs at least eight recorded games.');
+ const volume=x.volumeLabel&&x.paired.length?grid([value(x.recentVolume,'Recent five opportunities'),value(x.previousVolume,'Previous five opportunities'),value(x.rate,'Production per opportunity'),value(x.paired.length,'Valid paired games')]):missing('A valid matched attempts, carries, or targets series is not available.');
+ const h2h='<div class="dd3-scroll"><table><thead><tr><th>Opponent</th><th>Games</th><th>Average</th><th>Over line</th><th>Avg opportunities</th></tr></thead><tbody>'+x.opponentHistory.map(v=>'<tr><td>'+safe(v.opponent)+'</td><td>'+v.games.length+'</td><td>'+num(v.mean)+'</td><td>'+v.over+'/'+v.games.length+'</td><td>'+num(v.meanVolume)+'</td></tr>').join('')+'</tbody></table></div>';
+ const historyRows=(records)=>'<div class="dd3-scroll"><table><thead><tr><th>Season / Week</th><th>Result</th><th>Opportunities</th><th>Line comparison</th></tr></thead><tbody>'+records.map(r=>'<tr><td>'+safe(r.season+' · W'+r.week)+'</td><td>'+num(r.value)+'</td><td>'+num(r.volume)+'</td><td>'+safe(r.value>line?'Above':r.value<line?'Below':'Equal')+'</td></tr>').join('')+'</tbody></table></div>';
+ const weighting=grid([value(x.last10,'Last ten average (55% weight)'),value(x.last5,'Last five average (30% weight)'),value(x.seasonMean,'All-games average (15% weight)'),value(alternative?.historical??null,'Exploratory weighted baseline')]);
+ const validate=grid([value(x.backtest.length,'Strict prior-only player-game tests'),value(x.developmentMae,'Earlier rolling historical MAE'),value(x.holdoutMae,'Final two tests MAE'),value(x.holdoutOpportunityMae,'Last two opportunity MAE')])+para('Small rolling tests are descriptive, not independent external validation. The player eligibility filter itself may use future season-wide observations.');
+ const sections={
+ overview:()=>title('Deep Dive at a glance','Everything here concerns the player’s own historical performance, not upcoming matchups or game scripts.')+
+  grid([value(x.last10,'L10 average'),value(alternative?.historical??null,'Weighted historical reference'),value(alternative?.opportunity??null,'Opportunity-based reference'),value(line,'Selected research line')])+bounds+
+  title('Evidence disagreements','Conflicts remain visible; a higher historical average is not itself a next-game Over probability.')+conflicts,
+ performance:()=>title('Historical performance','Game results compared with the selected research line.')+grid([value(x.seasonMean,'All recorded games mean'),value(x.last5,'Last five average'),value(x.last10,'Last ten average'),value(x.median,'Last ten median')])+grid([value(x.wins,'Historical overs'),value(x.losses,'Historical unders'),value(x.ties,'Equal to line'),value(x.n,'Player-game count')])+historyRows(x.rows.slice(-15).reverse().map(r=>({...r,volume:x.paired.find(a=>ddwId(a)===ddwId(r))?.volume??null}))),
+ trends:()=>title('Historical trend quality','Compare changes in recent production and available workload.')+grid([value(x.last5,'Recent five average'),value(x.previous5,'Prior five average'),value(x.recentChange,'Recent change'),value(x.recentVolume,'Recent opportunity volume')])+conflicts,
+ volume:()=>title('Opportunity volume','Player-level passing attempts, rushing carries or receiving targets from completed games.')+volume,
+ quality:()=>title('Opportunity quality','High-value opportunities require separate sport-specific tracking data.')+missing('This NFL weekly source does not include routes run, red-zone carry location, contested targets, or snap-level opportunity context.'),
+ role:()=>title('Role and usage','Current support covers recorded opportunity totals; projected playing time belongs to Scenarios.')+volume+missing('Reliable snaps, routes, starter status and timestamped role changes are not connected.'),
+ efficiency:()=>title('Historical efficiency','Output per observed opportunity; extreme rates may regress.')+grid([value(x.rate,'Production / opportunity'),value(x.paired.length,'Paired games'),value(x.alternatives?.efficiency??null,'Recent output / opportunity')])+conflicts,
+ expected:()=>title('Opportunity-derived output','A descriptive estimate from historical efficiency and recorded volume, not an advanced expected-value model.')+estimates+missing('High-quality expected production needs opportunity type and location inputs; these are not yet available.'),
+ sustainability:()=>title('Production sustainability','Checks whether workload, efficiency and production changes move together.')+conflicts+volume,
+ stability:()=>title('Statistical stability','Standard deviation measures historical variability, not a probability of reaching the line.')+grid([value(x.std,'Last ten standard deviation'),value(x.median,'Last ten median'),value(x.n,'Sample size')])+bounds,
+ weighting:()=>title('Historical weighting','Fixed exploratory 55% L10 / 30% L5 / 15% all-games blend, with overlapping L5/L10 information.')+weighting+missing('Adaptive weights require frozen development and genuinely untouched test periods before adoption.'),
+ tendencies:()=>title('Player-only tendencies','Recorded production patterns and observed workload trends; opponent explanations are reserved for Trait Match.')+grid([value(x.recentChange,'L5 minus prior L5'),value(x.recentVolume,'Recent opportunity rate'),value(x.rate,'Output per opportunity')])+conflicts,
+ projection:()=>title('Alternative statistical estimates','Compare the historical baseline, opportunity estimate, and observed reference band with the selected research line.')+estimates+bounds+missing('No central calibrated forecast or validated future interval is available yet.'),
+ validation:()=>title('Historical validation','Rolling prior-only tests of the player-history estimate, without odds or selected betting lines.')+validate,
+ evidence:()=>title('Evidence quality','Missing inputs and retrospective selection risks are shown explicitly.')+grid([value(x.n,'Player games'),value(x.paired.length,'Paired opportunity games'),value(x.opponentHistory.length,'Historical opponents')])+x.missing.map(missing).join('')+x.warnings.map(para).join(''),
+ h2h:()=>title('Historical head-to-head results','Actual prior player games grouped by recorded opponent. Opponent defensive explanation is reserved for Trait Match.')+(x.opponentHistory.length?h2h+missing('This source currently supplies one NFL season; missing older seasons are not invented.')+x.opponentHistory.map(v=>'<details class="dd3-h2h"><summary>'+safe(v.opponent)+' · '+v.games.length+' game(s)</summary>'+historyRows(v.games.slice().reverse())+'</details>').join(''):missing('Opponent identities or previous head-to-head games are unavailable.'))
+ };
+ const active=sections[tab]?tab:'overview';
+ return '<section class="dd3"><div class="dd3-top"><div><span class="dd3-eyebrow">DEEP DIVE · PLAYER RESEARCH</span><h3>Deep Dive 3.2</h3></div><span class="dd3-pill">'+(x.source==='imported'?'HISTORICAL DATA':'DEMO — NOT EVIDENCE')+'</span></div>'+
+ '<p>Analyze the selected '+safe(p.stat)+' line of <strong>'+num(line)+'</strong> without mixing in future-game Scenarios or defensive Trait Match.</p>'+
+ '<div class="dd3-tabs" role="group" aria-label="Deep Dive categories">'+DEEP_DIVE_TABS.map(([id,label])=>'<button type="button" data-deep-dive-tab="'+id+'" aria-pressed="'+(active===id)+'" class="'+(active===id?'selected':'')+'">'+safe(label)+'</button>').join('')+'</div>'+
+ '<div class="dd3-content">'+sections[active]()+'</div>'+
+ '<p class="dd3-footer">All outputs are descriptive research. Unsupported features display unavailable. No calibrated future interval, market line verification, or Over/Under recommendation is claimed.</p></section>';
+}
