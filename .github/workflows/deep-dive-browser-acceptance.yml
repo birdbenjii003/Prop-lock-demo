@@ -1,0 +1,29 @@
+name: Deep Dive Stage 4 browser acceptance
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  browser-acceptance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 9
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install pinned Playwright browser tooling
+        run: |
+          npm install --no-save --package-lock=false playwright@1.58.2
+          npx playwright install --with-deps chromium
+      - name: Run mobile browser acceptance against deployed Pages
+        run: node tests/deep-dive-browser-e2e.cjs
+        env:
+          DEEP_DIVE_URL: https://birdbenjii003.github.io/Prop-lock-demo/
+      - name: Save browser evidence and failure logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: deep-dive-browser-acceptance
+          path: test-results/
+          if-no-files-found: ignore
