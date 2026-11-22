@@ -1,0 +1,32 @@
+name: Refresh free Deep Dive NFL history
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: deep-dive-history-refresh
+  cancel-in-progress: false
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Build 2023-2025 historical player archive
+        run: python scripts/update_nfl_history.py
+      - name: Commit verified archive
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/nfl_history_2023_2025.csv
+          if git diff --cached --quiet; then
+            echo 'No changes to historical archive.'
+          else
+            git commit -m 'Refresh historical free NFL player records'
+            git push
+          fi
