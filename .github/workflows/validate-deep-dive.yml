@@ -8,6 +8,8 @@ on:
       - 'scripts/deep-dive-workspace.js'
       - 'scripts/deep-dive-views.js'
       - 'tests/deep-dive.test.cjs'
+      - 'tests/test_deep_dive_calibration.py'
+      - 'scripts/deep-dive-calibration.py'
 permissions:
   contents: read
 jobs:
@@ -21,3 +23,8 @@ jobs:
           node-version: '22'
       - name: Run offline Deep Dive fixture tests
         run: node tests/deep-dive.test.cjs
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check chronological calibration audit
+        run: python -m unittest discover -s tests -p 'test_deep_dive_calibration.py'
