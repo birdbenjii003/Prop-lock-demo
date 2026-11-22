@@ -1,77 +1,77 @@
 {
-  "version": "deep-dive-cross-season-v1",
+  "version": "deep-dive-cross-season-v2",
   "generated_on": "2026-11-22",
-  "source": "Published nflverse CSV in Prop-lock-demo",
-  "method": "One history-only model: 55% L10 + 30% L5 + 15% all prior games; 2025 residual quantile builds two-sided 80% radius; 2026 never used to set radius",
-  "coverage_target": 0.8,
+  "source": "nflverse public player-week files, 2023–2026",
+  "method": "Prior-only participation gating; historical 55% L10 + 30% L5 + 15% all-prior; 2025 residual quantile; 2026 out-of-time descriptive coverage",
   "calibration_year": 2025,
   "test_year": 2026,
+  "coverage_target": 0.8,
   "status": "PARTIAL_DESCRIPTIVE_AUDIT",
   "groups": {
     "rushing_yards": {
       "label": "rushing yards",
-      "calibration_tests": 16626,
-      "test_games": 9251,
-      "test_players": 1578,
+      "calibration_tests": 1575,
+      "test_games": 880,
+      "test_players": 159,
       "status": "DESCRIPTIVE_COVERAGE_AUDIT",
-      "conformal_radius": 0.164,
-      "test_mae": 2.313,
-      "observed_coverage": 0.8012
+      "conformal_radius": 31.21,
+      "test_mae": 20.6007,
+      "observed_coverage": 0.8
     },
     "receiving_yards": {
       "label": "receiving yards",
-      "calibration_tests": 16626,
-      "test_games": 9251,
-      "test_players": 1578,
+      "calibration_tests": 3673,
+      "test_games": 2007,
+      "test_players": 349,
       "status": "DESCRIPTIVE_COVERAGE_AUDIT",
-      "conformal_radius": 5.996,
-      "test_mae": 4.866,
-      "observed_coverage": 0.8027
+      "conformal_radius": 29.6524,
+      "test_mae": 20.1627,
+      "observed_coverage": 0.7838
     },
     "passing_yards": {
       "label": "passing yards",
-      "calibration_tests": 16626,
-      "test_games": 9251,
-      "test_players": 1578,
+      "calibration_tests": 560,
+      "test_games": 323,
+      "test_players": 53,
       "status": "DESCRIPTIVE_COVERAGE_AUDIT",
-      "conformal_radius": 0,
-      "test_mae": 2.483,
-      "observed_coverage": 0.9344
+      "conformal_radius": 111.0491,
+      "test_mae": 68.4411,
+      "observed_coverage": 0.808
     },
     "receptions": {
       "label": "receptions",
-      "calibration_tests": 16626,
-      "test_games": 9251,
-      "test_players": 1578,
+      "calibration_tests": 3673,
+      "test_games": 2007,
+      "test_players": 349,
       "status": "DESCRIPTIVE_COVERAGE_AUDIT",
-      "conformal_radius": 0.547,
-      "test_mae": 0.367,
-      "observed_coverage": 0.8041
+      "conformal_radius": 2.2619,
+      "test_mae": 1.4666,
+      "observed_coverage": 0.7977
     },
     "targets": {
       "label": "targets",
-      "calibration_tests": 16626,
-      "test_games": 9251,
-      "test_players": 1578,
+      "calibration_tests": 3673,
+      "test_games": 2007,
+      "test_players": 349,
       "status": "DESCRIPTIVE_COVERAGE_AUDIT",
-      "conformal_radius": 0.693,
-      "test_mae": 0.475,
-      "observed_coverage": 0.8063
+      "conformal_radius": 2.8784,
+      "test_mae": 1.9038,
+      "observed_coverage": 0.7912
     },
     "carries": {
       "label": "carries",
-      "calibration_tests": 16626,
-      "test_games": 9251,
-      "test_players": 1578,
+      "calibration_tests": 1575,
+      "test_games": 880,
+      "test_players": 159,
       "status": "DESCRIPTIVE_COVERAGE_AUDIT",
-      "conformal_radius": 0.063,
-      "test_mae": 0.408,
-      "observed_coverage": 0.8011
+      "conformal_radius": 5.3257,
+      "test_mae": 3.5597,
+      "observed_coverage": 0.7898
     }
   },
   "caveats": [
-    "Retrospective player selection and nonexchangeable errors by player and game may invalidate nominal split-conformal coverage.",
-    "Observed backtest coverage is NOT a guarantee for future events; no probability of an Over/Under.",
-    "No sportsbook lines or live injury/opponent inputs used."
+    "Non-exchangeable player/game residuals; observed 2026 coverage does not establish calibrated future coverage.",
+    "Per-game activity qualification uses only past five games and requires at least two games above sport-stat opportunity threshold; does not guarantee frozen prospective player selection.",
+    "No market prices, next-game status, or calibrated player-specific probability."
   ]
 }
