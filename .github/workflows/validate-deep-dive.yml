@@ -14,6 +14,8 @@ on:
       - 'tests/test_verified_snap_ids.py'
       - 'scripts/deep-dive-snaps.js'
       - 'tests/deep-dive-snaps.test.cjs'
+      - 'scripts/deep-dive-quality.js'
+      - 'tests/deep-dive-quality.test.cjs'
 permissions:
   contents: read
 jobs:
@@ -29,6 +31,8 @@ jobs:
         run: node tests/deep-dive.test.cjs
       - name: Verify snap identity join safeguards
         run: node tests/deep-dive-snaps.test.cjs
+      - name: Validate PBP opportunity quality guardrails
+        run: node tests/deep-dive-quality.test.cjs
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
