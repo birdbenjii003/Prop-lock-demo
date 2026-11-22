@@ -12,6 +12,8 @@ on:
       - 'scripts/deep-dive-calibration.py'
       - 'scripts/deep-dive-independent-checks.py'
       - 'scripts/deep-dive-stage3-verification.py'
+      - 'scripts/deep-dive-asymmetric-audit.py'
+      - 'tests/test_deep_dive_asymmetric_audit.py'
       - 'tests/test_deep_dive_stage3_verification.py'
       - 'tests/test_deep_dive_independent_checks.py'
       - 'scripts/verify_nfl_snap_ids.py'
