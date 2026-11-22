@@ -36,8 +36,9 @@
 .research-upgrade{background:#132a35;border:1px solid #49766c;border-radius:13px;padding:15px;margin:15px 0}.research-upgrade h3{font-size:16px;margin:0 0 7px}.research-upgrade .summary-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0}.research-upgrade .summary-grid>div{padding:11px;background:#1b3541;border-radius:9px;border:1px solid #3b5d66}.research-upgrade .summary-grid b{display:block;font-size:19px;color:#99e6c8}.research-upgrade .summary-grid span{display:block;font-size:10px;color:#b8cddd}.research-upgrade p,.research-upgrade li{font-size:12px;color:#c1d7d8;line-height:1.6}.research-upgrade .research-limit{color:#f0c78e}.research-upgrade h4{font-size:13px;margin:15px 0 5px}.research-upgrade ul{padding-left:20px}
 .matchup-audit{margin-top:15px;padding:14px;border-radius:11px;border:1px solid #55766c;background:#152e31}.matchup-audit h3{font-size:16px;margin:0 0 8px}.matchup-audit p{font-size:12px;color:#c0d6d2;line-height:1.65}.matchup-audit table{border-collapse:collapse;min-width:670px;width:100%;font-size:11px}.matchup-audit td,.matchup-audit th{border-bottom:1px solid #3b5652;padding:8px;text-align:left}.matchup-audit th{color:#9ddcca}.matchup-audit td{color:#d7e7e0}.matchup-audit .guardrail{color:#edc994;font-size:11px}
 .combined-audit{background:#182e3e;border:1px solid #547684;padding:15px;border-radius:12px;margin:15px 0}.combined-audit h3{font-size:17px;margin:0 0 9px}.combined-audit p{color:#bdcedd;font-size:12px;line-height:1.6}.combined-audit table{border-collapse:collapse;min-width:750px;width:100%;font-size:11px}.combined-audit th,.combined-audit td{padding:8px 6px;text-align:left;border-bottom:1px solid #375069}.combined-audit th{color:#b8d8ed}.combined-audit td{color:#e4edf5}.combined-audit .combined-caution{color:#e7c596}
+.actual-validation{background:#142d34;border:1px solid #3b756e;border-radius:12px;padding:16px;margin:15px 0}.actual-validation h3{font-size:17px;margin:0 0 7px}.actual-validation p{color:#b9d4d1;line-height:1.6;font-size:12px}.actual-validation table{width:100%;min-width:690px;border-collapse:collapse;font-size:11px}.actual-validation th,.actual-validation td{padding:8px 6px;border-bottom:1px solid #3a5558;text-align:left}.actual-validation th{color:#91dbc4}.actual-validation td{color:#dceae6}.actual-validation .actual-warning{color:#edc58c}.actual-validation .actual-result{font-size:14px;color:#d7ebe7;font-weight:700}
 </style></head><body>
-<div class="layout"><header class="top"><div><div class="logo">PROP <em>LOCK</em></div><div class="subtitle">PERSONAL PLAYER PROP RESEARCH</div></div><div class="pill">● PUBLIC DEMO V2.9</div></header>
+<div class="layout"><header class="top"><div><div class="logo">PROP <em>LOCK</em></div><div class="subtitle">PERSONAL PLAYER PROP RESEARCH</div></div><div class="pill">● PUBLIC DEMO V3.0</div></header>
 <section class="hero"><div><h1>Find the prop. Research the matchup.</h1><p>Explore multi-sport player props and see how Deep Dive, Scenarios, and Trait Match fit together.</p></div><div class="hero-tag">$0 prototype</div></section>
 <nav class="tabs" id="sports" aria-label="Select sport"></nav>
 <div class="toolbar"><input class="search" id="search" type="search" placeholder="Search NFL player, team, or stat..." aria-label="Search players"/><select class="filter" id="category" aria-label="Select prop category"><option value="All">All Stat Categories</option></select><select class="filter" id="position" aria-label="Filter by inferred NFL role"><option value="All">All player roles</option></select></div>
@@ -158,6 +159,31 @@ function combinedDashboardMarkup(profiles){
  '<p class="combined-caution">The combined weights are fixed for exploratory testing: 50% Deep Dive + 30% earlier opportunity rate and projected volume + 20% shrunk historical opponent allowance. A negative change means the combination has higher error than Deep Dive. Cases without paired historical volume or sufficient prior defensive observations are excluded from ALL four methods, so results only describe that selected subgroup. Minimum screening: 30 development rows from 10 players and 20 holdout rows from 10 players.</p>'+
  '<p class="combined-caution">These comparisons do not include observed next-game pace, future personnel, weather, projected playing time or validated game script. The moving two-week holdout is not independently locked, and model formulas are exploratory. No automatic adjustment, calibrated hit probability, sportsbook evaluation or recommendation is issued.</p></section>';
 }
+let publishedValidation=null,publishedValidationError=null;
+function publishedValidationPanel(){
+ if(!publishedValidation)return '<section class="actual-validation"><h3>V3.0 · Published actual-data validation</h3><p>'+(publishedValidationError?escapeHtml(publishedValidationError):'Loading audited NFL snapshot results…')+'</p></section>';
+ const x=publishedValidation,latest=importedProps.flatMap(p=>(p.records||[]).slice(-1).map(r=>r.season*100+r.week)).reduce((a,b)=>Math.max(a,b),0);
+ const holdoutEnd=x.holdout_start_season*100+x.holdout_start_week+1;
+ // Snapshot comparison: report was computed with 2026 weeks 1–11; don't claim exact file matching from counts alone.
+ const matches=latest===202611&&importedProps.length===x.eligible_profiles&&nflSource==='hosted';
+ const num=v=>v===null||v===undefined?'N/A':fmt(v);
+ return '<section class="actual-validation"><h3>V3.0 · Published NFL validation snapshot</h3>'+
+ '<p class="actual-result">'+x.eligible_stat_categories+' categories meet the descriptive evidence gate · '+x.eligible_profiles+' eligible player/stat profiles</p>'+
+ '<p>Published '+escapeHtml(x.generated_date_utc)+' · Report source: '+escapeHtml(x.dataset_path)+' · NFL '+x.holdout_start_season+' holdout Weeks '+x.holdout_start_week+'–11. '+(matches?'The loaded hosted data has matching profile and week counts.':'The loaded data may differ from this published snapshot: results below are NOT automatically recalculated for custom or newer CSV data.')+'</p>'+
+ '<div class="validation-overflow"><table><thead><tr><th>Stat category</th><th>Holdout tests</th><th>Deep Dive MAE</th><th>Scenario MAE</th><th>Trait MAE</th><th>Combined MAE</th><th>Combined change</th><th>Status</th></tr></thead><tbody>'+
+ x.categories.map(g=>'<tr><td>'+escapeHtml(g.stat)+'</td><td>'+g.holdout_tests+'</td><td>'+num(g.deep_mae)+'</td><td>'+num(g.scenario_mae)+'</td><td>'+num(g.trait_mae)+'</td><td>'+num(g.combined_mae)+'</td><td>'+(g.combined_vs_deep_percent===null?'N/A':(g.combined_vs_deep_percent>=0?'+':'')+num(g.combined_vs_deep_percent)+'%')+'</td><td>'+(g.eligible?'Descriptive only':'Limited sample')+'</td></tr>').join('')+'</tbody></table></div>'+
+ '<p class="actual-warning">A positive change indicates lower MAE for the combined estimate. The model helps some categories marginally but hurts others. Tested game samples exclude cases without prior opportunity and opponent evidence. Player-role eligibility uses season-level data and can introduce lookahead selection bias. Moving two-week holdout, no frozen independent future season, no calibration, no betting win rates, and no automatic adoption of the combined weights.</p></section>';
+}
+async function fetchPublishedValidation(){
+ try{
+  const response=await fetch('./data/reports/nfl_v3_validation.json',{cache:'no-cache'});
+  if(!response.ok)throw Error('Published validation report unavailable (HTTP '+response.status+').');
+  const payload=await response.json();
+  if(payload.report_version!=='3.0'||!Array.isArray(payload.categories)||!payload.dataset_git_blob_sha)throw Error('Published report did not pass format checks.');
+  publishedValidation=payload;publishedValidationError=null;
+ }catch(error){publishedValidationError='Published report not available: '+(error.message||String(error))}
+ if(useImported&&importedProps.length)renderValidationDashboard();
+}
 function renderValidationDashboard(){
  const panel=$('validationDashboard');if(!panel)return;
  if(!useImported||currentSport!=='NFL'||!importedProps.length){panel.hidden=true;panel.innerHTML='';return}
@@ -166,7 +192,7 @@ function renderValidationDashboard(){
  const f=n=>n===null?'N/A':fmt(n);
  const total=report.groups.length;
  const eligible=report.groups.filter(x=>x.enough).length;
- panel.innerHTML='<div class="eyebrow">V2.1 · CROSS-PLAYER RESEARCH VALIDATION</div>'+
+ panel.innerHTML=publishedValidationPanel()+'<div class="eyebrow">V2.1 · CROSS-PLAYER RESEARCH VALIDATION</div>'+
  '<h2>Historical estimation accuracy by NFL stat</h2>'+
  '<p>Each test compares a one-game-ahead historical blend with a simple prior-average benchmark. Every forecast uses only the selected player’s earlier games. Test totals count player-games, not bets or independent game events.</p>'+
  '<div class="validation-summary"><div><strong>'+report.totalTests+'</strong><span>Backtested player-games</span></div><div><strong>'+report.testedProfiles+'</strong><span>Tested player/stat profiles</span></div><div><strong>'+eligible+'/'+total+'</strong><span>Categories with descriptive sample</span></div></div>'+
@@ -559,4 +585,5 @@ async function loadAutomaticNFL(force=false){
 $('autoNFL').onclick=()=>{manualOverride=false;loadAutomaticNFL(true)};
 // Do not overwrite a manual upload if an automatic request resolves later.
 loadAutomaticNFL();
+fetchPublishedValidation();
 </script></body></html>
