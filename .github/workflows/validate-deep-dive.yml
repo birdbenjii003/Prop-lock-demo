@@ -1,0 +1,23 @@
+name: Validate Deep Dive research
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'index.html'
+      - 'scripts/deep-dive-v2.js'
+      - 'scripts/deep-dive-workspace.js'
+      - 'scripts/deep-dive-views.js'
+      - 'tests/deep-dive.test.cjs'
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run offline Deep Dive fixture tests
+        run: node tests/deep-dive.test.cjs
