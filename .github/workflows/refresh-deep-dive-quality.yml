@@ -1,0 +1,31 @@
+name: Refresh free NFL opportunity quality
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: deep-dive-quality
+  cancel-in-progress: false
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Build red-zone and deep opportunity history
+        run: python scripts/update_nfl_opportunity_quality.py
+      - name: Verify output and commit changed static evidence
+        run: |
+          test -s data/nfl_opportunity_quality_2023_2026.csv
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/nfl_opportunity_quality_2023_2026.csv
+          if git diff --cached --quiet; then echo 'No new quality evidence.'; else
+            git commit -m 'Publish free NFL player opportunity quality observations'
+            git push
+          fi
