@@ -17,10 +17,16 @@ function deepDiveParseQualityCSV(raw,parse){
  if(out.length<500)throw Error('Insufficient quality records');
  return out;
 }
+const ddQualityIndexCache=new WeakMap();
+function ddQualityPlayerIndex(all){
+ let index=ddQualityIndexCache.get(all);
+ if(!index){index=new Map();for(const r of all){let list=index.get(r.playerId);if(!list){list=[];index.set(r.playerId,list)}list.push(r)}ddQualityIndexCache.set(all,index)}
+ return index;
+}
 function deepDiveQualitySummary(p,all){
  if(p?.source!=='imported'||!p.playerKey?.startsWith('id:')||!Array.isArray(all)||!Array.isArray(p.records))return null;
  const id=p.playerKey.slice(3),observed=new Set(p.records.map(r=>[r.season,r.week,r.team].join('|')));
- const match=all.filter(r=>r.playerId===id&&observed.has([r.season,r.week,r.team].join('|'))).sort((a,b)=>a.season-b.season||a.week-b.week);
+ const match=(ddQualityPlayerIndex(all).get(id)||[]).filter(r=>observed.has([r.season,r.week,r.team].join('|'))).sort((a,b)=>a.season-b.season||a.week-b.week);
  const role=p.stat.includes('Rushing')||p.stat==='Carries'?'rush':p.stat.includes('Receiving')||p.stat==='Receptions'||p.stat==='Targets'?'receive':null;
  if(!role||!match.length)return null;
  const recent=match.slice(-5),sum=k=>recent.reduce((a,r)=>a+r[k],0),metrics=role==='rush'?{chances:sum('rush_attempts'),redZone:sum('red_zone_carries'),goalLine:sum('goal_line_carries'),deep:null,air:null}:{chances:sum('targets'),redZone:sum('red_zone_targets'),goalLine:null,deep:sum('deep_targets'),air:sum('air_yards')};
