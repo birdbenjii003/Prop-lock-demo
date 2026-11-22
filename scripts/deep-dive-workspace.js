@@ -26,6 +26,10 @@ function deepDiveWorkspace(p,profiles,line){
  const rate=lastPaired.length>=5&&opportunities>0?production/opportunities:null;
  const recentVolume=paired.length>=5?ddwMean(paired.slice(-5).map(r=>r.volume)):null;
  const previousVolume=paired.length>=10?ddwMean(paired.slice(-10,-5).map(r=>r.volume)):null;
+ const lastShares=rows.filter(r=>Number.isFinite(r.opportunityShare)).slice(-5);
+ const priorShares=rows.filter(r=>Number.isFinite(r.opportunityShare)).slice(-10,-5);
+ const recentShare=lastShares.length>=3?ddwMean(lastShares.map(r=>r.opportunityShare)):null;
+ const previousShare=priorShares.length>=3?ddwMean(priorShares.map(r=>r.opportunityShare)):null;
  const h2h=new Map();
  for(const r of rows){if(!r.opp||r.opp==='Opponent unavailable')continue;
   if(!h2h.has(r.opp))h2h.set(r.opp,[]);h2h.get(r.opp).push({season:r.season,week:r.week,value:r.value,volume:volumeIndex.get(ddwId(r))??null})}
@@ -54,7 +58,7 @@ function deepDiveWorkspace(p,profiles,line){
  if(!opportunity)missing.push('Paired '+(volumeLabel||'opportunity')+' weekly data');
  if(values.length<10)missing.push('At least ten observed games for stable descriptive comparisons');
  missing.push('Advanced role data: snap or minutes share, routes, high-value chances, status changes');
- missing.push('Multi-season archive beyond the available source history');
+ if(new Set(rows.map(r=>r.season)).size<2)missing.push('Multi-season history for this specific player/statistic not available');
  missing.push('Frozen independent calibration and validated future prediction intervals');
  return {sport:p?.sport||'NFL',stat:p?.stat||'',source:imported?'imported':'demo',n:values.length,
   rows,values,seasonMean,last5:ddwMean(l5),last10:ddwMean(l10),median:ddwMedian(l10),std:ddwStd(l10),
@@ -62,7 +66,7 @@ function deepDiveWorkspace(p,profiles,line){
   wins:values.filter(v=>v>line).length,losses:values.filter(v=>v<line).length,ties:values.filter(v=>v===line).length,
   line,alternatives,volumeLabel,paired,lastPaired,recentVolume,previousVolume,rate,
   perGameRates:lastPaired.map(r=>({week:r.week,season:r.season,rate:r.value/r.volume})),
-  latestTeam,opponentHistory,backtest,development:dev,holdout:hold,developmentMae:mae(dev,'historyError'),holdoutMae:mae(hold,'historyError'),
+  latestTeam,opponentHistory,recentShare,previousShare,shareGames:rows.filter(r=>Number.isFinite(r.opportunityShare)).length,seasonCount:new Set(rows.map(r=>r.season)).size,backtest,development:dev,holdout:hold,developmentMae:mae(dev,'historyError'),holdoutMae:mae(hold,'historyError'),
   holdoutOpportunityMae:mae(hold,'oppError'),futureInterval,missing,
   warnings:['The imported profile set is selected using season-wide activity; this can introduce retrospective selection bias.',
   'The recent-two-test holdout is not a separately frozen evaluation dataset. Historical thresholds are not sportsbook odds.']};
