@@ -19,11 +19,16 @@ jobs:
           python-version: '3.12'
       - name: Build 2023-2025 historical player archive
         run: python scripts/update_nfl_history.py
+      - name: Run cross-season Deep Dive audit (only with complete seasons)
+        run: python scripts/deep-dive-calibration.py
       - name: Commit verified archive
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add data/nfl_history_2023_2025.csv
+          if [ -f data/reports/deep_dive_calibration_audit.json ]; then
+            git add data/reports/deep_dive_calibration_audit.json
+          fi
           if git diff --cached --quiet; then
             echo 'No changes to historical archive.'
           else
