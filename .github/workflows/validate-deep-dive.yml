@@ -10,6 +10,8 @@ on:
       - 'tests/deep-dive.test.cjs'
       - 'tests/test_deep_dive_calibration.py'
       - 'scripts/deep-dive-calibration.py'
+      - 'scripts/verify_nfl_snap_ids.py'
+      - 'tests/test_verified_snap_ids.py'
       - 'scripts/deep-dive-snaps.js'
       - 'tests/deep-dive-snaps.test.cjs'
 permissions:
@@ -31,4 +33,4 @@ jobs:
         with:
           python-version: '3.12'
       - name: Check chronological calibration audit
-        run: python -m unittest discover -s tests -p 'test_deep_dive_calibration.py'
+        run: python -m unittest discover -s tests -p 'test_*.py'
