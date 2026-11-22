@@ -523,7 +523,7 @@ function convertCsvToProps(text){
   const dedupKey=identity+'|'+season+'|'+week;
   if(observed.has(dedupKey)){duplicates++;continue}observed.add(dedupKey);rowsUsed++;
   for(const [stat,colName] of types){
-   const raw=get(r,stat);if(!raw)continue;const v=Number(raw);if(!Number.isFinite(v)||v<0||v>5000)continue;
+   const raw=get(r,stat);if(!raw)continue;const v=Number(raw);if(!Number.isFinite(v)||v>5000||v<(stat.endsWith('_yards')?-100:0))continue;
    const k=identity+'|'+stat;if(!grouped.has(k))grouped.set(k,{pid,name,team,opp,colName,stat,identity,records:[]});
    const g=grouped.get(k);g.records.push({season,week,value:v,team,opp});
   }
