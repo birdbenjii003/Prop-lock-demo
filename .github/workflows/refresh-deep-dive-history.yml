@@ -21,6 +21,12 @@ jobs:
         run: python scripts/update_nfl_history.py
       - name: Run cross-season Deep Dive audit (only with complete seasons)
         run: python scripts/deep-dive-calibration.py
+      - name: Verify nonempty restored archive
+        run: |
+          test -s data/nfl_history_2023_2025.csv
+          python -m unittest discover -s tests -p 'test_deep_dive_*.py'
+      - name: Reproduce Stage 3 validation from restored NFL sources
+        run: python scripts/deep-dive-stage3-verification.py
       - name: Commit verified archive
         run: |
           git config user.name 'github-actions[bot]'
@@ -28,6 +34,9 @@ jobs:
           git add data/nfl_history_2023_2025.csv
           if [ -f data/reports/deep_dive_calibration_audit.json ]; then
             git add data/reports/deep_dive_calibration_audit.json
+          fi
+          if [ -s data/reports/deep_dive_stage3_verification.json ]; then
+            git add data/reports/deep_dive_stage3_verification.json
           fi
           if git diff --cached --quiet; then
             echo 'No changes to historical archive.'
