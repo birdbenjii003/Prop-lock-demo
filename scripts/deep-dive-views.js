@@ -1,6 +1,6 @@
 'use strict';
 // Deep Dive workspace renderer. All markup text provided by user datasets is escaped by caller.
-function ddViewHtml(p,profiles,line,tab,escape,format,snapInfo=null,snapStatus='Verified snap evidence not available'){
+function ddViewHtml(p,profiles,line,tab,escape,format,snapInfo=null,snapStatus='Verified snap evidence not available',audit=null){
  const x=deepDiveWorkspace(p,profiles,line);
  const safe=v=>escape(String(v===undefined||v===null?'Unavailable':v));
  const num=v=>v===null||v===undefined||!Number.isFinite(v)?'Unavailable':format(v);
@@ -10,6 +10,12 @@ function ddViewHtml(p,profiles,line,tab,escape,format,snapInfo=null,snapStatus='
  const missing=t=>'<div class="dd3-missing">'+safe(t)+'</div>';
  const title=(t,d)=>'<h4>'+safe(t)+'</h4>'+para(d);
  const alternative=x.alternatives;
+ const auditKey=({'Rushing Yards':'rushing_yards','Receiving Yards':'receiving_yards','Passing Yards':'passing_yards','Receptions':'receptions','Targets':'targets','Carries':'carries'})[p.stat];
+ const observedAudit=audit?.version==='deep-dive-cross-season-v2'&&auditKey?audit.groups?.[auditKey]:null;
+ const audited=observedAudit?.status==='DESCRIPTIVE_COVERAGE_AUDIT'&&Number.isFinite(observedAudit.conformal_radius)&&x.n>=5&&alternative?.historical!==null;
+ const radius=audited?observedAudit.conformal_radius:null;
+ const lower=radius===null?null:Math.max(0,alternative.historical-radius),upper=radius===null?null:alternative.historical+radius;
+ const calibratedDisplay=audited?grid([value(alternative.historical,'Historical player projection'),value(radius,'2025 cohort error radius'),value(lower,'Reference lower estimate'),value(upper,'Reference upper estimate')])+para('2026 out-of-time observed cohort coverage: '+(100*observedAudit.observed_coverage).toFixed(1)+'% across '+observedAudit.test_games+' eligible player-games; 2025 calibration n='+observedAudit.calibration_tests+'. This is a descriptive cohort interval, NOT a certified player-specific 80% prediction interval.')+para('Line '+line+': '+(line<lower?'below':line>upper?'above':'inside')+' the descriptive cohort band. This DOES NOT imply an Over/Under probability.'):missing('Cross-season cohort interval evidence unavailable. No calibrated next-game prediction is claimed.');
  const estimateRows=alternative?alternative.estimates.map(v=>'<tr><td>'+safe(v.label)+'</td><td>'+num(v.value)+'</td><td>'+num(v.value===null?null:v.value-line)+'</td><td>'+safe(v.note)+'</td></tr>').join(''):'';
  const estimates='<div class="dd3-scroll"><table><thead><tr><th>Reference</th><th>Value</th><th>Vs. line</th><th>Method</th></tr></thead><tbody>'+estimateRows+'</tbody></table></div>';
  const conflicts=alternative?.conflicts?.length?alternative.conflicts.map(v=>'<div class="dd3-conflict"><strong>'+safe(v.title)+'</strong>'+para(v.detail)+'</div>').join(''):para('No numerical conflict trigger fired. This does not establish a reliable prediction.');
@@ -22,7 +28,7 @@ function ddViewHtml(p,profiles,line,tab,escape,format,snapInfo=null,snapStatus='
  const validate=grid([value(x.backtest.length,'Strict prior-only player-game tests'),value(x.developmentMae,'Earlier rolling historical MAE'),value(x.holdoutMae,'Final two tests MAE'),value(x.holdoutOpportunityMae,'Last two opportunity MAE')])+para('Small rolling tests are descriptive, not independent external validation. The player eligibility filter itself may use future season-wide observations.');
  const sections={
  overview:()=>title('Deep Dive at a glance','Everything here concerns the player’s own historical performance, not upcoming matchups or game scripts.')+
-  grid([value(x.last10,'L10 average'),value(alternative?.historical??null,'Weighted historical reference'),value(alternative?.opportunity??null,'Opportunity-based reference'),value(line,'Selected research line')])+bounds+
+  grid([value(x.last10,'L10 average'),value(alternative?.historical??null,'Weighted historical reference'),value(alternative?.opportunity??null,'Opportunity-based reference'),value(line,'Selected research line')])+bounds+calibratedDisplay+
   title('Evidence disagreements','Conflicts remain visible; a higher historical average is not itself a next-game Over probability.')+conflicts,
  performance:()=>title('Historical performance','Game results compared with the selected research line.')+grid([value(x.seasonMean,'All recorded games mean'),value(x.last5,'Last five average'),value(x.last10,'Last ten average'),value(x.median,'Last ten median')])+grid([value(x.wins,'Historical overs'),value(x.losses,'Historical unders'),value(x.ties,'Equal to line'),value(x.n,'Player-game count')])+historyRows(x.rows.slice(-15).reverse().map(r=>({...r,volume:x.paired.find(a=>ddwId(a)===ddwId(r))?.volume??null}))),
  trends:()=>title('Historical trend quality','Compare changes in recent production and available workload.')+grid([value(x.last5,'Recent five average'),value(x.previous5,'Prior five average'),value(x.recentChange,'Recent change'),value(x.recentVolume,'Recent opportunity volume')])+conflicts,
@@ -35,15 +41,15 @@ function ddViewHtml(p,profiles,line,tab,escape,format,snapInfo=null,snapStatus='
  stability:()=>title('Statistical stability','Standard deviation measures historical variability, not a probability of reaching the line.')+grid([value(x.std,'Last ten standard deviation'),value(x.median,'Last ten median'),value(x.n,'Sample size')])+bounds,
  weighting:()=>title('Historical weighting','Fixed exploratory 55% L10 / 30% L5 / 15% all-games blend, with overlapping L5/L10 information.')+weighting+missing('Adaptive weights require frozen development and genuinely untouched test periods before adoption.'),
  tendencies:()=>title('Player-only tendencies','Recorded production patterns and observed workload trends; opponent explanations are reserved for Trait Match.')+grid([value(x.recentChange,'L5 minus prior L5'),value(x.recentVolume,'Recent opportunity rate'),value(x.rate,'Output per opportunity')])+conflicts,
- projection:()=>title('Alternative statistical estimates','Compare the historical baseline, opportunity estimate, and observed reference band with the selected research line.')+estimates+bounds+missing('No central calibrated forecast or validated future interval is available yet.'),
- validation:()=>title('Historical validation','Rolling prior-only tests of the player-history estimate, without odds or selected betting lines.')+validate,
+ projection:()=>title('Alternative statistical estimates','Compare the historical baseline, opportunity estimate, and observed reference band with the selected research line.')+estimates+bounds+title('Out-of-time cohort interval check','2025 residuals are tested on the 2026 cohort without changing the historical model.')+calibratedDisplay,
+ validation:()=>title('Historical validation','Rolling prior-only tests of the player-history estimate, without odds or selected betting lines.')+validate+title('Cross-season cohort audit','2025 residual interval tested on eligible 2026 games.')+calibratedDisplay,
  evidence:()=>title('Evidence quality','Missing inputs and retrospective selection risks are shown explicitly.')+grid([value(x.n,'Player games'),value(x.paired.length,'Paired opportunity games'),value(x.opponentHistory.length,'Historical opponents'),value(snapInfo?.matched??0,'Verified snap-matched games')])+para(snapStatus)+x.missing.filter(m=>!m.startsWith('Multi-season archive')).map(missing).join('')+x.warnings.map(para).join(''),
  h2h:()=>title('Historical head-to-head results','Actual prior player games grouped by recorded opponent. Opponent defensive explanation is reserved for Trait Match.')+(x.opponentHistory.length?h2h+missing('This source currently supplies one NFL season; missing older seasons are not invented.')+x.opponentHistory.map(v=>'<details class="dd3-h2h"><summary>'+safe(v.opponent)+' · '+v.games.length+' game(s)</summary>'+historyRows(v.games.slice().reverse())+'</details>').join(''):missing('Opponent identities or previous head-to-head games are unavailable.'))
  };
  const active=sections[tab]?tab:'overview';
- return '<section class="dd3"><div class="dd3-top"><div><span class="dd3-eyebrow">DEEP DIVE · PLAYER RESEARCH</span><h3>Deep Dive 3.2</h3></div><span class="dd3-pill">'+(x.source==='imported'?'HISTORICAL DATA':'DEMO — NOT EVIDENCE')+'</span></div>'+
+ return '<section class="dd3"><div class="dd3-top"><div><span class="dd3-eyebrow">DEEP DIVE · PLAYER RESEARCH</span><h3>Deep Dive 3.6</h3></div><span class="dd3-pill">'+(x.source==='imported'?'HISTORICAL DATA':'DEMO — NOT EVIDENCE')+'</span></div>'+
  '<p>Analyze the selected '+safe(p.stat)+' line of <strong>'+num(line)+'</strong> without mixing in future-game Scenarios or defensive Trait Match.</p>'+
  '<div class="dd3-tabs" role="group" aria-label="Deep Dive categories">'+DEEP_DIVE_TABS.map(([id,label])=>'<button type="button" data-deep-dive-tab="'+id+'" aria-pressed="'+(active===id)+'" class="'+(active===id?'selected':'')+'">'+safe(label)+'</button>').join('')+'</div>'+
  '<div class="dd3-content">'+sections[active]()+'</div>'+
- '<p class="dd3-footer">All outputs are descriptive research. Unsupported features display unavailable. No calibrated future interval, market line verification, or Over/Under recommendation is claimed.</p></section>';
+ '<p class="dd3-footer">All outputs are descriptive research. Unsupported features display unavailable. No certified player-specific future interval, market line verification, or Over/Under recommendation is claimed.</p></section>';
 }
