@@ -1,0 +1,77 @@
+{
+  "version": "deep-dive-cross-season-v1",
+  "generated_on": "2026-11-22",
+  "source": "Published nflverse CSV in Prop-lock-demo",
+  "method": "One history-only model: 55% L10 + 30% L5 + 15% all prior games; 2025 residual quantile builds two-sided 80% radius; 2026 never used to set radius",
+  "coverage_target": 0.8,
+  "calibration_year": 2025,
+  "test_year": 2026,
+  "status": "PARTIAL_DESCRIPTIVE_AUDIT",
+  "groups": {
+    "rushing_yards": {
+      "label": "rushing yards",
+      "calibration_tests": 16626,
+      "test_games": 9251,
+      "test_players": 1578,
+      "status": "DESCRIPTIVE_COVERAGE_AUDIT",
+      "conformal_radius": 0.164,
+      "test_mae": 2.313,
+      "observed_coverage": 0.8012
+    },
+    "receiving_yards": {
+      "label": "receiving yards",
+      "calibration_tests": 16626,
+      "test_games": 9251,
+      "test_players": 1578,
+      "status": "DESCRIPTIVE_COVERAGE_AUDIT",
+      "conformal_radius": 5.996,
+      "test_mae": 4.866,
+      "observed_coverage": 0.8027
+    },
+    "passing_yards": {
+      "label": "passing yards",
+      "calibration_tests": 16626,
+      "test_games": 9251,
+      "test_players": 1578,
+      "status": "DESCRIPTIVE_COVERAGE_AUDIT",
+      "conformal_radius": 0,
+      "test_mae": 2.483,
+      "observed_coverage": 0.9344
+    },
+    "receptions": {
+      "label": "receptions",
+      "calibration_tests": 16626,
+      "test_games": 9251,
+      "test_players": 1578,
+      "status": "DESCRIPTIVE_COVERAGE_AUDIT",
+      "conformal_radius": 0.547,
+      "test_mae": 0.367,
+      "observed_coverage": 0.8041
+    },
+    "targets": {
+      "label": "targets",
+      "calibration_tests": 16626,
+      "test_games": 9251,
+      "test_players": 1578,
+      "status": "DESCRIPTIVE_COVERAGE_AUDIT",
+      "conformal_radius": 0.693,
+      "test_mae": 0.475,
+      "observed_coverage": 0.8063
+    },
+    "carries": {
+      "label": "carries",
+      "calibration_tests": 16626,
+      "test_games": 9251,
+      "test_players": 1578,
+      "status": "DESCRIPTIVE_COVERAGE_AUDIT",
+      "conformal_radius": 0.063,
+      "test_mae": 0.408,
+      "observed_coverage": 0.8011
+    }
+  },
+  "caveats": [
+    "Retrospective player selection and nonexchangeable errors by player and game may invalidate nominal split-conformal coverage.",
+    "Observed backtest coverage is NOT a guarantee for future events; no probability of an Over/Under.",
+    "No sportsbook lines or live injury/opponent inputs used."
+  ]
+}
