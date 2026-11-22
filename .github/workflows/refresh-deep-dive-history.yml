@@ -27,6 +27,8 @@ jobs:
           python -m unittest discover -s tests -p 'test_deep_dive_*.py'
       - name: Reproduce Stage 3 validation from restored NFL sources
         run: python scripts/deep-dive-stage3-verification.py
+      - name: Compare asymmetric NFL ranges without promoting the model
+        run: python scripts/deep-dive-asymmetric-audit.py
       - name: Commit verified archive
         run: |
           git config user.name 'github-actions[bot]'
@@ -37,6 +39,9 @@ jobs:
           fi
           if [ -s data/reports/deep_dive_stage3_verification.json ]; then
             git add data/reports/deep_dive_stage3_verification.json
+          fi
+          if [ -s data/reports/deep_dive_asymmetric_range_audit.json ]; then
+            git add data/reports/deep_dive_asymmetric_range_audit.json
           fi
           if git diff --cached --quiet; then
             echo 'No changes to historical archive.'
