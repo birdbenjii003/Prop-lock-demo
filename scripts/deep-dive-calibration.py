@@ -9,6 +9,8 @@ ARCHIVE=Path('data/nfl_history_2023_2025.csv')
 CURRENT=Path('data/nfl_2026.csv')
 OUTPUT=Path('data/reports/deep_dive_calibration_audit.json')
 FIELDS={'rushing_yards':'Rushing Yards','receiving_yards':'Receiving Yards','passing_yards':'Passing Yards','receptions':'Receptions','targets':'Targets','carries':'Carries'}
+# Tests only player-stat observations that meet PRIOR-ONLY participation gates.
+ACTIVITY={'rushing_yards':('carries',3),'carries':('carries',3),'receiving_yards':('targets',2),'receptions':('targets',2),'targets':('targets',2),'passing_yards':('attempts',10)}
 MIN_HISTORY=5
 MIN_CALIBRATION=80
 MIN_TEST=50
@@ -56,13 +58,21 @@ def build(rows):
             except ValueError:continue
             if not math.isfinite(value):continue
             if value<(-100 if col.endswith('_yards') else 0) or value>5000:continue
-            history[(row['player_id'],col)].append((int(row['season']),int(row['week']),value))
+            history[(row['player_id'],col)].append((int(row['season']),int(row['week']),value,row))
     output={stat:{'calibration':[],'test':[]} for stat in FIELDS}
     for (pid,stat),games in history.items():
         games.sort(key=lambda t:(t[0],t[1]))
-        for i,(year,week,actual) in enumerate(games):
+        for i,(year,week,actual,row) in enumerate(games):
             if year not in (2025,2026):continue
-            prior=[v for y,w,v in games[:i]]
+            prior=[v for y,w,v,r in games[:i]]
+            activity_field,minimum=ACTIVITY[stat]
+            recent=games[max(0,i-5):i]
+            active=0
+            for _,_,_,r in recent:
+                try:volume=float(r.get(activity_field) or '0')
+                except ValueError:volume=0
+                active+=int(math.isfinite(volume) and volume>=minimum)
+            if active<2:continue
             estimate=predict(prior)
             if estimate is None:continue
             name='calibration' if year==2025 else 'test'
@@ -71,10 +81,11 @@ def build(rows):
 
 def audit(rows):
     groups=build(rows)
-    result={'version':'deep-dive-cross-season-v1','method':'One model fixed at 55% last10 / 30% last5 / 15% all-history; 2025 residuals set two-sided split-conformal radius; 2026 tests never influence calibration',
+    result={'version':'deep-dive-cross-season-v2','method':'One model fixed at 55% last10 / 30% last5 / 15% all-history; 2025 residuals set two-sided split-conformal radius; 2026 tests never influence calibration',
       'calibration_year':2025,'test_year':2026,'coverage_target':COVERAGE_TARGET,'groups':{},'status':'INSUFFICIENT_EVIDENCE',
       'caveats':['2025 calibration examples share player/team/game dependence, so i.i.d. conformal coverage is not guaranteed.',
        'Historical player inclusion is retrospective; no market line or betting probability inferred.',
+       'Participation is screened using the prior five games, never current or future workload.',
        'The time-split is not a fully independent prospective experiment. Report observed coverage only after sample gates pass.']}
     eligible=0
     for stat,parts in groups.items():
