@@ -38,7 +38,7 @@ def parse_season(content, year):
             if clean[field]:
                 try:
                     value=float(clean[field])
-                    if not 0<=value<=5000:raise ValueError('out of range')
+                    if not ((-100 if field in ('passing_yards','rushing_yards','receiving_yards') else 0)<=value<=5000):raise ValueError('out of range')
                 except ValueError:raise ValueError(f'Invalid {field} for {year} week {week}')
         rows.append(clean)
     if len(rows)<100 or len(players)<40:
