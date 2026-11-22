@@ -1,0 +1,110 @@
+{
+  "version": "deep-dive-stage3-verification-v1",
+  "status": "REVIEW_REQUIRED",
+  "seasons": [
+    2023,
+    2024,
+    2025,
+    2026
+  ],
+  "historical_only": true,
+  "prospective_validation": false,
+  "player_specific_probability_available": false,
+  "groups": {
+    "rushing_yards": {
+      "status": "HISTORICAL_CHECKS_MET",
+      "2025_calibration_tests": 1575,
+      "2026_evaluation_games": 880,
+      "2026_evaluation_players": 159,
+      "2026_evaluation_weeks": 11,
+      "2026_coverage": 0.8,
+      "target_coverage": 0.8,
+      "weekly_coverage_min": 0.7349,
+      "weekly_coverage_max": 0.8276,
+      "model_mae": 20.601,
+      "prior_5_game_baseline_mae": 20.912,
+      "model_beats_baseline": true,
+      "note": "Historical checks only. No independently certified player-specific future interval."
+    },
+    "receiving_yards": {
+      "status": "BELOW_COVERAGE_TARGET",
+      "2025_calibration_tests": 3673,
+      "2026_evaluation_games": 2007,
+      "2026_evaluation_players": 349,
+      "2026_evaluation_weeks": 11,
+      "2026_coverage": 0.7838,
+      "target_coverage": 0.8,
+      "weekly_coverage_min": 0.7283,
+      "weekly_coverage_max": 0.9333,
+      "model_mae": 20.163,
+      "prior_5_game_baseline_mae": 20.828,
+      "model_beats_baseline": true,
+      "note": "Historical checks only. No independently certified player-specific future interval."
+    },
+    "passing_yards": {
+      "status": "HISTORICAL_CHECKS_MET",
+      "2025_calibration_tests": 560,
+      "2026_evaluation_games": 323,
+      "2026_evaluation_players": 53,
+      "2026_evaluation_weeks": 11,
+      "2026_coverage": 0.808,
+      "target_coverage": 0.8,
+      "weekly_coverage_min": 0.7097,
+      "weekly_coverage_max": 1.0,
+      "model_mae": 68.441,
+      "prior_5_game_baseline_mae": 71.008,
+      "model_beats_baseline": true,
+      "note": "Historical checks only. No independently certified player-specific future interval."
+    },
+    "receptions": {
+      "status": "BELOW_COVERAGE_TARGET",
+      "2025_calibration_tests": 3673,
+      "2026_evaluation_games": 2007,
+      "2026_evaluation_players": 349,
+      "2026_evaluation_weeks": 11,
+      "2026_coverage": 0.7977,
+      "target_coverage": 0.8,
+      "weekly_coverage_min": 0.7537,
+      "weekly_coverage_max": 0.8667,
+      "model_mae": 1.467,
+      "prior_5_game_baseline_mae": 1.514,
+      "model_beats_baseline": true,
+      "note": "Historical checks only. No independently certified player-specific future interval."
+    },
+    "targets": {
+      "status": "BELOW_COVERAGE_TARGET",
+      "2025_calibration_tests": 3673,
+      "2026_evaluation_games": 2007,
+      "2026_evaluation_players": 349,
+      "2026_evaluation_weeks": 11,
+      "2026_coverage": 0.7912,
+      "target_coverage": 0.8,
+      "weekly_coverage_min": 0.7538,
+      "weekly_coverage_max": 0.9333,
+      "model_mae": 1.904,
+      "prior_5_game_baseline_mae": 1.957,
+      "model_beats_baseline": true,
+      "note": "Historical checks only. No independently certified player-specific future interval."
+    },
+    "carries": {
+      "status": "BELOW_COVERAGE_TARGET",
+      "2025_calibration_tests": 1575,
+      "2026_evaluation_games": 880,
+      "2026_evaluation_players": 159,
+      "2026_evaluation_weeks": 11,
+      "2026_coverage": 0.7898,
+      "target_coverage": 0.8,
+      "weekly_coverage_min": 0.7349,
+      "weekly_coverage_max": 0.8478,
+      "model_mae": 3.56,
+      "prior_5_game_baseline_mae": 3.578,
+      "model_beats_baseline": true,
+      "note": "Historical checks only. No independently certified player-specific future interval."
+    }
+  },
+  "warnings": [
+    "Data provenance and 2026 game-final status require independent verification.",
+    "Cohort observations are dependent; retrospective coverage does not certify next-game coverage.",
+    "This verification never selects bets or estimates Over/Under probability."
+  ]
+}
