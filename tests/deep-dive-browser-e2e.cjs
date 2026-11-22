@@ -23,7 +23,11 @@ async function tabs(page){
  assert.equal(await page.locator('[data-deep-dive-tab]').count(),16);
 }
 async function main(){
- browser=await chromium.launch({headless:true});
+ try { browser=await chromium.launch({headless:true}); }
+ catch(error){
+  fs.writeFileSync('test-results/browser-assertions.json',JSON.stringify({url:BASE,phase:'browser_launch',failures:[String(error.stack||error)]},null,2));
+  throw error;
+ }
  const context=await browser.newContext({viewport:{width:390,height:844},deviceScaleFactor:1});
  const page=await context.newPage();
  page.setDefaultTimeout(15000);
