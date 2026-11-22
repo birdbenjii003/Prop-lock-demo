@@ -20,7 +20,7 @@ assert.ok(x.alternatives.estimates.some(c=>c.key==='opportunity'));
 const escape=s=>String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
 const fmt=v=>Number(v).toFixed(1);
 assert.equal(api.DEEP_DIVE_TABS.length,16);
-for(const [tab] of api.DEEP_DIVE_TABS){const html=api.ddViewHtml(p,[p,carries],50.5,tab,escape,fmt);assert.match(html,/Deep Dive 3.2/);assert.match(html,/aria-pressed="true"/)}
+for(const [tab] of api.DEEP_DIVE_TABS){const html=api.ddViewHtml(p,[p,carries],50.5,tab,escape,fmt);assert.match(html,/Deep Dive 3.7/);assert.match(html,/aria-pressed="true"/)}
 const sparse={...p,playerKey:'sparse',records:records([2,3,4])};
 const missing=api.deepDiveWorkspace(sparse,[sparse],50.5);
 assert.equal(missing.futureInterval.available,false);
@@ -31,6 +31,6 @@ const a=api.deepDiveWorkspace(future,[future,carries],50.5);
 assert.equal(a.backtest[0].historyPrediction,x.backtest[0].historyPrediction);
 const page=read('index.html');
 assert.ok(page.includes('<script src="./scripts/deep-dive-views.js"></script>'));
-assert.ok(page.includes('ddViewHtml(p,importedProps,line,deepDiveActiveTab,escapeHtml,fmt)'));
+assert.ok(page.includes('ddViewHtml(p,importedProps,line,deepDiveActiveTab,escapeHtml,fmt,deepDiveSnapSummary(p,deepDiveVerifiedSnaps),deepDiveSnapStatus,deepDiveIntervalAudit)'));
 const inline=page.match(/<script>\s*([\s\S]*?)<\/script>/);assert.ok(inline);new Function(inline[1]);
-console.log('Deep Dive 3.2 tests PASS: 16 views, conflicts, missing data, chronology and browser-script syntax');
+console.log('Deep Dive 3.7 tests PASS: 16 views, conflicts, missing data, chronology and browser-script syntax');
