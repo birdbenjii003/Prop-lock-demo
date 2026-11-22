@@ -76,6 +76,6 @@ assert.ok(escaped.includes('&lt;img src=x onerror=alert(1)&gt;'));
 assert.ok(!escaped.includes('<img src=x onerror=alert(1)>'));
 const page=read('index.html');
 assert.ok(page.includes('<script src="./scripts/deep-dive-views.js"></script>'));
-assert.ok(page.includes('ddViewHtml(p,importedProps,line,deepDiveActiveTab,escapeHtml,fmt,deepDiveSnapSummary(p,deepDiveVerifiedSnaps),deepDiveSnapStatus,deepDiveIntervalAudit,deepDiveQualitySummary(p,deepDiveQualityRows),deepDiveQualityStatus,nflSource==='hosted'?'hosted':'unverified')'));
+assert.ok(page.includes("ddViewHtml(p,importedProps,line,deepDiveActiveTab,escapeHtml,fmt,deepDiveSnapSummary(p,deepDiveVerifiedSnaps),deepDiveSnapStatus,deepDiveIntervalAudit,deepDiveQualitySummary(p,deepDiveQualityRows),deepDiveQualityStatus,nflSource==='hosted'?'hosted':'unverified')"));
 const inline=page.match(/<script>\s*([\s\S]*?)<\/script>/);assert.ok(inline);new Function(inline[1]);
 console.log('Deep Dive 3.8 tests PASS: 16 views, conflicts, missing data, chronology and browser-script syntax');
