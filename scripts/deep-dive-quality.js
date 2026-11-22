@@ -30,5 +30,11 @@ function deepDiveQualitySummary(p,all){
  const role=p.stat.includes('Rushing')||p.stat==='Carries'?'rush':p.stat.includes('Receiving')||p.stat==='Receptions'||p.stat==='Targets'?'receive':null;
  if(!role||!match.length)return null;
  const recent=match.slice(-5),sum=k=>recent.reduce((a,r)=>a+r[k],0),metrics=role==='rush'?{chances:sum('rush_attempts'),redZone:sum('red_zone_carries'),goalLine:sum('goal_line_carries'),deep:null,air:null}:{chances:sum('targets'),redZone:sum('red_zone_targets'),goalLine:null,deep:sum('deep_targets'),air:sum('air_yards')};
- return {games:match.length,recentGames:recent.length,role,metrics,seasonCount:new Set(match.map(r=>r.season)).size};
+ const count=recent.length,perGame=Object.fromEntries(Object.entries(metrics).map(([key,val])=>[key,val===null?null:val/count]));
+ const highValueRate=metrics.chances>0?metrics.redZone/metrics.chances:null;
+ const opportunityCounts=recent.map(r=>role==='rush'?r.rush_attempts:r.targets);
+ const average=metrics.chances/count,variance=opportunityCounts.reduce((a,n)=>a+(n-average)**2,0)/count;
+ const coefficientOfVariation=average>0?Math.sqrt(variance)/average:null;
+ const coverage=p.records.length?match.length/new Set(p.records.map(r=>[r.season,r.week,r.team].join('|'))).size:null;
+ return {games:match.length,recentGames:count,role,metrics,perGame,highValueRate,coefficientOfVariation,coverage,seasonCount:new Set(match.map(r=>r.season)).size};
 }
