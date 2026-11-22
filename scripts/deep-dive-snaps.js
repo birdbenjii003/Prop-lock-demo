@@ -16,10 +16,17 @@ function deepDiveParseVerifiedSnapCsv(text,parse){
  if(result.length<500)throw Error('Verified snap evidence below minimum 500 player-weeks');
  return result;
 }
+// Build player-key lookup once per loaded archive, avoiding a 54k-row scan on each tab click.
+const ddSnapIndexCache=new WeakMap();
+function ddSnapPlayerIndex(all){
+ let index=ddSnapIndexCache.get(all);
+ if(!index){index=new Map();for(const r of all){let list=index.get(r.playerId);if(!list){list=[];index.set(r.playerId,list)}list.push(r)}ddSnapIndexCache.set(all,index)}
+ return index;
+}
 function deepDiveMatchedSnaps(p,all){
  if(!p||p.source!=='imported'||!p.playerKey?.startsWith('id:')||!Array.isArray(p.records)||!Array.isArray(all))return [];
  const id=p.playerKey.slice(3),games=new Set(p.records.map(r=>[r.season,r.week,r.team].join('|')));
- return all.filter(s=>s.playerId===id&&games.has([s.season,s.week,s.team].join('|'))).sort((a,b)=>a.season-b.season||a.week-b.week);
+ return (ddSnapPlayerIndex(all).get(id)||[]).filter(s=>games.has([s.season,s.week,s.team].join('|'))).sort((a,b)=>a.season-b.season||a.week-b.week);
 }
 function deepDiveSnapSummary(p,all){
  const matched=deepDiveMatchedSnaps(p,all),last=matched.slice(-5);
