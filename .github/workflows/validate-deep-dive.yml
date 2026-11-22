@@ -16,6 +16,8 @@ on:
       - 'tests/test_deep_dive_asymmetric_audit.py'
       - 'tests/test_deep_dive_stage3_verification.py'
       - 'tests/test_deep_dive_independent_checks.py'
+      - 'scripts/deep-dive-live-smoke.py'
+      - 'tests/test_deep_dive_live_smoke.py'
       - 'scripts/verify_nfl_snap_ids.py'
       - 'tests/test_verified_snap_ids.py'
       - 'scripts/deep-dive-snaps.js'
