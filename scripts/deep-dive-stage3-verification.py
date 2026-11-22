@@ -98,6 +98,9 @@ def verify(rows):
             'model_mae':g['model_mae'],
             'prior_5_game_baseline_mae':g['last5_baseline_mae'],
             'model_beats_baseline':g['model_beats_baseline'],
+            'miss_direction':g.get('miss_direction'),
+            'weeks_below_target':g.get('weeks_below_target'),
+            'weekly_coverage':g.get('weekly_coverage'),
             **category_diagnostics(g),
             'note':'Historical checks only. No independently certified player-specific future interval.'
         }
