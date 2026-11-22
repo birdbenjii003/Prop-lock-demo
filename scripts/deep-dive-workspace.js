@@ -13,6 +13,21 @@ function ddwStd(a){if(a.length<2)return null;const m=ddwMean(a);return Math.sqrt
 function ddwMedian(a){if(!a.length)return null;const b=[...a].sort((x,y)=>x-y),n=b.length;return n%2?b[(n-1)/2]:(b[n/2-1]+b[n/2])/2}
 function ddwId(r){return String(r.season)+':'+String(r.week)}
 function ddwRounded(x){return x===null||!Number.isFinite(x)?null:Math.round(x*100)/100}
+// Fixed chronological diagnostic: earlier forecast errors set the radius;
+// later errors evaluate coverage, never re-fit the radius.
+function ddwRollingRangeAudit(backtest){
+ const eligible=backtest.filter(r=>Number.isFinite(r.historyPrediction)&&Number.isFinite(r.actual)&&Number.isFinite(r.historyError));
+ if(eligible.length<30)return {available:false,reason:'At least 30 chronological prior-only forecasts are required (20 calibration, 10 evaluation).',count:eligible.length};
+ const calibration=eligible.slice(0,20),evaluation=eligible.slice(20);
+ const errors=calibration.map(r=>r.historyError).sort((a,b)=>a-b);
+ const rank=Math.ceil((errors.length+1)*0.8),radius=errors[Math.min(errors.length-1,rank-1)];
+ const covered=evaluation.filter(r=>Math.abs(r.actual-r.historyPrediction)<=radius).length;
+ const width=2*radius,observedCoverage=covered/evaluation.length;
+ return {available:true,calibrationCount:calibration.length,evaluationCount:evaluation.length,
+  radius,width,covered,observedCoverage,targetCoverage:0.8,
+  status:observedCoverage>=0.8?'MET_IN_THIS_SAMPLE':'BELOW_TARGET_IN_THIS_SAMPLE',
+  warning:'Retrospective sequential diagnostic only; profile selection and data provenance are not independently frozen. This is not a validated next-game interval or a line probability.'};
+}
 function deepDiveWorkspace(p,profiles,line){
  const imported=p?.source==='imported'&&Array.isArray(p.records),rows=imported?
   [...p.records].filter(r=>Number.isFinite(r.value)).sort((a,b)=>a.season-b.season||a.week-b.week):[];
@@ -48,6 +63,7 @@ function deepDiveWorkspace(p,profiles,line){
    historyError:Math.abs(prediction-rows[i].value),oppError:opportunityPrediction===null?null:Math.abs(opportunityPrediction-rows[i].value)});
  }
  const dev=backtest.slice(0,-2),hold=backtest.slice(-2);
+ const rollingRangeAudit=ddwRollingRangeAudit(backtest);
  const mae=(a,key)=>a.length?ddwMean(a.filter(r=>r[key]!==null).map(r=>r[key])):null;
  // Only report an interval if frozen calibration has enough unseen errors; today's data is not sufficient.
  const futureInterval={available:false,reason:'A fixed independent evaluation period, pre-declared model and sufficient out-of-time residuals are required; not currently verified.'};
@@ -67,7 +83,7 @@ function deepDiveWorkspace(p,profiles,line){
   line,alternatives,volumeLabel,paired,lastPaired,recentVolume,previousVolume,rate,
   perGameRates:lastPaired.map(r=>({week:r.week,season:r.season,rate:r.value/r.volume})),
   latestTeam,opponentHistory,recentShare,previousShare,shareGames:rows.filter(r=>Number.isFinite(r.opportunityShare)).length,seasonCount:new Set(rows.map(r=>r.season)).size,backtest,development:dev,holdout:hold,developmentMae:mae(dev,'historyError'),holdoutMae:mae(hold,'historyError'),
-  holdoutOpportunityMae:mae(hold,'oppError'),futureInterval,missing,
+  holdoutOpportunityMae:mae(hold,'oppError'),rollingRangeAudit,futureInterval,missing,
   warnings:['The imported profile set is selected using season-wide activity; this can introduce retrospective selection bias.',
   'The recent-two-test holdout is not a separately frozen evaluation dataset. Historical thresholds are not sportsbook odds.']};
 }
