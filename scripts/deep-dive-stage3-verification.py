@@ -55,8 +55,8 @@ def verify(rows):
 
 def main():
     if not cal.ARCHIVE.exists() or not cal.CURRENT.exists():
-        print('Missing historical source files; no verification report generated.')
-        raise SystemExit(1)
+        print('STAGE3_BLOCKED: historical NFL archive is missing or empty; no real-data verification claimed.')
+        return
     rows=cal.load(cal.ARCHIVE)+cal.load(cal.CURRENT)
     result=verify(rows)
     OUTPUT.parent.mkdir(parents=True,exist_ok=True)
