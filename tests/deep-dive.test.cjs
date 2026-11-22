@@ -47,16 +47,35 @@ assert.equal(api.ddCohortEvidenceGate({...sufficient,observed_coverage:.76},10).
 assert.equal(api.ddCohortEvidenceGate(sufficient,5).status,'INSUFFICIENT_EVIDENCE');
 assert.equal(api.ddCohortEvidenceGate({...sufficient,test_players:4},10).status,'INSUFFICIENT_EVIDENCE');
 assert.equal(api.ddCohortEvidenceGate({...sufficient,observed_coverage:NaN},10).status,'INSUFFICIENT_EVIDENCE');
-const evidence={version:'deep-dive-cross-season-v2',groups:{rushing_yards:sufficient}};
-assert.match(api.ddViewHtml(p,[p,carries],50.5,'projection',escape,fmt,null,'No snaps',evidence),/DESCRIPTIVE_TARGET_MET/);
+const evidence={version:'deep-dive-cross-season-v2',calibration_year:2025,test_year:2026,groups:{rushing_yards:sufficient}};
+assert.match(api.ddViewHtml(p,[p,carries],50.5,'projection',escape,fmt,null,'No snaps',evidence,null,'Unavailable','hosted'),/DESCRIPTIVE_TARGET_MET/);
 const weak={...evidence,groups:{rushing_yards:{...sufficient,observed_coverage:.7}}};
-const cautionHtml=api.ddViewHtml(p,[p,carries],50.5,'projection',escape,fmt,null,'No snaps',weak);
+const cautionHtml=api.ddViewHtml(p,[p,carries],50.5,'projection',escape,fmt,null,'No snaps',weak,null,'Unavailable','hosted');
 assert.match(cautionHtml,/BELOW_TARGET/);
 assert.match(cautionHtml,/do not treat this as a reliable player prediction/);
-const noEvidence=api.ddViewHtml(p,[p,carries],50.5,'projection',escape,fmt,null,'No snaps',{version:'deep-dive-cross-season-v2',groups:{}});
+const noEvidence=api.ddViewHtml(p,[p,carries],50.5,'projection',escape,fmt,null,'No snaps',{version:'deep-dive-cross-season-v2',calibration_year:2025,test_year:2026,groups:{}},null,'Unavailable','hosted');
 assert.match(noEvidence,/INSUFFICIENT_EVIDENCE|interval evidence unavailable/);
+// Stage 4 coverage: all tabs render sparse/missing data without leaking cohort claims.
+const cohortEvidence={version:'deep-dive-cross-season-v2',calibration_year:2025,test_year:2026,groups:{rushing_yards:sufficient}};
+for(const [tab] of api.DEEP_DIVE_TABS){
+ const sparseHtml=api.ddViewHtml(sparse,[sparse],50.5,tab,escape,fmt,null,'Unavailable',cohortEvidence);
+ assert.match(sparseHtml,/Deep Dive 3.8/);
+ assert.match(sparseHtml,/aria-pressed="true"/);
+ assert.doesNotMatch(sparseHtml,/DESCRIPTIVE_TARGET_MET/);
+}
+const hosted=api.ddViewHtml(p,[p,carries],50.5,'projection',escape,fmt,null,'Missing',cohortEvidence,null,'Missing','hosted');
+assert.match(hosted,/DESCRIPTIVE_TARGET_MET/);
+const manual=api.ddViewHtml(p,[p,carries],50.5,'projection',escape,fmt,null,'Missing',cohortEvidence,null,'Missing','unverified');
+assert.doesNotMatch(manual,/DESCRIPTIVE_TARGET_MET/);
+assert.match(manual,/interval evidence unavailable/);
+const wrongYears=api.ddViewHtml(p,[p,carries],50.5,'projection',escape,fmt,null,'Missing',{...cohortEvidence,test_year:2025},null,'Missing','hosted');
+assert.doesNotMatch(wrongYears,/DESCRIPTIVE_TARGET_MET/);
+const fake={...p,stat:'<img src=x onerror=alert(1)>'};
+const escaped=api.ddViewHtml(fake,[fake],50.5,'overview',escape,fmt);
+assert.ok(escaped.includes('&lt;img src=x onerror=alert(1)&gt;'));
+assert.ok(!escaped.includes('<img src=x onerror=alert(1)>'));
 const page=read('index.html');
 assert.ok(page.includes('<script src="./scripts/deep-dive-views.js"></script>'));
-assert.ok(page.includes('ddViewHtml(p,importedProps,line,deepDiveActiveTab,escapeHtml,fmt,deepDiveSnapSummary(p,deepDiveVerifiedSnaps),deepDiveSnapStatus,deepDiveIntervalAudit,deepDiveQualitySummary(p,deepDiveQualityRows),deepDiveQualityStatus)'));
+assert.ok(page.includes('ddViewHtml(p,importedProps,line,deepDiveActiveTab,escapeHtml,fmt,deepDiveSnapSummary(p,deepDiveVerifiedSnaps),deepDiveSnapStatus,deepDiveIntervalAudit,deepDiveQualitySummary(p,deepDiveQualityRows),deepDiveQualityStatus,nflSource==='hosted'?'hosted':'unverified')'));
 const inline=page.match(/<script>\s*([\s\S]*?)<\/script>/);assert.ok(inline);new Function(inline[1]);
 console.log('Deep Dive 3.8 tests PASS: 16 views, conflicts, missing data, chronology and browser-script syntax');

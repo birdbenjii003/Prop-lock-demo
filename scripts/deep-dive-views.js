@@ -11,7 +11,7 @@ function ddCohortEvidenceGate(group,playerGames){
  if(group.observed_coverage<0.8)return {status:'BELOW_TARGET',reason:'Observed 2026 coverage fell below the historical 80% target; do not treat this as a reliable player prediction.'};
  return {status:'DESCRIPTIVE_TARGET_MET',reason:'The retrospective cohort met its coverage target; prospective and player-specific calibration remain unverified.'};
 }
-function ddViewHtml(p,profiles,line,tab,escape,format,snapInfo=null,snapStatus='Verified snap evidence not available',audit=null,quality=null,qualityStatus='Opportunity quality evidence not available'){
+function ddViewHtml(p,profiles,line,tab,escape,format,snapInfo=null,snapStatus='Verified snap evidence not available',audit=null,quality=null,qualityStatus='Opportunity quality evidence not available',sourceContext='unverified'){
  const x=deepDiveWorkspace(p,profiles,line);
  const safe=v=>escape(String(v===undefined||v===null?'Unavailable':v));
  const num=v=>v===null||v===undefined||!Number.isFinite(v)?'Unavailable':format(v);
@@ -22,7 +22,8 @@ function ddViewHtml(p,profiles,line,tab,escape,format,snapInfo=null,snapStatus='
  const title=(t,d)=>'<h4>'+safe(t)+'</h4>'+para(d);
  const alternative=x.alternatives;
  const auditKey=({'Rushing Yards':'rushing_yards','Receiving Yards':'receiving_yards','Passing Yards':'passing_yards','Receptions':'receptions','Targets':'targets','Carries':'carries'})[p.stat];
- const observedAudit=audit?.version==='deep-dive-cross-season-v2'&&auditKey?audit.groups?.[auditKey]:null;
+ const verifiedHosted=sourceContext==='hosted'&&x.source==='imported'&&x.sport==='NFL';
+ const observedAudit=verifiedHosted&&audit?.version==='deep-dive-cross-season-v2'&&audit?.calibration_year===2025&&audit?.test_year===2026&&auditKey?audit.groups?.[auditKey]:null;
  const cohortGate=ddCohortEvidenceGate(observedAudit,x.n);
  const audited=cohortGate.status!=='INSUFFICIENT_EVIDENCE'&&alternative?.historical!==null;
  const radius=audited?observedAudit.conformal_radius:null;
