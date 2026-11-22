@@ -24,6 +24,106 @@
       "model_mae": 20.601,
       "prior_5_game_baseline_mae": 20.912,
       "model_beats_baseline": true,
+      "miss_direction": {
+        "above_upper": 98,
+        "below_lower": 78,
+        "total": 176
+      },
+      "weeks_below_target": [
+        7,
+        8,
+        11
+      ],
+      "weekly_coverage": [
+        {
+          "week": 1,
+          "games": 87,
+          "covered": 72,
+          "coverage": 0.8276,
+          "above_upper": 8,
+          "below_lower": 7
+        },
+        {
+          "week": 2,
+          "games": 96,
+          "covered": 79,
+          "coverage": 0.8229,
+          "above_upper": 7,
+          "below_lower": 10
+        },
+        {
+          "week": 3,
+          "games": 92,
+          "covered": 75,
+          "coverage": 0.8152,
+          "above_upper": 8,
+          "below_lower": 9
+        },
+        {
+          "week": 4,
+          "games": 92,
+          "covered": 74,
+          "coverage": 0.8043,
+          "above_upper": 10,
+          "below_lower": 8
+        },
+        {
+          "week": 5,
+          "games": 87,
+          "covered": 70,
+          "coverage": 0.8046,
+          "above_upper": 13,
+          "below_lower": 4
+        },
+        {
+          "week": 6,
+          "games": 81,
+          "covered": 67,
+          "coverage": 0.8272,
+          "above_upper": 7,
+          "below_lower": 7
+        },
+        {
+          "week": 7,
+          "games": 83,
+          "covered": 61,
+          "coverage": 0.7349,
+          "above_upper": 14,
+          "below_lower": 8
+        },
+        {
+          "week": 8,
+          "games": 84,
+          "covered": 62,
+          "coverage": 0.7381,
+          "above_upper": 13,
+          "below_lower": 9
+        },
+        {
+          "week": 9,
+          "games": 89,
+          "covered": 73,
+          "coverage": 0.8202,
+          "above_upper": 9,
+          "below_lower": 7
+        },
+        {
+          "week": 10,
+          "games": 81,
+          "covered": 65,
+          "coverage": 0.8025,
+          "above_upper": 8,
+          "below_lower": 8
+        },
+        {
+          "week": 11,
+          "games": 8,
+          "covered": 6,
+          "coverage": 0.75,
+          "above_upper": 1,
+          "below_lower": 1
+        }
+      ],
       "coverage_shortfall_percentage_points": 0.0,
       "historical_mae_improvement_percent": 1.49,
       "needs_coverage_review": false,
@@ -43,6 +143,110 @@
       "model_mae": 20.163,
       "prior_5_game_baseline_mae": 20.828,
       "model_beats_baseline": true,
+      "miss_direction": {
+        "above_upper": 254,
+        "below_lower": 180,
+        "total": 434
+      },
+      "weeks_below_target": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        7,
+        10
+      ],
+      "weekly_coverage": [
+        {
+          "week": 1,
+          "games": 210,
+          "covered": 162,
+          "coverage": 0.7714,
+          "above_upper": 24,
+          "below_lower": 24
+        },
+        {
+          "week": 2,
+          "games": 213,
+          "covered": 165,
+          "coverage": 0.7746,
+          "above_upper": 25,
+          "below_lower": 23
+        },
+        {
+          "week": 3,
+          "games": 203,
+          "covered": 161,
+          "coverage": 0.7931,
+          "above_upper": 23,
+          "below_lower": 19
+        },
+        {
+          "week": 4,
+          "games": 199,
+          "covered": 149,
+          "coverage": 0.7487,
+          "above_upper": 33,
+          "below_lower": 17
+        },
+        {
+          "week": 5,
+          "games": 184,
+          "covered": 134,
+          "coverage": 0.7283,
+          "above_upper": 29,
+          "below_lower": 21
+        },
+        {
+          "week": 6,
+          "games": 194,
+          "covered": 156,
+          "coverage": 0.8041,
+          "above_upper": 25,
+          "below_lower": 13
+        },
+        {
+          "week": 7,
+          "games": 193,
+          "covered": 154,
+          "coverage": 0.7979,
+          "above_upper": 23,
+          "below_lower": 16
+        },
+        {
+          "week": 8,
+          "games": 192,
+          "covered": 158,
+          "coverage": 0.8229,
+          "above_upper": 23,
+          "below_lower": 11
+        },
+        {
+          "week": 9,
+          "games": 207,
+          "covered": 174,
+          "coverage": 0.8406,
+          "above_upper": 21,
+          "below_lower": 12
+        },
+        {
+          "week": 10,
+          "games": 197,
+          "covered": 146,
+          "coverage": 0.7411,
+          "above_upper": 28,
+          "below_lower": 23
+        },
+        {
+          "week": 11,
+          "games": 15,
+          "covered": 14,
+          "coverage": 0.9333,
+          "above_upper": 0,
+          "below_lower": 1
+        }
+      ],
       "coverage_shortfall_percentage_points": 1.62,
       "historical_mae_improvement_percent": 3.19,
       "needs_coverage_review": true,
@@ -62,6 +266,108 @@
       "model_mae": 68.441,
       "prior_5_game_baseline_mae": 71.008,
       "model_beats_baseline": true,
+      "miss_direction": {
+        "above_upper": 31,
+        "below_lower": 31,
+        "total": 62
+      },
+      "weeks_below_target": [
+        1,
+        5,
+        7,
+        8,
+        10
+      ],
+      "weekly_coverage": [
+        {
+          "week": 1,
+          "games": 35,
+          "covered": 26,
+          "coverage": 0.7429,
+          "above_upper": 6,
+          "below_lower": 3
+        },
+        {
+          "week": 2,
+          "games": 37,
+          "covered": 30,
+          "coverage": 0.8108,
+          "above_upper": 3,
+          "below_lower": 4
+        },
+        {
+          "week": 3,
+          "games": 34,
+          "covered": 29,
+          "coverage": 0.8529,
+          "above_upper": 3,
+          "below_lower": 2
+        },
+        {
+          "week": 4,
+          "games": 31,
+          "covered": 27,
+          "coverage": 0.871,
+          "above_upper": 4,
+          "below_lower": 0
+        },
+        {
+          "week": 5,
+          "games": 32,
+          "covered": 25,
+          "coverage": 0.7812,
+          "above_upper": 3,
+          "below_lower": 4
+        },
+        {
+          "week": 6,
+          "games": 28,
+          "covered": 25,
+          "coverage": 0.8929,
+          "above_upper": 2,
+          "below_lower": 1
+        },
+        {
+          "week": 7,
+          "games": 29,
+          "covered": 23,
+          "coverage": 0.7931,
+          "above_upper": 2,
+          "below_lower": 4
+        },
+        {
+          "week": 8,
+          "games": 31,
+          "covered": 22,
+          "coverage": 0.7097,
+          "above_upper": 3,
+          "below_lower": 6
+        },
+        {
+          "week": 9,
+          "games": 33,
+          "covered": 28,
+          "coverage": 0.8485,
+          "above_upper": 2,
+          "below_lower": 3
+        },
+        {
+          "week": 10,
+          "games": 30,
+          "covered": 23,
+          "coverage": 0.7667,
+          "above_upper": 3,
+          "below_lower": 4
+        },
+        {
+          "week": 11,
+          "games": 3,
+          "covered": 3,
+          "coverage": 1.0,
+          "above_upper": 0,
+          "below_lower": 0
+        }
+      ],
       "coverage_shortfall_percentage_points": 0.0,
       "historical_mae_improvement_percent": 3.62,
       "needs_coverage_review": false,
@@ -81,6 +387,109 @@
       "model_mae": 1.467,
       "prior_5_game_baseline_mae": 1.514,
       "model_beats_baseline": true,
+      "miss_direction": {
+        "above_upper": 224,
+        "below_lower": 182,
+        "total": 406
+      },
+      "weeks_below_target": [
+        1,
+        2,
+        3,
+        4,
+        8,
+        10
+      ],
+      "weekly_coverage": [
+        {
+          "week": 1,
+          "games": 210,
+          "covered": 160,
+          "coverage": 0.7619,
+          "above_upper": 23,
+          "below_lower": 27
+        },
+        {
+          "week": 2,
+          "games": 213,
+          "covered": 163,
+          "coverage": 0.7653,
+          "above_upper": 28,
+          "below_lower": 22
+        },
+        {
+          "week": 3,
+          "games": 203,
+          "covered": 153,
+          "coverage": 0.7537,
+          "above_upper": 30,
+          "below_lower": 20
+        },
+        {
+          "week": 4,
+          "games": 199,
+          "covered": 159,
+          "coverage": 0.799,
+          "above_upper": 24,
+          "below_lower": 16
+        },
+        {
+          "week": 5,
+          "games": 184,
+          "covered": 148,
+          "coverage": 0.8043,
+          "above_upper": 21,
+          "below_lower": 15
+        },
+        {
+          "week": 6,
+          "games": 194,
+          "covered": 157,
+          "coverage": 0.8093,
+          "above_upper": 24,
+          "below_lower": 13
+        },
+        {
+          "week": 7,
+          "games": 193,
+          "covered": 162,
+          "coverage": 0.8394,
+          "above_upper": 14,
+          "below_lower": 17
+        },
+        {
+          "week": 8,
+          "games": 192,
+          "covered": 152,
+          "coverage": 0.7917,
+          "above_upper": 23,
+          "below_lower": 17
+        },
+        {
+          "week": 9,
+          "games": 207,
+          "covered": 178,
+          "coverage": 0.8599,
+          "above_upper": 16,
+          "below_lower": 13
+        },
+        {
+          "week": 10,
+          "games": 197,
+          "covered": 156,
+          "coverage": 0.7919,
+          "above_upper": 21,
+          "below_lower": 20
+        },
+        {
+          "week": 11,
+          "games": 15,
+          "covered": 13,
+          "coverage": 0.8667,
+          "above_upper": 0,
+          "below_lower": 2
+        }
+      ],
       "coverage_shortfall_percentage_points": 0.23,
       "historical_mae_improvement_percent": 3.1,
       "needs_coverage_review": true,
@@ -100,6 +509,110 @@
       "model_mae": 1.904,
       "prior_5_game_baseline_mae": 1.957,
       "model_beats_baseline": true,
+      "miss_direction": {
+        "above_upper": 237,
+        "below_lower": 182,
+        "total": 419
+      },
+      "weeks_below_target": [
+        1,
+        2,
+        3,
+        4,
+        6,
+        8,
+        10
+      ],
+      "weekly_coverage": [
+        {
+          "week": 1,
+          "games": 210,
+          "covered": 161,
+          "coverage": 0.7667,
+          "above_upper": 23,
+          "below_lower": 26
+        },
+        {
+          "week": 2,
+          "games": 213,
+          "covered": 161,
+          "coverage": 0.7559,
+          "above_upper": 22,
+          "below_lower": 30
+        },
+        {
+          "week": 3,
+          "games": 203,
+          "covered": 154,
+          "coverage": 0.7586,
+          "above_upper": 30,
+          "below_lower": 19
+        },
+        {
+          "week": 4,
+          "games": 199,
+          "covered": 150,
+          "coverage": 0.7538,
+          "above_upper": 30,
+          "below_lower": 19
+        },
+        {
+          "week": 5,
+          "games": 184,
+          "covered": 153,
+          "coverage": 0.8315,
+          "above_upper": 20,
+          "below_lower": 11
+        },
+        {
+          "week": 6,
+          "games": 194,
+          "covered": 150,
+          "coverage": 0.7732,
+          "above_upper": 30,
+          "below_lower": 14
+        },
+        {
+          "week": 7,
+          "games": 193,
+          "covered": 161,
+          "coverage": 0.8342,
+          "above_upper": 16,
+          "below_lower": 16
+        },
+        {
+          "week": 8,
+          "games": 192,
+          "covered": 152,
+          "coverage": 0.7917,
+          "above_upper": 24,
+          "below_lower": 16
+        },
+        {
+          "week": 9,
+          "games": 207,
+          "covered": 175,
+          "coverage": 0.8454,
+          "above_upper": 19,
+          "below_lower": 13
+        },
+        {
+          "week": 10,
+          "games": 197,
+          "covered": 157,
+          "coverage": 0.797,
+          "above_upper": 23,
+          "below_lower": 17
+        },
+        {
+          "week": 11,
+          "games": 15,
+          "covered": 14,
+          "coverage": 0.9333,
+          "above_upper": 0,
+          "below_lower": 1
+        }
+      ],
       "coverage_shortfall_percentage_points": 0.88,
       "historical_mae_improvement_percent": 2.71,
       "needs_coverage_review": true,
@@ -119,6 +632,110 @@
       "model_mae": 3.56,
       "prior_5_game_baseline_mae": 3.578,
       "model_beats_baseline": true,
+      "miss_direction": {
+        "above_upper": 108,
+        "below_lower": 77,
+        "total": 185
+      },
+      "weeks_below_target": [
+        1,
+        2,
+        5,
+        7,
+        8,
+        9,
+        11
+      ],
+      "weekly_coverage": [
+        {
+          "week": 1,
+          "games": 87,
+          "covered": 64,
+          "coverage": 0.7356,
+          "above_upper": 12,
+          "below_lower": 11
+        },
+        {
+          "week": 2,
+          "games": 96,
+          "covered": 76,
+          "coverage": 0.7917,
+          "above_upper": 9,
+          "below_lower": 11
+        },
+        {
+          "week": 3,
+          "games": 92,
+          "covered": 74,
+          "coverage": 0.8043,
+          "above_upper": 10,
+          "below_lower": 8
+        },
+        {
+          "week": 4,
+          "games": 92,
+          "covered": 78,
+          "coverage": 0.8478,
+          "above_upper": 9,
+          "below_lower": 5
+        },
+        {
+          "week": 5,
+          "games": 87,
+          "covered": 69,
+          "coverage": 0.7931,
+          "above_upper": 10,
+          "below_lower": 8
+        },
+        {
+          "week": 6,
+          "games": 81,
+          "covered": 67,
+          "coverage": 0.8272,
+          "above_upper": 9,
+          "below_lower": 5
+        },
+        {
+          "week": 7,
+          "games": 83,
+          "covered": 61,
+          "coverage": 0.7349,
+          "above_upper": 15,
+          "below_lower": 7
+        },
+        {
+          "week": 8,
+          "games": 84,
+          "covered": 66,
+          "coverage": 0.7857,
+          "above_upper": 12,
+          "below_lower": 6
+        },
+        {
+          "week": 9,
+          "games": 89,
+          "covered": 69,
+          "coverage": 0.7753,
+          "above_upper": 12,
+          "below_lower": 8
+        },
+        {
+          "week": 10,
+          "games": 81,
+          "covered": 65,
+          "coverage": 0.8025,
+          "above_upper": 9,
+          "below_lower": 7
+        },
+        {
+          "week": 11,
+          "games": 8,
+          "covered": 6,
+          "coverage": 0.75,
+          "above_upper": 1,
+          "below_lower": 1
+        }
+      ],
       "coverage_shortfall_percentage_points": 1.02,
       "historical_mae_improvement_percent": 0.5,
       "needs_coverage_review": true,
