@@ -45,7 +45,7 @@ async function main(){
   });
   await step('Load hosted NFL player history',async()=>{
    await page.locator('#autoNFL').click();
-   await page.waitForFunction(()=>document.querySelector('#autoNFL')?.disabled===false,{timeout:90000});
+   await page.waitForFunction(()=>document.querySelector('#autoNFL')?.disabled===false,null,{timeout:90000});
    const status=await page.locator('#importStatus').innerText();
    assert.match(status,/NFL 2023–2026 weekly stats/);
    assert.match(status,/public site|device cache/);
