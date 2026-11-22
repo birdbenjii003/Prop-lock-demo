@@ -1,0 +1,18 @@
+'use strict';
+const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
+const src=fs.readFileSync('scripts/deep-dive-quality.js','utf8');
+const lib=vm.runInNewContext(src+'\n({deepDiveParseQualityCSV,deepDiveQualitySummary})');
+const header='player_id,season,week,team,rush_attempts,red_zone_carries,goal_line_carries,targets,red_zone_targets,deep_targets,air_yards';
+const rows=Array.from({length:500},(_,i)=>`P${i},2025,1,A,12,2,1,0,0,0,0`);
+rows[0]='RB,2025,1,A,15,3,1,0,0,0,0';
+const parse=t=>t.trim().split('\n').map(l=>l.split(','));
+const all=lib.deepDiveParseQualityCSV(header+'\n'+rows.join('\n'),parse);
+assert.equal(all.length,500);
+const p={source:'imported',playerKey:'id:RB',stat:'Rushing Yards',records:[{season:2025,week:1,team:'A',value:75}]};
+const q=lib.deepDiveQualitySummary(p,all);
+assert.equal(q.metrics.redZone,3);assert.equal(q.metrics.goalLine,1);
+assert.equal(lib.deepDiveQualitySummary({...p,playerKey:'name:RB'},all),null);
+assert.equal(lib.deepDiveQualitySummary({...p,records:[{season:2025,week:1,team:'B'}]},all),null);
+assert.throws(()=>lib.deepDiveParseQualityCSV(header+'\n'+[...rows,rows[0]].join('\n'),parse),/Duplicate/);
+assert.throws(()=>lib.deepDiveParseQualityCSV(header+'\n'+rows.map(r=>r.replace(',15,3,1,',',15,22,1,')).join('\n'),parse),/Impossible/);
+console.log('Deep Dive PBP quality joins and guards PASS');
