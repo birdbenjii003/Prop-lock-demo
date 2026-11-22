@@ -40,7 +40,7 @@
 .deep-dive-v2{background:#152935;border:1px solid #48727a;border-radius:13px;padding:16px;margin:14px 0}.deep-dive-v2 h3{font-size:17px;margin:0 0 7px}.deep-dive-v2 h4{font-size:13px;margin:12px 0 7px}.deep-dive-v2 p{font-size:12px;line-height:1.6;color:#c1d2dc}.deep-dive-v2 .dd-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:12px 0}.deep-dive-v2 .dd-grid>div{background:#1d3945;padding:11px;border:1px solid #416273;border-radius:9px}.deep-dive-v2 .dd-grid b{display:block;font-size:19px;color:#c5eadb}.deep-dive-v2 .dd-grid span{display:block;font-size:11px;color:#b6cbd6;line-height:1.3}.deep-dive-v2 .dd-warning{background:#40331f;border:1px solid #896e40;border-radius:8px;padding:10px;margin:7px 0}.deep-dive-v2 .dd-warning b{color:#f4d39a}.deep-dive-v2 .dd-warning p{margin:5px 0 0;color:#e7d7b9}.deep-dive-v2 details{border-top:1px solid #37535d;padding:10px 0}.deep-dive-v2 summary{cursor:pointer;font-weight:650;color:#d2efe8}.deep-dive-v2 .dd-guard{color:#ecd09e}
 .dd3{background:#122a30;border:1px solid #498277;border-radius:14px;padding:16px;margin:16px 0}.dd3-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.dd3-top h3{font-size:19px;margin:4px 0}.dd3-eyebrow{font-size:10px;color:#9dddce;letter-spacing:1px}.dd3-pill{font-size:10px;color:#cee6db;border:1px solid #426c61;border-radius:99px;padding:6px 9px}.dd3 p{font-size:12px;line-height:1.6;color:#bdd5d2}.dd3-tabs{display:flex;gap:6px;overflow-x:auto;padding:10px 0 13px;scrollbar-width:thin;flex-wrap:wrap}.dd3-tabs button{border:1px solid #42646d;border-radius:8px;background:#1a3540;color:#c5dbdf;font-size:11px;padding:8px 10px;white-space:nowrap}.dd3-tabs button.selected{border-color:#8ddfc1;color:#b4f6da;background:#245149}.dd3-content{background:#142f3d;border-radius:10px;padding:14px;min-height:150px}.dd3-content h4{margin:0 0 6px;font-size:15px}.dd3-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0}.dd3-card{background:#1c3a45;border:1px solid #395d63;border-radius:9px;padding:11px;min-width:0}.dd3-card strong{display:block;color:#a8f0d2;font-size:19px;overflow-wrap:anywhere}.dd3-card span{display:block;font-size:11px;color:#c2d9d5}.dd3-card small{display:block;font-size:10px;color:#aec4cd}.dd3-scroll{max-width:100%;overflow-x:auto}.dd3 table{border-collapse:collapse;min-width:560px;width:100%;font-size:11px}.dd3 th,.dd3 td{border-bottom:1px solid #365767;padding:8px;text-align:left}.dd3 th{color:#98d9c8}.dd3 td{color:#e3e9ed}.dd3-conflict{background:#3a321d;border:1px solid #7c6a45;border-radius:9px;padding:9px;margin:7px 0}.dd3-conflict strong{color:#f0ce8f;font-size:12px}.dd3-missing{font-size:12px;color:#e9c699;border-left:2px solid #b99658;padding:8px 10px;margin:8px 0;background:#2f302b}.dd3-h2h{margin:8px 0;border:1px solid #43666a;border-radius:8px;padding:9px}.dd3-h2h summary{cursor:pointer}.dd3-footer{color:#e5c893!important}
 </style></head><body>
-<div class="layout"><header class="top"><div><div class="logo">PROP <em>LOCK</em></div><div class="subtitle">PERSONAL PLAYER PROP RESEARCH</div></div><div class="pill">● PUBLIC DEMO V3.3</div></header>
+<div class="layout"><header class="top"><div><div class="logo">PROP <em>LOCK</em></div><div class="subtitle">PERSONAL PLAYER PROP RESEARCH</div></div><div class="pill">● PUBLIC DEMO V3.4</div></header>
 <section class="hero"><div><h1>Find the prop. Research the matchup.</h1><p>Explore multi-sport player props and see how Deep Dive, Scenarios, and Trait Match fit together.</p></div><div class="hero-tag">$0 prototype</div></section>
 <nav class="tabs" id="sports" aria-label="Select sport"></nav>
 <div class="toolbar"><input class="search" id="search" type="search" placeholder="Search NFL player, team, or stat..." aria-label="Search players"/><select class="filter" id="category" aria-label="Select prop category"><option value="All">All Stat Categories</option></select><select class="filter" id="position" aria-label="Filter by inferred NFL role"><option value="All">All player roles</option></select></div>
@@ -592,6 +592,20 @@ async function loadOptionalNFLHistory(currentCsv){
   if(!archiveHeader||currentHeader!==archiveHeader)throw Error('Archive schema mismatch: current data retained');
   const historyRows=txt.slice(txt.indexOf('\n')+1).trim();
   if(!historyRows)throw Error('Historical archive is empty');
+  // Verify every published season, trustworthy player identifiers, and unique player-weeks.
+  // Fail closed rather than silently accepting a partial or mislabeled archive.
+  const parsed=parseCsv(txt),headers=parsed[0].map(x=>x.trim());
+  const seasonIndex=headers.indexOf('season'),weekIndex=headers.indexOf('week'),idIndex=headers.indexOf('player_id');
+  if(seasonIndex<0||weekIndex<0||idIndex<0)throw Error('Missing archive identity columns');
+  const counts=new Map([[2023,0],[2024,0],[2025,0]]),identities=new Set();
+  for(const row of parsed.slice(1)){
+   const season=Number(row[seasonIndex]),week=Number(row[weekIndex]),id=row[idIndex];
+   if(!counts.has(season)||!Number.isInteger(week)||week<1||week>22||!id)throw Error('Archive includes invalid or unmatched season/week/player');
+   const key=id+'|'+season+'|'+week;
+   if(identities.has(key))throw Error('Duplicate historical player-week');
+   identities.add(key);counts.set(season,counts.get(season)+1);
+  }
+  if([...counts.values()].some(n=>n<100))throw Error('Archive incomplete: each season needs at least 100 player-games');
   const csv=currentCsv.trimEnd()+'\n'+historyRows+'\n';
   if(csv.length>28*1024*1024)throw Error('Combined archive exceeds 28 MB');
   return {csv,seasons:'2023–2026',warning:''};
