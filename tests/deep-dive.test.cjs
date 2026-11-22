@@ -29,6 +29,18 @@ assert.equal(missing.alternatives.band,null);
 const future={...p,records:p.records.map(r=>({...r,value:r.week===10?999:r.value}))};
 const a=api.deepDiveWorkspace(future,[future,carries],50.5);
 assert.equal(a.backtest[0].historyPrediction,x.backtest[0].historyPrediction);
+// No leakage: later outcomes cannot change the frozen calibration radius.
+const long={...p,playerKey:'long',records:records(Array.from({length:45},(_,i)=>30+i%7))};
+const longA=api.deepDiveWorkspace(long,[long],50.5);
+assert.equal(longA.rollingRangeAudit.available,true);
+assert.equal(longA.rollingRangeAudit.calibrationCount,20);
+assert.equal(longA.rollingRangeAudit.evaluationCount,20);
+assert.equal(longA.futureInterval.available,false);
+const altered={...long,records:long.records.map((r,i)=>i===44?{...r,value:1000}:r)};
+const longB=api.deepDiveWorkspace(altered,[altered],50.5);
+assert.equal(longA.rollingRangeAudit.radius,longB.rollingRangeAudit.radius);
+assert.equal(missing.rollingRangeAudit.available,false);
+assert.match(api.ddViewHtml(long,[long],50.5,'validation',escape,fmt),/Chronological range diagnostic/);
 const page=read('index.html');
 assert.ok(page.includes('<script src="./scripts/deep-dive-views.js"></script>'));
 assert.ok(page.includes('ddViewHtml(p,importedProps,line,deepDiveActiveTab,escapeHtml,fmt,deepDiveSnapSummary(p,deepDiveVerifiedSnaps),deepDiveSnapStatus,deepDiveIntervalAudit,deepDiveQualitySummary(p,deepDiveQualityRows),deepDiveQualityStatus)'));
