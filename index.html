@@ -33,8 +33,9 @@
 .opportunity-section{border:1px solid #46716c;background:#132e35;border-radius:12px;margin-top:15px;padding:14px}.opportunity-section h3{font-size:16px;margin:0 0 8px}.opportunity-section p{font-size:12px;color:#bcd4d9;line-height:1.6}.opportunity-table{min-width:690px;width:100%;border-collapse:collapse;font-size:11px}.opportunity-table th,.opportunity-table td{padding:8px 6px;text-align:left;border-bottom:1px solid #385558}.opportunity-table th{color:#93d7c1}.opportunity-table td{color:#dcebe8}.opportunity-note{font-size:11px!important;color:#eac38c!important;margin-top:10px}
 .quality-section{background:#192a37;border:1px solid #5c6c7d;border-radius:12px;padding:14px;margin-top:16px}.quality-section h3{font-size:16px;margin:0 0 9px}.quality-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:10px 0}.quality-stats div{border:1px solid #39516a;border-radius:8px;padding:10px 5px;text-align:center}.quality-stats strong{font-size:19px;color:#a0ecc4;display:block}.quality-stats span{font-size:10px;color:#b8cbd7}.quality-table{min-width:580px;width:100%;border-collapse:collapse;font-size:11px}.quality-table th,.quality-table td{padding:7px;border-bottom:1px solid #3a5063;text-align:left}.quality-table th{color:#a0cbd7}.quality-section p{font-size:11px;color:#e5c08e;line-height:1.65}
 .calibration-section{border:1px solid #8d7051;border-radius:12px;padding:15px;background:#2b2827;margin-top:17px}.calibration-section h3{margin:0 0 8px;font-size:17px}.calibration-section p{font-size:12px;color:#e0cbb3;line-height:1.6}.calibration-checks{display:grid;gap:7px;margin:12px 0}.calibration-check{display:flex;gap:11px;align-items:start;justify-content:space-between;padding:10px;background:#252b32;border-radius:8px;font-size:12px}.calibration-check b{color:#e9e2d8}.calibration-check span{color:#e8bf88;max-width:55%;text-align:right}.calibration-section button{cursor:pointer;padding:10px;border-radius:8px;color:#d9efeb;background:#254e4e;border:1px solid #54887c}.calibration-status{color:#ffcd91;font-size:13px;font-weight:800;margin:9px 0}
+.research-upgrade{background:#132a35;border:1px solid #49766c;border-radius:13px;padding:15px;margin:15px 0}.research-upgrade h3{font-size:16px;margin:0 0 7px}.research-upgrade .summary-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0}.research-upgrade .summary-grid>div{padding:11px;background:#1b3541;border-radius:9px;border:1px solid #3b5d66}.research-upgrade .summary-grid b{display:block;font-size:19px;color:#99e6c8}.research-upgrade .summary-grid span{display:block;font-size:10px;color:#b8cddd}.research-upgrade p,.research-upgrade li{font-size:12px;color:#c1d7d8;line-height:1.6}.research-upgrade .research-limit{color:#f0c78e}.research-upgrade h4{font-size:13px;margin:15px 0 5px}.research-upgrade ul{padding-left:20px}
 </style></head><body>
-<div class="layout"><header class="top"><div><div class="logo">PROP <em>LOCK</em></div><div class="subtitle">PERSONAL PLAYER PROP RESEARCH</div></div><div class="pill">● PUBLIC DEMO V2.5</div></header>
+<div class="layout"><header class="top"><div><div class="logo">PROP <em>LOCK</em></div><div class="subtitle">PERSONAL PLAYER PROP RESEARCH</div></div><div class="pill">● PUBLIC DEMO V2.7</div></header>
 <section class="hero"><div><h1>Find the prop. Research the matchup.</h1><p>Explore multi-sport player props and see how Deep Dive, Scenarios, and Trait Match fit together.</p></div><div class="hero-tag">$0 prototype</div></section>
 <nav class="tabs" id="sports" aria-label="Select sport"></nav>
 <div class="toolbar"><input class="search" id="search" type="search" placeholder="Search NFL player, team, or stat..." aria-label="Search players"/><select class="filter" id="category" aria-label="Select prop category"><option value="All">All Stat Categories</option></select><select class="filter" id="position" aria-label="Filter by inferred NFL role"><option value="All">All player roles</option></select></div>
@@ -50,6 +51,7 @@
 <script src="./scripts/backtest.js"></script>
 <script src="./scripts/quality.js"></script>
 <script src="./scripts/calibration.js"></script>
+<script src="./scripts/research.js"></script>
 <script>
 'use strict';
 // Fictional records deliberately separate demonstration from live sports data.
@@ -346,6 +348,32 @@ function estimatorPanel(p,line){
  '<div class="estimator-outcome">'+x.status+'</div>'+
  '<p class="rowlabels">Over probability: unavailable · Under probability: unavailable. No pick is issued until real next-game context and separately tested calibration are added.</p></div>';
 }
+function researchUpgradePanel(p){
+ if(p.source!=='imported'||!Array.isArray(p.records))return '<div class="research-upgrade"><h3>V2.7 · Unified research</h3><p>Real historical NFL records are required. Fictional sample profiles do not produce evidence.</p></div>';
+ const opponent=traitSelections[p.id]||p.opp,info=researchIntegration(p,importedProps,opponent,scenarioMultiplier);
+ const d=info.deep,t=info.team,m=info.trait;
+ const num=x=>x===null?'Unavailable':fmt(x);
+ const metric=(value,label)=>'<div><b>'+value+'</b><span>'+label+'</span></div>';
+ return '<div class="research-upgrade"><h3>V2.7 · Unified player research</h3>'+
+ '<p>Deep Dive, historical volume scenarios, and opponent comparisons are presented together. This view uses completed NFL records only and does not invent the next matchup.</p>'+
+ '<h4>01 · Deep Dive: production and usage</h4><div class="summary-grid">'+
+ metric(num(d.baseline),'Exploratory historical blend')+metric(d.games,'Recorded player games')+
+ metric(num(d.recentVolume),d.volumeLabel?'Last five paired games: '+escapeHtml(d.volumeLabel):'Opportunity not mapped')+
+ metric(num(d.recentEfficiency),'Recorded production per opportunity')+'</div>'+
+ '<p>Recent L5 versus previous L5 change: '+num(d.trend)+'. Volatility (L10 sample SD): '+num(d.productionStd)+'. '+escapeHtml(d.availability)+'.</p>'+
+ '<h4>02 · Scenarios: measured opportunity context</h4><div class="summary-grid">'+
+ metric(num(t.passing),'Current-team recent weekly passing attempts')+metric(num(t.rushing),'Current-team recent weekly carries')+
+ metric(num(t.targets),'Current-team recent weekly targets')+
+ metric(num(info.opportunityScenario.illustration),'Hypothetical output with '+Math.round(scenarioMultiplier*100)+'% of recent opportunities')+'</div>'+
+ '<p>Team values are sums from recorded player activity, not a possession-adjusted pace model. The scenario assumes the player’s historical efficiency stays fixed; it cannot represent a real injury or coaching decision. Team comparisons may exclude missing records or prior teams.</p>'+
+ '<h4>03 · Trait Match: opponent allowances</h4><div class="summary-grid">'+
+ metric(m.playerGames,'Eligible player-games against '+escapeHtml(opponent))+metric(m.players,'Distinct comparable players')+
+ metric(num(m.average),'Opponent historical allowed average')+metric(m.difference===null?'Insufficient data':(m.difference>=0?'+':'')+fmt(m.difference)+'%','Difference versus historical role cohort')+'</div>'+
+ '<p>'+escapeHtml(m.note)+'</p>'+
+ '<h4>Integrated research status</h4><p class="research-limit"><strong>'+escapeHtml(info.status)+'</strong></p>'+
+ '<ul>'+info.blockers.map(x=>'<li>'+escapeHtml(x)+'</li>').join('')+'</ul>'+
+ '<p>No calibrated hit probabilities, market odds, or validated full-method future projections are generated. Existing backtests evaluate historical estimators, not the complete three-method research system.</p></div>';
+}
 function renderResearch(){
  const p=propsForView().find(p=>p.id===selectedId&&p.sport===currentSport);
  if(!p||useImported&&!activeProfile){$('research').innerHTML='<div class="eyebrow">RESEARCH WORKSPACE</div><h2>Choose a player prop</h2><p class="muted">Select a card to see your three-step analysis workflow.</p>';return}
@@ -367,6 +395,7 @@ function renderResearch(){
  <div class="panel"><div class="panel-head"><h3>01 · Deep Dive</h3><span class="metricchip">LIVE CALCULATIONS</span></div><p>Actual historical calculations from the available ${p.source==='imported'?'user-supplied':'fictional'} records: median, sample volatility, L5 trend, recency-weighted average, and full-data over/under counts.</p>${metricsPanel(p,line)}</div>
  ${scenarioPanel(p,line)}
  ${traitPanel(p)}
+ ${researchUpgradePanel(p)}
  ${estimatorPanel(p,line)}
  ${validationPanel(p)}
  <div class="panel"><div class="panel-head"><h3>Research conclusion</h3><span class="metricchip">PASS — NOT VALIDATED</span></div><p><b>No validated Over/Under recommendation.</b> Deep Dive is now calculated from the loaded logs. Scenario stress tests are hypothetical, and opponent history is not defensive Trait Match. The historical blend is unvalidated. Defensive allowance is descriptive rather than a full trait matchup. A calibrated outcome probability requires more data and backtesting.</p></div>
