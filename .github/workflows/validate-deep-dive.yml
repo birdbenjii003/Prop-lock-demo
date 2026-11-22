@@ -10,6 +10,8 @@ on:
       - 'tests/deep-dive.test.cjs'
       - 'tests/test_deep_dive_calibration.py'
       - 'scripts/deep-dive-calibration.py'
+      - 'scripts/deep-dive-snaps.js'
+      - 'tests/deep-dive-snaps.test.cjs'
 permissions:
   contents: read
 jobs:
@@ -23,6 +25,8 @@ jobs:
           node-version: '22'
       - name: Run offline Deep Dive fixture tests
         run: node tests/deep-dive.test.cjs
+      - name: Verify snap identity join safeguards
+        run: node tests/deep-dive-snaps.test.cjs
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
