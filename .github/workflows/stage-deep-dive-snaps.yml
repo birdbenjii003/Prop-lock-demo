@@ -1,0 +1,32 @@
+name: Stage free NFL snap participation
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: deep-dive-snap-staging
+  cancel-in-progress: false
+jobs:
+  stage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Stage PFR snap counts (unmatched until crosswalk verified)
+        run: python scripts/update_nfl_snaps.py
+      - name: Commit validated raw snap archive
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/nfl_snap_counts_2023_2025.csv
+          if git diff --cached --quiet; then
+            echo 'No snap changes.'
+          else
+            git commit -m 'Stage free NFL snap history (unmatched PFR identifiers)'
+            git push
+          fi
