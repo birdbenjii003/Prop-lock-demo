@@ -15,7 +15,7 @@ class CalibrationTests(unittest.TestCase):
             rows=[]
             for i,x in enumerate(v):
                 rows.append({'player_id':'P','season':str(2023+i//12),'week':str(i%12+1),
-                   'rushing_yards':str(x),'season_type':'REG'})
+                   'rushing_yards':str(x),'carries':'12','season_type':'REG'})
             return rows
         rows=make([10+i for i in range(48)])
         original=mod.build(rows)['rushing_yards']['calibration']
@@ -31,7 +31,7 @@ class CalibrationTests(unittest.TestCase):
         self.assertIsNone(report['groups']['rushing_yards']['conformal_radius'])
     def test_negative_yardage_is_preserved(self):
         rows=[{'player_id':'A','season':str(2023+i//12),'week':str(i%12+1),
-            'season_type':'REG','rushing_yards':str(-3 if i==3 else 30)} for i in range(48)]
+            'season_type':'REG','carries':'12','rushing_yards':str(-3 if i==3 else 30)} for i in range(48)]
         report=mod.build(rows)
         self.assertEqual(len(report['rushing_yards']['calibration']),12)
     def test_future_2026_does_not_change_2025_radius(self):
@@ -43,7 +43,7 @@ class CalibrationTests(unittest.TestCase):
                         v=20+n%4+week
                         if year==2026:v+=final
                         rows.append({'player_id':f'P{n}','season':str(year),'week':str(week),
-                                     'season_type':'REG','rushing_yards':str(v)})
+                                     'season_type':'REG','carries':'12','rushing_yards':str(v)})
             return rows
         first=mod.audit(dataset(0))['groups']['rushing_yards']
         second=mod.audit(dataset(300))['groups']['rushing_yards']
