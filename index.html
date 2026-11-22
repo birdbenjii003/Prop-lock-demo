@@ -40,7 +40,7 @@
 .deep-dive-v2{background:#152935;border:1px solid #48727a;border-radius:13px;padding:16px;margin:14px 0}.deep-dive-v2 h3{font-size:17px;margin:0 0 7px}.deep-dive-v2 h4{font-size:13px;margin:12px 0 7px}.deep-dive-v2 p{font-size:12px;line-height:1.6;color:#c1d2dc}.deep-dive-v2 .dd-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:12px 0}.deep-dive-v2 .dd-grid>div{background:#1d3945;padding:11px;border:1px solid #416273;border-radius:9px}.deep-dive-v2 .dd-grid b{display:block;font-size:19px;color:#c5eadb}.deep-dive-v2 .dd-grid span{display:block;font-size:11px;color:#b6cbd6;line-height:1.3}.deep-dive-v2 .dd-warning{background:#40331f;border:1px solid #896e40;border-radius:8px;padding:10px;margin:7px 0}.deep-dive-v2 .dd-warning b{color:#f4d39a}.deep-dive-v2 .dd-warning p{margin:5px 0 0;color:#e7d7b9}.deep-dive-v2 details{border-top:1px solid #37535d;padding:10px 0}.deep-dive-v2 summary{cursor:pointer;font-weight:650;color:#d2efe8}.deep-dive-v2 .dd-guard{color:#ecd09e}
 .dd3{background:#122a30;border:1px solid #498277;border-radius:14px;padding:16px;margin:16px 0}.dd3-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.dd3-top h3{font-size:19px;margin:4px 0}.dd3-eyebrow{font-size:10px;color:#9dddce;letter-spacing:1px}.dd3-pill{font-size:10px;color:#cee6db;border:1px solid #426c61;border-radius:99px;padding:6px 9px}.dd3 p{font-size:12px;line-height:1.6;color:#bdd5d2}.dd3-tabs{display:flex;gap:6px;overflow-x:auto;padding:10px 0 13px;scrollbar-width:thin;flex-wrap:wrap}.dd3-tabs button{border:1px solid #42646d;border-radius:8px;background:#1a3540;color:#c5dbdf;font-size:11px;padding:8px 10px;white-space:nowrap}.dd3-tabs button.selected{border-color:#8ddfc1;color:#b4f6da;background:#245149}.dd3-content{background:#142f3d;border-radius:10px;padding:14px;min-height:150px}.dd3-content h4{margin:0 0 6px;font-size:15px}.dd3-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0}.dd3-card{background:#1c3a45;border:1px solid #395d63;border-radius:9px;padding:11px;min-width:0}.dd3-card strong{display:block;color:#a8f0d2;font-size:19px;overflow-wrap:anywhere}.dd3-card span{display:block;font-size:11px;color:#c2d9d5}.dd3-card small{display:block;font-size:10px;color:#aec4cd}.dd3-scroll{max-width:100%;overflow-x:auto}.dd3 table{border-collapse:collapse;min-width:560px;width:100%;font-size:11px}.dd3 th,.dd3 td{border-bottom:1px solid #365767;padding:8px;text-align:left}.dd3 th{color:#98d9c8}.dd3 td{color:#e3e9ed}.dd3-conflict{background:#3a321d;border:1px solid #7c6a45;border-radius:9px;padding:9px;margin:7px 0}.dd3-conflict strong{color:#f0ce8f;font-size:12px}.dd3-missing{font-size:12px;color:#e9c699;border-left:2px solid #b99658;padding:8px 10px;margin:8px 0;background:#2f302b}.dd3-h2h{margin:8px 0;border:1px solid #43666a;border-radius:8px;padding:9px}.dd3-h2h summary{cursor:pointer}.dd3-footer{color:#e5c893!important}
 </style></head><body>
-<div class="layout"><header class="top"><div><div class="logo">PROP <em>LOCK</em></div><div class="subtitle">PERSONAL PLAYER PROP RESEARCH</div></div><div class="pill">● PUBLIC DEMO V3.2</div></header>
+<div class="layout"><header class="top"><div><div class="logo">PROP <em>LOCK</em></div><div class="subtitle">PERSONAL PLAYER PROP RESEARCH</div></div><div class="pill">● PUBLIC DEMO V3.3</div></header>
 <section class="hero"><div><h1>Find the prop. Research the matchup.</h1><p>Explore multi-sport player props and see how Deep Dive, Scenarios, and Trait Match fit together.</p></div><div class="hero-tag">$0 prototype</div></section>
 <nav class="tabs" id="sports" aria-label="Select sport"></nav>
 <div class="toolbar"><input class="search" id="search" type="search" placeholder="Search NFL player, team, or stat..." aria-label="Search players"/><select class="filter" id="category" aria-label="Select prop category"><option value="All">All Stat Categories</option></select><select class="filter" id="position" aria-label="Filter by inferred NFL role"><option value="All">All player roles</option></select></div>
@@ -574,11 +574,30 @@ $('search').addEventListener('input',e=>{query=e.target.value;render()});$('cate
 
 // NFL data is published as a public static snapshot by GitHub Actions, not obtained
 // through a sportsbook API. Browser cache is best effort; no background tracking.
-const NFL_DATA_PATH='./data/nfl_2026.csv', NFL_CACHE_KEY='prop-lock-nfl-2026-v14';
+const NFL_DATA_PATH='./data/nfl_2026.csv', NFL_HISTORY_PATH='./data/nfl_history_2023_2025.csv', NFL_CACHE_KEY='prop-lock-nfl-2026-v14';
 function dbOpen(){return new Promise((resolve,reject)=>{if(!('indexedDB' in window)){reject(Error('No IndexedDB'));return}const req=indexedDB.open('prop-lock-public-stats-v1',1);req.onupgradeneeded=()=>{if(!req.result.objectStoreNames.contains('snapshots'))req.result.createObjectStore('snapshots')};req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)})}
 async function cacheRead(){try{const db=await dbOpen();return await new Promise((resolve,reject)=>{const tx=db.transaction('snapshots','readonly'),r=tx.objectStore('snapshots').get(NFL_CACHE_KEY);r.onsuccess=()=>resolve(r.result||null);r.onerror=()=>reject(r.error);tx.oncomplete=()=>db.close()})}catch{return null}}
 async function cacheWrite(record){try{const db=await dbOpen();await new Promise((resolve,reject)=>{const tx=db.transaction('snapshots','readwrite');tx.objectStore('snapshots').put(record,NFL_CACHE_KEY);tx.oncomplete=()=>resolve();tx.onerror=()=>reject(tx.error)});db.close()}catch{}}
 function markNFLStatus(s){$('importStatus').textContent=s}
+async function loadOptionalNFLHistory(currentCsv){
+ const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),12000);
+ try{
+  const r=await fetch(NFL_HISTORY_PATH,{signal:controller.signal,cache:'default'});
+  if(r.status===404)return {csv:currentCsv,seasons:'2026 only',warning:'Multi-season archive not published yet. Run the opt-in historical data workflow to add 2023–2025.'};
+  if(!r.ok)throw Error('HTTP '+r.status);
+  const len=Number(r.headers.get('content-length')||0);if(len>12*1024*1024)throw Error('Historical archive exceeds 12 MB');
+  const txt=await r.text();if(txt.length>12*1024*1024)throw Error('Historical archive exceeds 12 MB');
+  const currentHeader=currentCsv.slice(0,currentCsv.indexOf('\n')).trim();
+  const archiveHeader=txt.slice(0,txt.indexOf('\n')).trim();
+  if(!archiveHeader||currentHeader!==archiveHeader)throw Error('Archive schema mismatch: current data retained');
+  const historyRows=txt.slice(txt.indexOf('\n')+1).trim();
+  if(!historyRows)throw Error('Historical archive is empty');
+  const csv=currentCsv.trimEnd()+'\n'+historyRows+'\n';
+  if(csv.length>28*1024*1024)throw Error('Combined archive exceeds 28 MB');
+  return {csv,seasons:'2023–2026',warning:''};
+ }catch(e){return {csv:currentCsv,seasons:'2026 only',warning:'Historical archive unavailable: '+(e.message||String(e))};}
+ finally{clearTimeout(timer)}
+}
 async function loadAutomaticNFL(force=false){
  if(autoInProgress)return;autoInProgress=true;$('autoNFL').disabled=true;
  const cached=await cacheRead();let csv=null,fromCache=false,warning='';
@@ -598,10 +617,11 @@ async function loadAutomaticNFL(force=false){
  }
  if(csv){
   try{
-   const {imported,summary}=convertCsvToProps(csv);
+   const history=await loadOptionalNFLHistory(csv);
+   const {imported,summary}=convertCsvToProps(history.csv);
    if(!fromCache)await cacheWrite({csv,savedAt:Date.now()});
    if(!manualOverride){importedProps=imported;nflSource='hosted';nflUpdated=new Date(fromCache?cached.savedAt:Date.now()).toLocaleString();if(currentSport==='NFL')setMode(true);else{categories();render()}}
-   markNFLStatus(`NFL 2026 weekly stats ${fromCache?'loaded from your device cache':'loaded from the public site'} (${nflUpdated||'this session'}).\n${summary}\n${warning?'Note: '+warning+'\n':''}These are completed games, not upcoming opponent matchups. Source: nflverse. No live lines or predictive probability.`);
+   markNFLStatus(`NFL ${history.seasons} weekly stats ${fromCache?'loaded from your device cache':'loaded from the public site'} (${nflUpdated||'this session'}).\n${summary}\n${history.warning?'History: '+history.warning+'\n':''}${warning?'Note: '+warning+'\n':''}These are completed games, not upcoming opponent matchups. Source: nflverse. No live lines or predictive probability.`);
   }catch(e){markNFLStatus('NFL auto-load validation failed: '+(e.message||String(e))+'. You can still import a CSV manually.');}
  }else{markNFLStatus('Automatic NFL data unavailable: '+(warning||'No published dataset.')+'\nGitHub Actions must publish data/nfl_2026.csv first. You can still import a CSV manually.');}
  autoInProgress=false;$('autoNFL').disabled=false;
