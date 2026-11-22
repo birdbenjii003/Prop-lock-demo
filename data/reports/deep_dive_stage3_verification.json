@@ -24,6 +24,10 @@
       "model_mae": 20.601,
       "prior_5_game_baseline_mae": 20.912,
       "model_beats_baseline": true,
+      "coverage_shortfall_percentage_points": 0.0,
+      "historical_mae_improvement_percent": 1.49,
+      "needs_coverage_review": false,
+      "requires_prospective_validation": true,
       "note": "Historical checks only. No independently certified player-specific future interval."
     },
     "receiving_yards": {
@@ -39,6 +43,10 @@
       "model_mae": 20.163,
       "prior_5_game_baseline_mae": 20.828,
       "model_beats_baseline": true,
+      "coverage_shortfall_percentage_points": 1.62,
+      "historical_mae_improvement_percent": 3.19,
+      "needs_coverage_review": true,
+      "requires_prospective_validation": true,
       "note": "Historical checks only. No independently certified player-specific future interval."
     },
     "passing_yards": {
@@ -54,6 +62,10 @@
       "model_mae": 68.441,
       "prior_5_game_baseline_mae": 71.008,
       "model_beats_baseline": true,
+      "coverage_shortfall_percentage_points": 0.0,
+      "historical_mae_improvement_percent": 3.62,
+      "needs_coverage_review": false,
+      "requires_prospective_validation": true,
       "note": "Historical checks only. No independently certified player-specific future interval."
     },
     "receptions": {
@@ -69,6 +81,10 @@
       "model_mae": 1.467,
       "prior_5_game_baseline_mae": 1.514,
       "model_beats_baseline": true,
+      "coverage_shortfall_percentage_points": 0.23,
+      "historical_mae_improvement_percent": 3.1,
+      "needs_coverage_review": true,
+      "requires_prospective_validation": true,
       "note": "Historical checks only. No independently certified player-specific future interval."
     },
     "targets": {
@@ -84,6 +100,10 @@
       "model_mae": 1.904,
       "prior_5_game_baseline_mae": 1.957,
       "model_beats_baseline": true,
+      "coverage_shortfall_percentage_points": 0.88,
+      "historical_mae_improvement_percent": 2.71,
+      "needs_coverage_review": true,
+      "requires_prospective_validation": true,
       "note": "Historical checks only. No independently certified player-specific future interval."
     },
     "carries": {
@@ -99,6 +119,10 @@
       "model_mae": 3.56,
       "prior_5_game_baseline_mae": 3.578,
       "model_beats_baseline": true,
+      "coverage_shortfall_percentage_points": 1.02,
+      "historical_mae_improvement_percent": 0.5,
+      "needs_coverage_review": true,
+      "requires_prospective_validation": true,
       "note": "Historical checks only. No independently certified player-specific future interval."
     }
   },
@@ -106,5 +130,20 @@
     "Data provenance and 2026 game-final status require independent verification.",
     "Cohort observations are dependent; retrospective coverage does not certify next-game coverage.",
     "This verification never selects bets or estimates Over/Under probability."
-  ]
+  ],
+  "historical_archive_evidence": {
+    "sha256": "2b09639090dcc359c3e9362f8dbe50e925a6915ff73c5e091b12c04c60fce229",
+    "byte_size": 3621827,
+    "player_games_by_season": {
+      "2023": 17788,
+      "2024": 18112,
+      "2025": 18522
+    },
+    "unique_players_by_season": {
+      "2023": 1942,
+      "2024": 1996,
+      "2025": 2019
+    },
+    "identity_check": "PASSED"
+  }
 }
