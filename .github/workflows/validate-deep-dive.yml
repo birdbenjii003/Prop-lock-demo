@@ -10,6 +10,8 @@ on:
       - 'tests/deep-dive.test.cjs'
       - 'tests/test_deep_dive_calibration.py'
       - 'scripts/deep-dive-calibration.py'
+      - 'scripts/deep-dive-independent-checks.py'
+      - 'tests/test_deep_dive_independent_checks.py'
       - 'scripts/verify_nfl_snap_ids.py'
       - 'tests/test_verified_snap_ids.py'
       - 'scripts/deep-dive-snaps.js'
