@@ -532,6 +532,28 @@ function convertCsvToProps(text){
    const g=grouped.get(k);g.records.push({season,week,value:v,team,opp});
   }
  }
+ // Compute historical opportunity share from ALL valid imported player-week rows,
+ // before filtering research profiles; no assumptions about future team workloads.
+ const teamTotals=new Map(),playerOpportunities=new Map();
+ for(const g of grouped.values()){
+  if(!['targets','carries','attempts'].includes(g.stat))continue;
+  const m=new Map();
+  for(const r of g.records){
+   const key=r.season+'|'+r.week+'|'+r.team;
+   teamTotals.set(key+'|'+g.stat,(teamTotals.get(key+'|'+g.stat)||0)+r.value);
+   m.set(key,r.value);
+  }
+  playerOpportunities.set(g.identity+'|'+g.stat,m);
+ }
+ for(const g of grouped.values()){
+  const volumeStat=({'rushing_yards':'carries','rushing_tds':'carries','carries':'carries','receiving_yards':'targets','receptions':'targets','receiving_tds':'targets','targets':'targets','passing_yards':'attempts','passing_tds':'attempts','passing_interceptions':'attempts','attempts':'attempts'})[g.stat];
+  if(!volumeStat)continue;
+  const mapping=playerOpportunities.get(g.identity+'|'+volumeStat);
+  for(const r of g.records){
+   const key=r.season+'|'+r.week+'|'+r.team,total=teamTotals.get(key+'|'+volumeStat),own=mapping?.get(key);
+   r.opportunityShare=Number.isFinite(own)&&Number.isFinite(total)&&total>0&&own>=0&&own<=total?own/total:null;
+  }
+ }
  // Only display plausible player/market combinations. A weekly stats feed reports
  // zero values for every column for every player, even when they never play that role.
  // Keep all valid game rows within each eligible profile, including zero outcomes.
