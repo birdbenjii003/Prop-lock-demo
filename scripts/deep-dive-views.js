@@ -1,5 +1,16 @@
 'use strict';
 // Deep Dive workspace renderer. All markup text provided by user datasets is escaped by caller.
+// A retrospective cohort checkpoint, not a certification of player-specific future coverage.
+function ddCohortEvidenceGate(group,playerGames){
+ if(!group||group.status!=='DESCRIPTIVE_COVERAGE_AUDIT'||
+    !Number.isFinite(group.conformal_radius)||group.conformal_radius<0||
+    !Number.isFinite(group.observed_coverage)||group.observed_coverage<0||group.observed_coverage>1||
+    !Number.isFinite(group.test_mae)||
+    group.calibration_tests<80||group.test_games<50||group.test_players<15||
+    playerGames<10)return {status:'INSUFFICIENT_EVIDENCE',reason:'Missing cohort audit, required sample depth, or valid coverage statistics.'};
+ if(group.observed_coverage<0.8)return {status:'BELOW_TARGET',reason:'Observed 2026 coverage fell below the historical 80% target; do not treat this as a reliable player prediction.'};
+ return {status:'DESCRIPTIVE_TARGET_MET',reason:'The retrospective cohort met its coverage target; prospective and player-specific calibration remain unverified.'};
+}
 function ddViewHtml(p,profiles,line,tab,escape,format,snapInfo=null,snapStatus='Verified snap evidence not available',audit=null,quality=null,qualityStatus='Opportunity quality evidence not available'){
  const x=deepDiveWorkspace(p,profiles,line);
  const safe=v=>escape(String(v===undefined||v===null?'Unavailable':v));
@@ -12,10 +23,11 @@ function ddViewHtml(p,profiles,line,tab,escape,format,snapInfo=null,snapStatus='
  const alternative=x.alternatives;
  const auditKey=({'Rushing Yards':'rushing_yards','Receiving Yards':'receiving_yards','Passing Yards':'passing_yards','Receptions':'receptions','Targets':'targets','Carries':'carries'})[p.stat];
  const observedAudit=audit?.version==='deep-dive-cross-season-v2'&&auditKey?audit.groups?.[auditKey]:null;
- const audited=observedAudit?.status==='DESCRIPTIVE_COVERAGE_AUDIT'&&Number.isFinite(observedAudit.conformal_radius)&&x.n>=5&&alternative?.historical!==null;
+ const cohortGate=ddCohortEvidenceGate(observedAudit,x.n);
+ const audited=cohortGate.status!=='INSUFFICIENT_EVIDENCE'&&alternative?.historical!==null;
  const radius=audited?observedAudit.conformal_radius:null;
  const lower=radius===null?null:Math.max(0,alternative.historical-radius),upper=radius===null?null:alternative.historical+radius;
- const calibratedDisplay=audited?grid([value(alternative.historical,'Historical player projection'),value(radius,'2025 cohort error radius'),value(lower,'Reference lower estimate'),value(upper,'Reference upper estimate')])+para('2026 out-of-time observed cohort coverage: '+(100*observedAudit.observed_coverage).toFixed(1)+'% across '+observedAudit.test_games+' eligible player-games; 2025 calibration n='+observedAudit.calibration_tests+'. This is a descriptive cohort interval, NOT a certified player-specific 80% prediction interval.')+para('Line '+line+': '+(line<lower?'below':line>upper?'above':'inside')+' the descriptive cohort band. This DOES NOT imply an Over/Under probability.'):missing('Cross-season cohort interval evidence unavailable. No calibrated next-game prediction is claimed.');
+ const calibratedDisplay=audited?title('Cohort evidence status: '+cohortGate.status,cohortGate.reason)+grid([value(alternative.historical,'Historical player projection'),value(radius,'2025 cohort error radius'),value(lower,'Reference lower estimate'),value(upper,'Reference upper estimate')])+para('2026 out-of-time observed cohort coverage: '+(100*observedAudit.observed_coverage).toFixed(1)+'% across '+observedAudit.test_games+' eligible player-games; 2025 calibration n='+observedAudit.calibration_tests+'. This is a descriptive cohort interval, NOT a certified player-specific 80% prediction interval.')+para('Line '+line+': '+(line<lower?'below':line>upper?'above':'inside')+' the descriptive cohort band. This DOES NOT imply an Over/Under probability.'):missing('Cross-season cohort interval evidence unavailable: '+cohortGate.reason+' No calibrated next-game prediction is claimed.');
  const diag=x.rollingRangeAudit;
  const diagnosticDisplay=diag?.available?title('Chronological range diagnostic','Earlier 20 player-game residuals set a fixed 80%-target error radius. Later forecasts evaluate coverage without refitting.')+
   grid([value(diag.radius,'Frozen absolute-error radius'),value(diag.calibrationCount,'Earlier calibration tests'),value(diag.evaluationCount,'Later evaluation tests'),value(diag.observedCoverage*100,'Observed later coverage (%)')])+
