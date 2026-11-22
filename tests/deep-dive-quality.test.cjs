@@ -11,6 +11,7 @@ assert.equal(all.length,500);
 const p={source:'imported',playerKey:'id:RB',stat:'Rushing Yards',records:[{season:2025,week:1,team:'A',value:75}]};
 const q=lib.deepDiveQualitySummary(p,all);
 assert.equal(q.metrics.redZone,3);assert.equal(q.metrics.goalLine,1);
+assert.equal(q.perGame.chances,15);assert.equal(q.perGame.redZone,3);assert.equal(q.highValueRate,3/15);assert.equal(q.coverage,1);assert.equal(q.coefficientOfVariation,0);
 assert.equal(lib.deepDiveQualitySummary({...p,playerKey:'name:RB'},all),null);
 assert.equal(lib.deepDiveQualitySummary({...p,records:[{season:2025,week:1,team:'B'}]},all),null);
 assert.throws(()=>lib.deepDiveParseQualityCSV(header+'\n'+[...rows,rows[0]].join('\n'),parse),/Duplicate/);
