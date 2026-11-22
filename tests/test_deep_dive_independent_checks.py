@@ -32,12 +32,28 @@ class IndependentChecks(unittest.TestCase):
         self.assertEqual(x['baseline_comparable_games'],x['evaluation_games'])
         self.assertIsInstance(x['model_beats_baseline'],bool)
 
+    def test_miss_direction_and_weekly_counts(self):
+        result=mod.evaluate(fixture(180))['groups']['rushing_yards']
+        self.assertEqual(result['status'],'DESCRIPTIVE_CHECKS')
+        self.assertEqual(result['evaluation_weeks'],len(result['weekly_coverage']))
+        self.assertEqual(result['miss_direction']['total'],
+                         result['miss_direction']['above_upper']+result['miss_direction']['below_lower'])
+        self.assertEqual(result['miss_direction']['total'],
+                         sum(row['above_upper']+row['below_lower'] for row in result['weekly_coverage']))
+        self.assertEqual(result['evaluation_games'],
+                         sum(row['games'] for row in result['weekly_coverage']))
+        self.assertTrue(result['weeks_below_target'])
+        self.assertEqual(result['miss_direction']['below_lower'],0)
+        self.assertGreater(result['miss_direction']['above_upper'],0)
+
     def test_sparse_data_withheld(self):
         result=mod.evaluate(fixture()[:9])
         row=result['groups']['rushing_yards']
         self.assertEqual(row['status'],'INSUFFICIENT_EVIDENCE')
         self.assertIsNone(row['observed_coverage'])
         self.assertIsNone(row['model_beats_baseline'])
+        self.assertIsNone(row['miss_direction'])
+        self.assertIsNone(row['weekly_coverage'])
 
     def test_never_claims_certified_interval(self):
         report=mod.evaluate(fixture())
