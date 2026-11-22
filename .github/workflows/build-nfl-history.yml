@@ -1,0 +1,44 @@
+name: Build free NFL Deep Dive history
+on:
+  workflow_dispatch:
+    inputs:
+      include_snaps:
+        description: 'Also stage separate PFR snap-count archive (no player join)'
+        required: false
+        type: boolean
+        default: false
+permissions:
+  contents: write
+concurrency:
+  group: deep-dive-free-history
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify parsers with offline fixtures
+        run: python -m unittest discover -s tests -p 'test_nfl_archive.py'
+      - name: Download and validate 2023-2025 weekly player data
+        run: python scripts/update_nfl_history.py
+      - name: Stage separate PFR snap counts only if explicitly requested
+        if: inputs.include_snaps == true
+        run: python scripts/update_nfl_snaps.py
+      - name: Commit verified historical files
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/nfl_history_2023_2025.csv
+          if [ -f data/nfl_snap_counts_2023_2025.csv ]; then git add data/nfl_snap_counts_2023_2025.csv; fi
+          if git diff --cached --quiet; then
+            echo 'History already current.'
+          else
+            git commit -m 'Publish validated free multi-season NFL Deep Dive research data'
+            git push
+          fi
