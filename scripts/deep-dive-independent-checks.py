@@ -60,8 +60,26 @@ def evaluate(rows):
                 'last5_baseline_mae':round(statistics.mean(base_errors),3) if ready and len(base_errors)==len(test) else None,
                 'baseline_comparable_games':len(base_errors),
                 'model_beats_baseline':None,'observed_coverage':None,
-                'week_coverage_min':None,'week_coverage_max':None}
+                'week_coverage_min':None,'week_coverage_max':None,
+                'miss_direction':None,'weekly_coverage':None,'weeks_below_target':None}
         if ready:
+            # Diagnostics are evaluation-only. Never feed these back into 2025 radius/model.
+            weekly=[]
+            misses_high=0
+            misses_low=0
+            for week, games in sorted(per_week.items()):
+                high=sum(r['actual']-r['prediction']>radius for r in games)
+                low=sum(r['prediction']-r['actual']>radius for r in games)
+                misses_high+=high
+                misses_low+=low
+                weekly.append({'week':week,'games':len(games),
+                               'covered':len(games)-high-low,
+                               'coverage':round((len(games)-high-low)/len(games),4),
+                               'above_upper':high,'below_lower':low})
+            result['miss_direction']={'above_upper':misses_high,'below_lower':misses_low,
+                                      'total':misses_high+misses_low}
+            result['weekly_coverage']=weekly
+            result['weeks_below_target']=[w['week'] for w in weekly if w['coverage']<model.COVERAGE_TARGET]
             coverage=[sum(r['absolute_error']<=radius for r in games)/len(games) for games in per_week.values()]
             result['observed_coverage']=round(sum(r['absolute_error']<=radius for r in test)/len(test),4)
             result['week_coverage_min']=round(min(coverage),4)
