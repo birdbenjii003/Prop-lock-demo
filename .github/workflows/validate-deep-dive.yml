@@ -11,6 +11,8 @@ on:
       - 'tests/test_deep_dive_calibration.py'
       - 'scripts/deep-dive-calibration.py'
       - 'scripts/deep-dive-independent-checks.py'
+      - 'scripts/deep-dive-stage3-verification.py'
+      - 'tests/test_deep_dive_stage3_verification.py'
       - 'tests/test_deep_dive_independent_checks.py'
       - 'scripts/verify_nfl_snap_ids.py'
       - 'tests/test_verified_snap_ids.py'
@@ -40,3 +42,5 @@ jobs:
           python-version: '3.12'
       - name: Check chronological calibration audit
         run: python -m unittest discover -s tests -p 'test_*.py'
+      - name: Verify Stage 3 NFL cohort on available historical data
+        run: python scripts/deep-dive-stage3-verification.py
