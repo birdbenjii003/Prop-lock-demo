@@ -1,0 +1,36 @@
+name: Validate shared live-data foundation
+on:
+  push:
+    paths:
+      - 'index.html'
+      - 'scripts/live-data-foundation.js'
+      - 'tests/live-data-foundation.test.cjs'
+      - '.github/workflows/validate-live-data-foundation.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  contract:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate shared contract syntax and tests
+        run: |
+          node --check scripts/live-data-foundation.js
+          node tests/live-data-foundation.test.cjs
+      - name: Confirm application inline script parses
+        run: |
+          node - <<'NODE'
+          const fs=require('node:fs'),vm=require('node:vm');
+          const html=fs.readFileSync('index.html','utf8');
+          const inline=html.match(/<script>\s*([\s\S]*?)<\/script>/);
+          if(!inline)throw Error('Application script missing');
+          new vm.Script(inline[1]);
+          if(!html.includes('scripts/live-data-foundation.js'))throw Error('Shared foundation not loaded');
+          if(!html.includes('id="liveFeedMonitor"'))throw Error('Monitor not included');
+          console.log('Browser application syntax and monitor integration PASS');
+          NODE
