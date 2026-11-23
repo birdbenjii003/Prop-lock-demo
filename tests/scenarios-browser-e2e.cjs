@@ -55,9 +55,17 @@ async function main(){
       await page.locator('#cards').waitFor();
     });
     await check('Load hosted NFL player-week dataset',async()=>{
-      await page.locator('#autoNFL').click();
-      await page.waitForFunction(()=>document.querySelector('#autoNFL')?.disabled===false,null,{timeout:90000});
-      await page.locator('#cards [data-profile]').first().waitFor();
+      // The application starts its own NFL download on page load, disabling #autoNFL.
+      // Do not click a disabled control or start a redundant forced refresh.
+      await page.waitForFunction(()=>nflSource==='hosted'&&useImported&&importedProps.length>0||
+        (!autoInProgress&&!document.querySelector('#autoNFL')?.disabled),
+        null,{timeout:90000});
+      const alreadyLoaded=await page.evaluate(()=>nflSource==='hosted'&&useImported&&importedProps.length>0);
+      if(!alreadyLoaded){
+        await page.locator('#autoNFL').click();
+        await page.waitForFunction(()=>!autoInProgress,null,{timeout:90000});
+      }
+      await page.locator('#cards [data-profile]').first().waitFor({timeout:20000});
       const hosted=await page.evaluate(()=>({source:nflSource,profiles:importedProps.length,years:[...new Set(importedProps.flatMap(p=>(p.records||[]).map(r=>Number(r.season))))]}));
       assert.equal(hosted.source,'hosted','Data must come from published NFL archive, not a device cache or demo');
       assert.ok(hosted.profiles>0,'Hosted NFL profiles are empty');
