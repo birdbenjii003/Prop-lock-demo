@@ -46,7 +46,7 @@ async function main(){
   const context=await browser.newContext({viewport:{width:390,height:844},deviceScaleFactor:1});
   page=await context.newPage();page.setDefaultTimeout(30000);
   page.on('pageerror',error=>errors.push(error.message));
-  let originalEstimates=[],initialLine='';
+  let initialLine='';
   try {
     await check('Open deployed mobile research site',async()=>{
       const r=await page.goto(BASE,{waitUntil:'domcontentloaded',timeout:45000});
@@ -71,7 +71,6 @@ async function main(){
       assert.match(output,/UNAVAILABLE — NOT CALIBRATED/);
       assert.match(output,/Playing ahead/);
       assert.match(output,/Playing behind/);
-      originalEstimates=await page.locator('#research .scenario-note').allInnerTexts();
       initialLine=await page.locator('#lineNumber').inputValue();
     });
     await check('Different research threshold updates scenario failure point',async()=>{
@@ -101,7 +100,7 @@ async function main(){
       await page.locator('#scenarioLat').fill('33.75');
       await page.locator('#scenarioLon').fill('-84.39');
       await page.locator('#scenarioLoadWeather').click();
-      await page.locator('#scenarioWeatherStatus').getByText('Current venue weather:').waitFor({timeout:15000});
+      await page.waitForFunction(()=>document.querySelector('#scenarioWeatherStatus')?.textContent?.includes('Current venue weather:'),null,{timeout:15000});
       const reading=await page.locator('#scenarioWeatherStatus').innerText();
       assert.match(reading,/90\.0°F/);
       assert.match(reading,/3\.0 mph/);
