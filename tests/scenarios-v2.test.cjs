@@ -1,0 +1,37 @@
+'use strict';
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const vm=require('node:vm');
+const source=fs.readFileSync('scripts/scenarios-v2.js','utf8')+
+ '\n({scenarioOpportunity,scenarioWeather,scenarioStudy,scenarioWeatherFromOpenMeteo})';
+const api=vm.runInNewContext(source,{Date});
+const rec=(values)=>values.map((value,i)=>({season:2025,week:i+1,value}));
+const p={source:'imported',sport:'NFL',playerKey:'rb-1',stat:'Rushing Yards',records:rec([40,45,50,60,55,30,80,75,65,70])};
+const carries={...p,stat:'Carries',records:rec([10,12,12,15,14,8,20,18,16,17])};
+const x=api.scenarioStudy(p,[p,carries],50.5);
+assert.equal(x.status,'ILLUSTRATIVE_NOT_CALIBRATED');
+assert.equal(x.scenarios.length,4);
+assert.equal(x.base.n,10);
+assert.equal(x.scenarioProbabilities,null);
+assert.equal(x.overallProbability,null);
+assert.equal(x.validation,'NOT_HISTORICALLY_VALIDATED');
+assert.ok(x.scenarios.every(a=>Number.isFinite(a.opportunities)&&Number.isFinite(a.estimate)));
+assert.ok(x.failurePoint.requiredOpportunities>0);
+const noVolume=api.scenarioStudy(p,[p],50.5);
+assert.equal(noVolume.status,'INSUFFICIENT_OPPORTUNITY_EVIDENCE');
+assert.equal(noVolume.scenarios.length,0);
+const sparse={...carries,records:rec([10,12,13])};
+assert.equal(api.scenarioStudy(p,[p,sparse],50.5).status,'INSUFFICIENT_OPPORTUNITY_EVIDENCE');
+const now=Date.parse('2026-11-22T18:00:00Z');
+const current={temperatureF:90,windMph:3,observedAt:'2026-11-22T17:30:00Z',source:'Test source',venueVerified:true};
+assert.equal(api.scenarioWeather(current,now).status,'CURRENT_CONDITIONS');
+assert.equal(api.scenarioWeather({...current,observedAt:'2026-11-22T14:00:00Z'},now).status,'UNVERIFIED_OR_STALE');
+assert.equal(api.scenarioWeather({...current,venueVerified:false},now).status,'UNVERIFIED_OR_STALE');
+assert.equal(api.scenarioWeather({...current,windMph:-2},now).status,'UNVERIFIED_OR_STALE');
+assert.equal(api.scenarioStudy(p,[p,carries],50.5,current).scenarios[0].estimate,x.scenarios[0].estimate,
+ 'Live weather must not silently alter uncalibrated production');
+const adapted=api.scenarioWeatherFromOpenMeteo({current:{temperature_2m:90,wind_speed_10m:3,time:'2026-11-22T17:30'}},true,'2026-11-22T17:30:00Z');
+assert.equal(adapted.temperatureF,90);
+assert.equal(adapted.windMph,3);
+assert.equal(api.scenarioWeatherFromOpenMeteo({current:{}},true),null);
+console.log('Scenario v2 opportunity, connection, weather provenance, missing-data safeguards PASS');
