@@ -1,6 +1,6 @@
 'use strict';
 // Scenario research v2.0: conditional opportunity sensitivity, not a forecast or bet decision.
-const SCENARIO_OPPORTUNITY_STAT={'Rushing Yards':'Carries','Rushing TDs':'Carries','Receiving Yards':'Targets','Receiving TDs':'Targets','Receptions':'Targets','Passing Yards':'Passing Attempts','Passing TDs':'Passing Attempts','Interceptions':'Passing Attempts'};
+const SCENARIO_OPPORTUNITY_STAT={'Rushing Yards':'Carries','Rushing TDs':'Carries','Receiving Yards':'Targets','Receiving TDs':'Targets','Receptions':'Targets','Passing Yards':'Passing Attempts','Passing TDs':'Passing Attempts','Interceptions':'Passing Attempts','Carries':'Carries','Targets':'Targets','Passing Attempts':'Passing Attempts'};
 const SCENARIO_SCRIPTS=[
  {id:'competitive',label:'Competitive',volume:1,efficiency:1,pace:1},
  {id:'leading',label:'Playing ahead',volume:1.20,efficiency:1.0,pace:.97},
@@ -33,10 +33,37 @@ function scenarioWeather(input,nowMs=Date.now()){
  return {status:venueVerified?'CURRENT_CONDITIONS':'CURRENT_UNVERIFIED_VENUE',temperatureF,windMph,observedAt,source,
   reason:'Observed conditions at confirmed venue; NOT a game-time forecast unless timestamps match kickoff'};
 }
+function scenarioHistoricalCheck(p,profiles){
+ // Chronological previous-five-game opportunity+efficiency baseline, not a game-script validation.
+ const type=SCENARIO_OPPORTUNITY_STAT[p.stat];
+ const peer=(profiles||[]).find(x=>x.playerKey===p.playerKey&&x.stat===type&&x.sport===p.sport);
+ if(!type||!p?.records||!peer?.records)return {status:'INSUFFICIENT_EVIDENCE',tested:0};
+ const v=new Map(peer.records.map(r=>[r.season+':'+r.week,r.value]));
+ const rows=[...p.records].sort((a,b)=>a.season-b.season||a.week-b.week)
+  .map(r=>({...r,opportunities:v.get(r.season+':'+r.week)}))
+  .filter(r=>Number.isFinite(r.value)&&Number.isFinite(r.opportunities)&&r.opportunities>0);
+ if(rows.length<12)return {status:'INSUFFICIENT_EVIDENCE',tested:0};
+ let error=0,naiveError=0,tested=0;
+ for(let i=7;i<rows.length;i++){
+  const earlier=rows.slice(Math.max(0,i-10),i);
+  const rate=earlier.reduce((a,r)=>a+r.value,0)/earlier.reduce((a,r)=>a+r.opportunities,0);
+  const opportunity=earlier.reduce((a,r)=>a+r.opportunities,0)/earlier.length;
+  const prediction=rate*opportunity;
+  const naive=earlier.reduce((a,r)=>a+r.value,0)/earlier.length;
+  if(!Number.isFinite(prediction))continue;
+  error+=Math.abs(rows[i].value-prediction);
+  naiveError+=Math.abs(rows[i].value-naive);
+  tested++;
+ }
+ return tested>=5?{status:'HISTORICAL_BASELINE_ONLY',tested,mae:error/tested,naiveMae:naiveError/tested,
+  warning:'This evaluates previous-game opportunities, not scenario likelihoods or game-script accuracy.'}
+  :{status:'INSUFFICIENT_EVIDENCE',tested};
+}
 function scenarioStudy(p,profiles,line,weather=null){
  const base=scenarioOpportunity(p,profiles);
  const evidence=scenarioWeather(weather);
- if(base.status!=='DESCRIPTIVE_ONLY')return {status:'INSUFFICIENT_OPPORTUNITY_EVIDENCE',base,weather:evidence,scenarios:[],scenarioProbabilities:null,overallProbability:null};
+ const historical=scenarioHistoricalCheck(p,profiles);
+ if(base.status!=='DESCRIPTIVE_ONLY')return {status:'INSUFFICIENT_OPPORTUNITY_EVIDENCE',base,weather:evidence,historical,scenarios:[],scenarioProbabilities:null,overallProbability:null};
  // All script multipliers below are transparent stress-test assumptions, NOT historically calibrated.
  const passing=['Passing Yards','Passing TDs','Passing Attempts','Interceptions','Receiving Yards','Receptions','Targets','Receiving TDs'].includes(p.stat);
  const scripts=SCENARIO_SCRIPTS.map(script=>{
@@ -51,7 +78,7 @@ function scenarioStudy(p,profiles,line,weather=null){
  const low=Math.min(...scripts.map(s=>s.estimate)),high=Math.max(...scripts.map(s=>s.estimate));
  const competitive=scripts[0].estimate;
  const sensitivity=(scripts.find(s=>s.id==='leading').estimate-scripts.find(s=>s.id==='trailing').estimate);
- return {status:'ILLUSTRATIVE_NOT_CALIBRATED',base,weather:evidence,scenarios:scripts,
+ return {status:'ILLUSTRATIVE_NOT_CALIBRATED',base,weather:evidence,historical,scenarios:scripts,
   estimatedRange:{low,high},sensitivityDelta:sensitivity,
   failurePoint:base.efficiency>0?{requiredOpportunities:line/base.efficiency,type:base.type}:null,
   links:['Pace, volume, participation and efficiency are connected assumptions; avoid multiplying independent worst cases.'],
