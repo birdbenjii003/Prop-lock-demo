@@ -71,7 +71,7 @@ async function main(){
       assert.match(output,/UNAVAILABLE — NOT CALIBRATED/);
       assert.match(output,/Playing ahead/);
       assert.match(output,/Playing behind/);
-      originalEstimates=await page.locator('#research .scenario-results').allInnerTexts().catch(()=>[]);
+      originalEstimates=await page.locator('#research .scenario-note').allInnerTexts();
       initialLine=await page.locator('#lineNumber').inputValue();
     });
     await check('Different research threshold updates scenario failure point',async()=>{
@@ -97,17 +97,17 @@ async function main(){
         await route.fulfill({status:200,contentType:'application/json',
           body:JSON.stringify({current:{temperature_2m:90,wind_speed_10m:3,time:sampleTime}})});
       });
-      const baseline=await page.locator('#research .scenario-results').allInnerTexts();
+      const baseline=await page.locator('#research .validation-overflow table').allInnerTexts();
       await page.locator('#scenarioLat').fill('33.75');
       await page.locator('#scenarioLon').fill('-84.39');
       await page.locator('#scenarioLoadWeather').click();
-      await page.getByText('Current venue weather:').waitFor({timeout:15000});
+      await page.locator('#scenarioWeatherStatus').getByText('Current venue weather:').waitFor({timeout:15000});
       const reading=await page.locator('#scenarioWeatherStatus').innerText();
       assert.match(reading,/90\.0°F/);
       assert.match(reading,/3\.0 mph/);
       assert.match(reading,/user-supplied, not independently verified/);
       assert.match(reading,/Heat flag/);
-      assert.deepEqual(await page.locator('#research .scenario-results').allInnerTexts(),baseline,
+      assert.deepEqual(await page.locator('#research .validation-overflow table').allInnerTexts(),baseline,
         'Weather must not silently alter unvalidated estimates');
       await page.unrouteAll({behavior:'wait'});
     });
