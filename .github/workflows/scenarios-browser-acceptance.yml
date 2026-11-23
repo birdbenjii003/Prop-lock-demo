@@ -25,6 +25,8 @@ jobs:
           chromium.launch().then(async b=>{console.log('Chromium launch OK',b.version());await b.close();})
             .catch(e=>{console.error(e);process.exitCode=1});
           NODE
+      - name: Check browser test syntax
+        run: node --check tests/scenarios-browser-e2e.cjs
       - name: Run Scenarios real mobile browser tests
         run: node tests/scenarios-browser-e2e.cjs
         env:
