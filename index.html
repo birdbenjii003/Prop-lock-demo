@@ -191,11 +191,31 @@ async function fetchPublishedValidation(){
  }catch(error){publishedValidationError='Published report not available: '+(error.message||String(error))}
  if(useImported&&importedProps.length)renderValidationDashboard();
 }
+// Cache the dataset-wide historical benchmark until importedProps is replaced.
+// Player selection and tab navigation must not recompute all backtests.
+let cachedDeepDiveBacktestDataset=null;
+let cachedDeepDiveBacktestResult=null;
+function cachedDeepDiveBacktests(profiles){
+ if(cachedDeepDiveBacktestDataset!==profiles){
+  cachedDeepDiveBacktestResult=aggregateBacktests(profiles);
+  cachedDeepDiveBacktestDataset=profiles;
+ }
+ return cachedDeepDiveBacktestResult;
+}
+let lastDeepDiveDashboardDataset=null;
+let lastDeepDiveDashboardPublished=null;
+let lastDeepDiveDashboardError=null;
 function renderValidationDashboard(){
  const panel=$('validationDashboard');if(!panel)return;
- if(!useImported||currentSport!=='NFL'||!importedProps.length){panel.hidden=true;panel.innerHTML='';return}
+ if(!useImported||currentSport!=='NFL'||!importedProps.length){
+  panel.hidden=true;panel.innerHTML='';panel.dataset.ready='';return;
+ }
+ // The dashboard is dataset-wide; selecting a player/stat/tab does not change it.
+ if(panel.dataset.ready==='true'&&lastDeepDiveDashboardDataset===importedProps&&
+    lastDeepDiveDashboardPublished===publishedValidation&&
+    lastDeepDiveDashboardError===publishedValidationError)return;
  panel.hidden=false;
- const report=aggregateBacktests(importedProps);
+ const report=cachedDeepDiveBacktests(importedProps);
  const f=n=>n===null?'N/A':fmt(n);
  const total=report.groups.length;
  const eligible=report.groups.filter(x=>x.enough).length;
@@ -209,6 +229,10 @@ function renderValidationDashboard(){
  '<p class="validation-muted">Select a stat category to filter the player list below. The full three-method research process is not being backtested here: only the historical blend is evaluated. There are no authentic historical sportsbook lines in this dataset.</p>'+holdoutDashboardMarkup(importedProps)+opportunityDashboardMarkup(importedProps)+qualityDashboardMarkup(importedProps)+calibrationDashboardMarkup(importedProps)+matchupAuditDashboardMarkup(importedProps)+combinedDashboardMarkup(importedProps);
  const marketTemplate=$('marketTemplateDownload');if(marketTemplate)marketTemplate.onclick=()=>{const url=URL.createObjectURL(new Blob([marketTemplateCsv()],{type:'text/csv;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='prop-lock-market-schema-empty.csv';a.click();URL.revokeObjectURL(url)};
  panel.querySelectorAll('[data-validation-stat]').forEach(b=>b.onclick=()=>{currentCategory=b.dataset.validationStat;categories();activeProfile=null;selectedId=null;render();$('cards').scrollIntoView({behavior:'smooth',block:'start'})});
+ lastDeepDiveDashboardDataset=importedProps;
+ lastDeepDiveDashboardPublished=publishedValidation;
+ lastDeepDiveDashboardError=publishedValidationError;
+ panel.dataset.ready='true';
 }
 function render(){
  renderValidationDashboard();
