@@ -7,6 +7,7 @@ const fs=require('node:fs');
 const BASE=process.env.SCENARIOS_URL||'https://birdbenjii003.github.io/Prop-lock-demo/';
 fs.mkdirSync('test-results',{recursive:true});
 const checks=[],failures=[],errors=[];
+const externalDiagnostics=[];
 let page,browser;
 
 async function check(name,fn){
@@ -115,21 +116,24 @@ async function main(){
     });
     // External provider availability is monitored separately from deterministic browser acceptance.
     // Distinguish DNS/CORS/rate-limit outages from failures in our own website logic.
-    await check('Real weather provider reachability diagnostic (non-blocking)',async()=>{
+    {
+      let providerStatus='UNVERIFIED';
       const params=new URLSearchParams({latitude:'33.75',longitude:'-84.39',current:'temperature_2m,wind_speed_10m',
         temperature_unit:'fahrenheit',wind_speed_unit:'mph',timezone:'UTC'});
       const url='https://api.open-meteo.com/v1/forecast?'+params;
       try{
         const response=await page.request.get(url,{timeout:12000});
-        if(!response.ok()){console.warn('PROVIDER_UNAVAILABLE HTTP',response.status());return;}
+        if(!response.ok()){providerStatus='HTTP_'+response.status();} else {
         const data=await response.json();
         const valid=Number.isFinite(data.current?.temperature_2m)&&Number.isFinite(data.current?.wind_speed_10m)&&!!data.current?.time;
+        providerStatus=valid?'REACHABLE':'MALFORMED_RESPONSE';
         if(valid)console.log('PROVIDER_REACHABLE',JSON.stringify({time:data.current.time}));
         else console.warn('PROVIDER_UNAVAILABLE malformed response');
-      }catch(error){console.warn('PROVIDER_UNAVAILABLE',String(error));}
-      // Browser weather display is validated above with a deterministic provider fixture.
-      // A separate production network probe is needed to certify live connectivity.
-    });
+        }
+      }catch(error){providerStatus='NETWORK_ERROR';console.warn('PROVIDER_UNAVAILABLE',String(error));}
+      externalDiagnostics.push({name:'Open-Meteo direct network probe',status:providerStatus});
+      // This diagnostic does not count as an application acceptance pass.
+    }
     await check('Scenarios, Deep Dive and Trait Match remain separately present',async()=>{
       const research=await page.locator('#research').innerText();
       assert.match(research,/02 · Scenarios/);
@@ -140,7 +144,7 @@ async function main(){
   } finally{
     await page.screenshot({path:'test-results/scenarios-final-mobile.png',fullPage:false}).catch(()=>{});
     fs.writeFileSync('test-results/scenarios-browser-assertions.json',
-      JSON.stringify({url:BASE,checks,failures,errors,networkWeatherIsIndependentFromFixture:true},null,2));
+      JSON.stringify({url:BASE,checks,failures,errors,externalDiagnostics,networkWeatherIsIndependentFromFixture:true},null,2));
     await browser.close();
   }
   if(failures.length)throw Error(failures.length+' Scenarios acceptance checks failed; see artifact for details.');
