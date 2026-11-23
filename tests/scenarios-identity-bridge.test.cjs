@@ -1,0 +1,33 @@
+'use strict';
+const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
+const code=fs.readFileSync('scripts/scenarios-roster-identity.js','utf8')+'\n'+
+ fs.readFileSync('scripts/scenarios-identity-bridge.js','utf8')+
+ '\n({scenarioGsisId,scenarioCrosswalkRows,scenarioResolveEspnId,scenarioVerifyRosterById})';
+const api=vm.runInNewContext(code,{Date});
+const player={playerKey:'id:00-0034857',name:'Sample Player',position:'RB',team:'ATL'};
+const header=['gsis_id','espn_id','display_name','position'];
+const rows=[header,['00-0034857','123456','Sample Player','RB'],['00-0037777','654321','Second Player','WR']];
+const good=api.scenarioCrosswalkRows(rows);
+assert.equal(good.status,'CROSSWALK_PARSED');
+assert.equal(api.scenarioCrosswalkRows([['wrong']]).status,'INVALID_CROSSWALK');
+assert.equal(api.scenarioGsisId(player),'00-0034857');
+assert.equal(api.scenarioGsisId({playerKey:'name:sample|ATL'}),null);
+const resolved=api.scenarioResolveEspnId(player,good);
+assert.equal(resolved.status,'CROSSWALK_ID_RESOLVED');
+const roster=list=>({athletes:[{items:list}]});
+const athlete=(id,name,position='RB')=>({id,fullName:name,position:{abbreviation:position}});
+const timestamp=Date.parse('2026-11-23T12:00:00Z');
+const matched=api.scenarioVerifyRosterById(resolved,roster([athlete('123456','Sample Player')]),player,'ATL',timestamp);
+assert.equal(matched.status,'ID_CORROBORATED');
+assert.equal(matched.gsisId,'00-0034857');
+assert.equal(matched.espnId,'123456');
+assert.equal(api.scenarioVerifyRosterById(resolved,roster([athlete('999999','Sample Player')]),player,'ATL',timestamp).status,'PLAYER_NOT_ON_TEAM_ROSTER');
+assert.equal(api.scenarioVerifyRosterById(resolved,roster([athlete('123456','Other Player')]),player,'ATL',timestamp).status,'NAME_CONFLICT');
+assert.equal(api.scenarioVerifyRosterById(resolved,roster([athlete('123456','Sample Player','QB')]),player,'ATL',timestamp).status,'POSITION_CONFLICT');
+assert.equal(api.scenarioVerifyRosterById(resolved,roster([athlete('123456','Sample Player'),athlete('123456','Sample Player')]),player,'ATL',timestamp).status,'AMBIGUOUS_ESPN_ID');
+assert.equal(api.scenarioVerifyRosterById(resolved,{athletes:null},player,'ATL',timestamp).status,'IDENTITY_UNVERIFIED');
+assert.equal(api.scenarioResolveEspnId({...player,playerKey:'name:sample|ATL'},good).status,'MISSING_GSIS_ID');
+assert.equal(api.scenarioResolveEspnId(player,api.scenarioCrosswalkRows([header,['00-0034857','123456','Different Person','RB']])).status,'NAME_CONFLICT');
+assert.equal(api.scenarioResolveEspnId(player,api.scenarioCrosswalkRows([...rows,['00-0034857','111111','Sample Player','RB']])).status,'CONFLICTING_CROSSWALK');
+assert.equal(api.scenarioResolveEspnId(player,api.scenarioCrosswalkRows([...rows,['00-0099999','123456','Another Person','RB']])).status,'CONFLICTING_CROSSWALK');
+console.log('GSIS/ESPN identity crosswalk and roster collision safeguards PASS; live sources unverified');
