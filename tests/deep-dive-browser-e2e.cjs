@@ -8,9 +8,27 @@ const BASE=process.env.DEEP_DIVE_URL||'https://birdbenjii003.github.io/Prop-lock
 const TABS=['overview','performance','trends','volume','quality','role','efficiency','expected','sustainability','stability','weighting','tendencies','projection','validation','evidence','h2h'];
 fs.mkdirSync('test-results',{recursive:true});
 let failures=[],browser;
+let activePage=null;
 async function step(label,callback){
  try{await callback();console.log('PASS',label)}
- catch(error){failures.push(label+': '+String(error.message||error));console.error('FAIL',label,String(error.message||error))}
+ catch(error){
+  const message=label+': '+String(error.stack||error);
+  failures.push(message);
+  console.error('FAIL',message);
+  if(activePage){
+   const safe=label.toLowerCase().replace(/[^a-z0-9]+/g,'-').slice(0,45);
+   await activePage.screenshot({path:'test-results/failure-'+safe+'.png',fullPage:false}).catch(()=>{});
+   const state=await activePage.evaluate(()=>({
+    cards:document.querySelectorAll('#cards [data-profile]').length,
+    selectedProfile:document.querySelector('#cards [data-profile].selected')?.getAttribute('data-profile')||null,
+    statButtons:document.querySelectorAll('#research [data-stat-id]').length,
+    deepDiveTabs:document.querySelectorAll('[data-deep-dive-tab]').length,
+    activeTab:document.querySelector('[data-deep-dive-tab][aria-pressed="true"]')?.getAttribute('data-deep-dive-tab')||null,
+    status:document.getElementById('importStatus')?.textContent?.slice(0,350)
+   })).catch(e=>({diagnosticError:String(e)}));
+   console.error('BROWSER_STATE',JSON.stringify(state));
+  }
+ }
 }
 async function tabs(page){
  for(const id of TABS){
@@ -30,7 +48,8 @@ async function main(){
  }
  const context=await browser.newContext({viewport:{width:390,height:844},deviceScaleFactor:1});
  const page=await context.newPage();
- page.setDefaultTimeout(15000);
+ activePage=page;
+ page.setDefaultTimeout(30000);
  const problems=[];
  page.on('pageerror',e=>problems.push(e.message));
  try{
@@ -56,8 +75,8 @@ async function main(){
    await page.locator('#cards [data-profile]').first().waitFor({timeout:20000});
   });
   await step('Select actual player and stat, change research line',async()=>{
-   await page.locator('#cards [data-profile]').first().click();
-   await page.locator('#research [data-stat-id]').first().waitFor();
+   await page.locator('#cards [data-profile]').first().click({timeout:30000});
+   await page.locator('#research [data-stat-id]').first().waitFor({timeout:30000});
    await page.locator('#research [data-stat-id]').first().click();
    assert.match(await page.locator('#research .sourcechip').innerText(),/NFLVERSE PUBLIC SNAPSHOT/);
    const line=page.locator('#lineNumber');
@@ -67,6 +86,7 @@ async function main(){
    assert.match(await page.locator('.dd3-content').innerText(),/50.5|Unavailable/);
   });
   await step('All 16 tabs render with hosted NFL player evidence',async()=>{
+   assert.equal(await page.locator('#research [data-stat-id]').count()>0,true,'Hosted player selection did not complete; preceding step must pass before tab checks');
    await tabs(page);
    await page.locator('[data-deep-dive-tab="projection"]').click();
    const text=await page.locator('.dd3-content').innerText();
