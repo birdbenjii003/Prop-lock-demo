@@ -191,11 +191,22 @@ async function fetchPublishedValidation(){
  }catch(error){publishedValidationError='Published report not available: '+(error.message||String(error))}
  if(useImported&&importedProps.length)renderValidationDashboard();
 }
+// Cache the dataset-wide historical benchmark until importedProps is replaced.
+// Player selection and tab navigation must not recompute all backtests.
+let cachedDeepDiveBacktestDataset=null;
+let cachedDeepDiveBacktestResult=null;
+function cachedDeepDiveBacktests(profiles){
+ if(cachedDeepDiveBacktestDataset!==profiles){
+  cachedDeepDiveBacktestResult=aggregateBacktests(profiles);
+  cachedDeepDiveBacktestDataset=profiles;
+ }
+ return cachedDeepDiveBacktestResult;
+}
 function renderValidationDashboard(){
  const panel=$('validationDashboard');if(!panel)return;
  if(!useImported||currentSport!=='NFL'||!importedProps.length){panel.hidden=true;panel.innerHTML='';return}
  panel.hidden=false;
- const report=aggregateBacktests(importedProps);
+ const report=cachedDeepDiveBacktests(importedProps);
  const f=n=>n===null?'N/A':fmt(n);
  const total=report.groups.length;
  const eligible=report.groups.filter(x=>x.enough).length;
