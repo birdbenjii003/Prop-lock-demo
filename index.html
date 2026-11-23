@@ -342,8 +342,14 @@ function scenarioPanel(p,line){
  const desc='<p>Scenario v2 uses recorded opportunities when available. It models linked game-script changes in pace and volume, identifies failure thresholds, and withholds unvalidated scenario probabilities.</p>';
  const weather=study.weather;
  const weatherText=(weather.status==='CURRENT_CONDITIONS'||weather.status==='CURRENT_UNVERIFIED_VENUE')
-  ?'Current venue weather: '+fmt(weather.temperatureF)+'°F, '+fmt(weather.windMph)+' mph wind · '+escapeHtml(weather.observedAt)+' · '+escapeHtml(weather.source)+'. Observations are NOT automatically game-time forecasts.'
+  ?'Current venue weather: '+fmt(weather.temperatureF)+'°F, '+fmt(weather.windMph)+' mph wind · '+escapeHtml(weather.observedAt)+' · '+escapeHtml(weather.source)+'. Observations are NOT automatically game-time forecasts. Venue association is user-supplied, not independently verified. ' +conditions
   :escapeHtml(scenarioWeatherStatus)+' · Weather is not used to alter projections until independently calibrated.';
+ const historical=study.historical?.status==='HISTORICAL_BASELINE_ONLY'
+  ?'Historical previous-only opportunity baseline: '+study.historical.tested+' evaluated games · MAE '+fmt(study.historical.mae)+' (prior-mean reference '+fmt(study.historical.naiveMae)+'). This does NOT validate game scripts.'
+  :'Historical opportunity baseline validation unavailable (insufficient matched records).';
+ const conditions=weather.status==='CURRENT_CONDITIONS'||weather.status==='CURRENT_UNVERIFIED_VENUE'
+  ?(weather.temperatureF>=85?'Heat flag: elevated temperature; no validated yardage adjustment. ':'')+(weather.windMph>=15?'Wind flag: stronger winds; no verified player-specific effect. ':'':'Low/moderate recorded wind; impact not estimated. ')
+  :'';
  const rows=study.scenarios.map(x=>'<tr><td>'+escapeHtml(x.label)+'</td><td>'+fmt(x.opportunities)+'</td><td>'+fmt(x.estimate)+'</td><td>'+escapeHtml(x.assessment.replaceAll('_',' '))+'</td></tr>').join('');
  const core=study.status==='ILLUSTRATIVE_NOT_CALIBRATED'
  ?'<p class="scenario-note">Historical matched opportunity sample: '+study.base.n+' games · '+escapeHtml(study.base.type)+': '+fmt(study.base.opportunity)+'/game · Recorded production per opportunity: '+fmt(study.base.efficiency)+'.</p>'+
@@ -356,7 +362,7 @@ function scenarioPanel(p,line){
  '<label for="scenarioSlider" class="sublabel">Scale historical production to '+Math.round(scenarioMultiplier*100)+'%</label><input id="scenarioSlider" class="line-range" type="range" min="0.6" max="1.4" step="0.05" value="'+scenarioMultiplier+'"/>'+
  '<p class="scenario-note">Adjusted historical L10 average: '+fmt(scenarioStats(p,line,scenarioMultiplier).avg)+'. These uniform multipliers are NOT game-script or injury predictions.</p></details>';
  return '<div class="panel"><div class="panel-head"><h3>02 · Scenarios</h3><span class="metricchip">V2.0 · EXPERIMENTAL</span></div>'+
- desc+core+
+ desc+core+'<p class="scenario-note">'+historical+'</p>'+
  '<h4>Live venue weather — optional</h4><p class="rowlabels">Enter coordinates for a stadium location you have independently checked. Only a button press requests current weather; these readings are not a kickoff forecast or a validated yardage adjustment. Outdoor venues only; retractable roofs require confirmed roof status.</p>'+
  '<div class="line-controls"><input id="scenarioLat" type="number" step=".0001" min="-90" max="90" placeholder="Stadium latitude" aria-label="Verified stadium latitude"/>'+
  '<input id="scenarioLon" type="number" step=".0001" min="-180" max="180" placeholder="Stadium longitude" aria-label="Verified stadium longitude"/>'+
