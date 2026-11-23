@@ -58,6 +58,7 @@
 <script src="./scripts/calibration.js"></script>
 <script src="./scripts/research.js"></script>
 <script src="./scripts/scenarios-v2.js"></script>
+<script src="./scripts/scenarios-game-weather.js"></script>
 <script src="./scripts/deep-dive-v2.js"></script>
 <script src="./scripts/deep-dive-workspace.js"></script>
 <script src="./scripts/deep-dive-views.js"></script>
@@ -78,7 +79,7 @@ const demoProps=[
 {id:'nhl-shots',sport:'NHL',name:'Sample Winger',team:'Northern Ice',opp:'Capital Ice',stat:'Shots on Goal',line:2.5,logs:[3,4,2,5,1,3,2,4,3,2],usage:'Ice time and shot attempts',scenario:'Account for power-play time and changing line assignments.',trait:'Compare shot locations against opponent defensive suppression patterns.'},
 {id:'ncaab-pts',sport:'NCAAB',name:'Sample College Guard',team:'State College',opp:'City College',stat:'Points',line:16.5,logs:[17,20,13,18,21,16,14,19,22,15],usage:'Minutes and offensive share',scenario:'Test pace, foul risk, and rotation volatility.',trait:'Match offensive role against opponent zone/man tendencies.'},
 {id:'ncaaf-pass',sport:'NCAAF',name:'Sample College QB',team:'Western U',opp:'Eastern U',stat:'Passing Yards',line:215.5,logs:[232,198,241,218,176,265,223,207,254,219],usage:'Dropbacks and offensive tempo',scenario:'Compare tempo, weather, and game script.',trait:'Compare passing design with opponent coverage and pass rush.'}];
-let importedProps=[];let useImported=false;let nflSource='none',nflUpdated='',manualOverride=false,autoInProgress=false;let scenarioMultiplier=1;let scenarioLiveWeather=null;let scenarioWeatherStatus='No verified stadium feed loaded.';let traitSelections={};let selectedPosition='All';let activeProfile=null;const sports=['NFL','NBA','MLB','NHL','NCAAB','NCAAF'];let currentSport='NFL',currentCategory='All',query='',selectedId='nfl-wr',savedOnly=false;let saved=[];let lineOverrides={};let chartWindow=10;try{lineOverrides=JSON.parse(localStorage.getItem('prop-lock-lines-v11')||'{}')||{}}catch{lineOverrides={}}try{saved=JSON.parse(localStorage.getItem('prop-lock-watchlist')||'[]');if(!Array.isArray(saved))saved=[]}catch{saved=[]}
+let importedProps=[];let useImported=false;let nflSource='none',nflUpdated='',manualOverride=false,autoInProgress=false;let scenarioMultiplier=1;let scenarioLiveWeather=null;let scenarioWeatherStatus='No verified stadium feed loaded.';let scenarioGameContext=null;let scenarioKickoffForecastResult=null;let scenarioGameStatus='No upcoming schedule linked. Historical team labels cannot confirm current rosters.';let traitSelections={};let selectedPosition='All';let activeProfile=null;const sports=['NFL','NBA','MLB','NHL','NCAAB','NCAAF'];let currentSport='NFL',currentCategory='All',query='',selectedId='nfl-wr',savedOnly=false;let saved=[];let lineOverrides={};let chartWindow=10;try{lineOverrides=JSON.parse(localStorage.getItem('prop-lock-lines-v11')||'{}')||{}}catch{lineOverrides={}}try{saved=JSON.parse(localStorage.getItem('prop-lock-watchlist')||'[]');if(!Array.isArray(saved))saved=[]}catch{saved=[]}
 const propsForView=()=>useImported?importedProps:demoProps;const $=id=>document.getElementById(id);const escapeHtml=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function sportNav(){$('sports').innerHTML=sports.map(s=>`<button class="tab ${s===currentSport?'active':''}" data-sport="${s}" aria-pressed="${s===currentSport}">${s}</button>`).join('');document.querySelectorAll('[data-sport]').forEach(b=>b.onclick=()=>{currentSport=b.dataset.sport;currentCategory='All';selectedId=null;activeProfile=null;query='';$('search').value='';categories();render()});}
 function categories(){let a=[...new Set(propsForView().filter(p=>p.sport===currentSport).map(p=>p.stat))];$('category').innerHTML='<option value="All">All Prop Categories</option>'+a.map(s=>`<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`).join('');$('category').value=currentCategory;}
@@ -363,6 +364,11 @@ function scenarioPanel(p,line){
  '<p class="scenario-note">Adjusted historical L10 average: '+fmt(scenarioStats(p,line,scenarioMultiplier).avg)+'. These uniform multipliers are NOT game-script or injury predictions.</p></details>';
  return '<div class="panel"><div class="panel-head"><h3>02 · Scenarios</h3><span class="metricchip">V2.0 · EXPERIMENTAL</span></div>'+
  desc+core+'<p class="scenario-note">'+historical+'</p>'+
+ '<h4>Upcoming NFL game and kickoff forecast — experimental</h4>'+
+ '<p class="scenario-note">The current player-team label is historical and is NOT verified as a current roster assignment. Check the current team before requesting scheduled-game context. No forecast is incorporated in scenario estimates.</p>'+
+ '<p class="scenario-note" id="scenarioGameStatus">'+escapeHtml(scenarioGameStatus)+'</p>'+
+ (scenarioKickoffForecastResult?.status==='KICKOFF_FORECAST_UNVERIFIED'?'<p class="scenario-note">Kickoff forecast (not observed): '+fmt(scenarioKickoffForecastResult.temperatureF)+'°F · '+fmt(scenarioKickoffForecastResult.windMph)+' mph wind · valid '+escapeHtml(scenarioKickoffForecastResult.validAt)+'. Forecast source: '+escapeHtml(scenarioKickoffForecastResult.source)+'. Field conditions and player effects unverified.</p>':'')+
+ '<button id="scenarioLookupGame" type="button">Find upcoming game for historical team</button>'+
  '<h4>Live venue weather — optional</h4><p class="rowlabels">Enter coordinates for a stadium location you have independently checked. Only a button press requests current weather; these readings are not a kickoff forecast or a validated yardage adjustment. Outdoor venues only; retractable roofs require confirmed roof status.</p>'+
  '<div class="line-controls"><input id="scenarioLat" type="number" step=".0001" min="-90" max="90" placeholder="Stadium latitude" aria-label="Verified stadium latitude"/>'+
  '<input id="scenarioLon" type="number" step=".0001" min="-180" max="180" placeholder="Stadium longitude" aria-label="Verified stadium longitude"/>'+
@@ -537,6 +543,34 @@ function renderResearch(){
  document.querySelectorAll('[data-window]').forEach(b=>b.onclick=()=>{chartWindow=Number(b.dataset.window);renderResearch()});
  document.querySelectorAll('[data-scenario]').forEach(b=>b.onclick=()=>{scenarioMultiplier=Number(b.dataset.scenario);renderResearch()});
  const scenario=$('scenarioSlider');if(scenario)scenario.onchange=e=>{scenarioMultiplier=Number(e.target.value);renderResearch()};
+ const gameLookup=$('scenarioLookupGame');
+ if(gameLookup)gameLookup.onclick=async()=>{
+  // This is an opt-in lookup only; no assertion that the player is on this team today.
+  const selected=propsForView().find(x=>x.id===selectedId&&x.sport==='NFL');
+  if(!selected?.team){scenarioGameStatus='Team label unavailable; schedule cannot be linked.';renderResearch();return}
+  gameLookup.disabled=true;
+  scenarioGameStatus='Loading next scheduled NFL game for historical team '+selected.team+'…';
+  $('scenarioGameStatus').textContent=scenarioGameStatus;
+  scenarioGameContext=null;scenarioKickoffForecastResult=null;
+  try{
+   const response=await fetch(scenarioScheduleUrl(),{cache:'no-store'});
+   if(!response.ok)throw Error('Schedule HTTP '+response.status);
+   const schedule=await response.json();
+   const ctx=scenarioUpcomingGame(schedule,selected.team);
+   scenarioGameContext=ctx;
+   scenarioGameStatus=ctx.status+(ctx.game?' · '+ctx.game.teams.map(t=>t.abbreviation).join(' vs ')+' · '+ctx.game.date+' · '+ctx.game.venueName:'')+'. '+(ctx.reason||'');
+   if(ctx.status==='OUTDOOR_VENUE_MATCHED'){
+    const url=scenarioKickoffWeatherUrl(ctx);
+    if(url){
+     const weatherResponse=await fetch(url,{cache:'no-store'});
+     if(!weatherResponse.ok)throw Error('Kickoff forecast HTTP '+weatherResponse.status);
+     scenarioKickoffForecastResult=scenarioKickoffForecast(await weatherResponse.json(),ctx);
+     scenarioGameStatus+=' Forecast status: '+scenarioKickoffForecastResult.status+'. Data are contextual only.';
+    }
+   }
+  }catch(error){scenarioGameStatus='Schedule or forecast unavailable: '+(error.message||String(error));scenarioGameContext=null;scenarioKickoffForecastResult=null}
+  renderResearch();
+ };
  const fetchWeather=$('scenarioLoadWeather');
  if(fetchWeather)fetchWeather.onclick=async()=>{
   const lat=Number($('scenarioLat')?.value),lon=Number($('scenarioLon')?.value);
