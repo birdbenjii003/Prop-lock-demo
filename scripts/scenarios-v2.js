@@ -31,7 +31,7 @@ function scenarioWeather(input,nowMs=Date.now()){
     !Number.isFinite(observed)||observed>nowMs+5*60*1000||nowMs-observed>90*60*1000)
   return {status:'UNVERIFIED_OR_STALE',reason:'Missing venue identity, timestamp, valid measurements or fresh observation'};
  return {status:venueVerified?'CURRENT_CONDITIONS':'CURRENT_UNVERIFIED_VENUE',temperatureF,windMph,observedAt,source,
-  reason:'Observed conditions at confirmed venue; NOT a game-time forecast unless timestamps match kickoff'};
+  reason:'Weather for supplied coordinates only; NOT a game-time forecast unless timestamps match kickoff'};
 }
 function scenarioHistoricalCheck(p,profiles){
  // Chronological previous-five-game opportunity+efficiency baseline, not a game-script validation.
