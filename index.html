@@ -51,12 +51,14 @@
 <details class="field-help"><summary>Accepted CSV columns and import rules</summary><p>Supports nflverse weekly stats with <code>player_display_name</code>, <code>player_id</code>, <code>season</code>, <code>week</code>, <code>season_type</code>, <code>recent_team</code>, <code>opponent_team</code>, and stat fields such as <code>receiving_yards</code>, <code>passing_yards</code>, <code>rushing_yards</code>, <code>receptions</code>, <code>targets</code>, <code>passing_tds</code>, <code>rushing_tds</code>, or <code>receiving_tds</code>. Also accepts <code>player_name</code> or <code>player</code>, and <code>team</code> instead of <code>recent_team</code>. REG rows only. Players are matched by a stable ID when present; otherwise name and team. Rows without required fields are excluded.</p><p>No odds or matchup context is inferred from these game logs. Imported data is user-supplied, not independently verified.</p></details>
 </section>
 <div class="notice" id="dataBanner">SAMPLE MODE — Fictional players and logs. No live odds or modeled probabilities.</div>
+<section class="panel" aria-label="Data source freshness" style="margin-top:12px"><div class="panel-head"><h3>Live Data Foundation — Source Freshness</h3><span class="metricchip">READ-ONLY · V1</span></div><div id="liveFeedMonitor" class="rowlabels">Source monitoring not yet initialized.</div><p class="hint">Refresh periods are targets, not a provider guarantee. Current means recently retrieved, not independently verified or real-time. Scheduled automatic polling is not enabled yet.</p></section>
 <section class="validation-dashboard" id="validationDashboard" hidden aria-label="Cross-player historical validation"></section>
 <main class="workspace"><div class="cards" id="cards"></div><aside class="research" id="research"><div class="eyebrow">RESEARCH WORKSPACE</div><h2>Choose a player prop</h2><p class="muted">Select a card to see the three-step research process.</p></aside></main><footer class="foot">Prop Lock V1.2 is a local-only demonstration. Your watchlist and custom lines remain in this browser. The site can retrieve a publicly hosted NFL statistical snapshot; manually imported CSVs remain in memory and are never uploaded. External source correctness is not independently verified, and this app does not supply live sportsbook lines or calibrated predictions.</footer></div>
 <script src="./scripts/backtest.js"></script>
 <script src="./scripts/quality.js"></script>
 <script src="./scripts/calibration.js"></script>
 <script src="./scripts/research.js"></script>
+<script src="./scripts/live-data-foundation.js"></script>
 <script src="./scripts/scenarios-v2.js"></script>
 <script src="./scripts/scenarios-game-weather.js"></script>
 <script src="./scripts/scenarios-roster-identity.js"></script>
@@ -82,6 +84,22 @@ const demoProps=[
 {id:'ncaab-pts',sport:'NCAAB',name:'Sample College Guard',team:'State College',opp:'City College',stat:'Points',line:16.5,logs:[17,20,13,18,21,16,14,19,22,15],usage:'Minutes and offensive share',scenario:'Test pace, foul risk, and rotation volatility.',trait:'Match offensive role against opponent zone/man tendencies.'},
 {id:'ncaaf-pass',sport:'NCAAF',name:'Sample College QB',team:'Western U',opp:'Eastern U',stat:'Passing Yards',line:215.5,logs:[232,198,241,218,176,265,223,207,254,219],usage:'Dropbacks and offensive tempo',scenario:'Compare tempo, weather, and game script.',trait:'Compare passing design with opponent coverage and pass rush.'}];
 let importedProps=[];let useImported=false;let nflSource='none',nflUpdated='',manualOverride=false,autoInProgress=false;let scenarioMultiplier=1;let scenarioLiveWeather=null;let scenarioWeatherStatus='No verified stadium feed loaded.';let scenarioGameContext=null;let scenarioKickoffForecastResult=null;let scenarioGameStatus='No upcoming schedule linked. Historical team labels cannot confirm current rosters.';let scenarioGameTeam=null;let scenarioRosterEvidence=null;let scenarioRosterRequestId=0;let scenarioIdEvidence=null;let scenarioIdRequestId=0;let scenarioCrosswalkCache=null;let scenarioCrosswalkCheckedAt=0;let traitSelections={};let selectedPosition='All';let activeProfile=null;const sports=['NFL','NBA','MLB','NHL','NCAAB','NCAAF'];let currentSport='NFL',currentCategory='All',query='',selectedId='nfl-wr',savedOnly=false;let saved=[];let lineOverrides={};let chartWindow=10;try{lineOverrides=JSON.parse(localStorage.getItem('prop-lock-lines-v11')||'{}')||{}}catch{lineOverrides={}}try{saved=JSON.parse(localStorage.getItem('prop-lock-watchlist')||'[]');if(!Array.isArray(saved))saved=[]}catch{saved=[]}
+const plLiveStore=new Map();
+function renderLiveFeedMonitor(){
+ const panel=document.getElementById('liveFeedMonitor');
+ if(!panel)return;
+ const sport=PL_SPORTS.includes(currentSport)?currentSport:'NFL';
+ const status=plFeedSummary(plLiveStore,sport);
+ panel.innerHTML='<p>Sport: '+escapeHtml(sport)+' · All feeds must show source freshness and verification independently.</p>'+
+  '<div class="validation-overflow"><table class="validation-table"><thead><tr><th>Source type</th><th>Freshness</th><th>Evidence</th><th>Retrieved</th></tr></thead><tbody>'+
+  status.map(x=>'<tr><td>'+escapeHtml(x.type)+'</td><td>'+escapeHtml(x.state)+'</td><td>'+escapeHtml(x.verification)+'</td><td>'+escapeHtml(x.lastRetrieved||'Never')+'</td></tr>').join('')+
+  '</tbody></table></div>';
+}
+function plRecordSource(input){
+ const result=plIngest(plLiveStore,input);
+ if(result.ok)renderLiveFeedMonitor();
+ return result;
+}
 const propsForView=()=>useImported?importedProps:demoProps;const $=id=>document.getElementById(id);const escapeHtml=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function sportNav(){$('sports').innerHTML=sports.map(s=>`<button class="tab ${s===currentSport?'active':''}" data-sport="${s}" aria-pressed="${s===currentSport}">${s}</button>`).join('');document.querySelectorAll('[data-sport]').forEach(b=>b.onclick=()=>{currentSport=b.dataset.sport;currentCategory='All';selectedId=null;activeProfile=null;query='';$('search').value='';categories();render()});}
 function categories(){let a=[...new Set(propsForView().filter(p=>p.sport===currentSport).map(p=>p.stat))];$('category').innerHTML='<option value="All">All Prop Categories</option>'+a.map(s=>`<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`).join('');$('category').value=currentCategory;}
@@ -239,6 +257,7 @@ function renderValidationDashboard(){
  panel.dataset.ready='true';
 }
 function render(){
+ renderLiveFeedMonitor();
  renderValidationDashboard();
  sportNav();renderPositions();const list=visible();
  $('count').textContent=useImported?([...new Set(list.map(p=>p.playerKey||p.name+'|'+p.team))].length+' NFL player profiles'):list.length+' sample props';
@@ -891,6 +910,12 @@ async function loadAutomaticNFL(force=false){
    const history=await loadOptionalNFLHistory(csv);
    await loadVerifiedNFLSnaps();
    const {imported,summary}=convertCsvToProps(history.csv);
+   // Historical snapshot publication/retrieval evidence is distinct from live event data.
+   // A downloaded file alone is not a verification of all underlying statistics.
+   plRecordSource({sport:'NFL',type:'historical_stats',source:'nflverse',id:'nfl-weekly-snapshot',
+    retrievedAt:new Date().toISOString(),verification:'unverified',
+    payload:{seasons:history.seasons,origin:fromCache?'device-cache':'published-site',sourceUpdatedAt:nflUpdated||null}});
+
    if(!fromCache)await cacheWrite({csv,savedAt:Date.now()});
    if(!manualOverride){importedProps=imported;nflSource='hosted';nflUpdated=new Date(fromCache?cached.savedAt:Date.now()).toLocaleString();if(currentSport==='NFL')setMode(true);else{categories();render()}}
    markNFLStatus(`NFL ${history.seasons} weekly stats ${fromCache?'loaded from your device cache':'loaded from the public site'} (${nflUpdated||'this session'}).\n${summary}\n${history.warning?'History: '+history.warning+'\n':''}${warning?'Note: '+warning+'\n':''}These are completed games, not upcoming opponent matchups. Source: nflverse. No live lines or predictive probability.`);
