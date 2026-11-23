@@ -1,0 +1,35 @@
+name: Scenarios Phase 3 game and forecast browser acceptance
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  phase3-browser:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install pinned Playwright on supported Ubuntu
+        run: |
+          npm init -y
+          npm install --no-save --package-lock=false playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Syntax and offline stadium safeguards
+        run: |
+          node --check tests/scenarios-phase3-browser-e2e.cjs
+          node --check scripts/scenarios-game-weather.js
+          node tests/scenarios-game-weather.test.cjs
+      - name: Exercise actual Pages with controlled scheduled-game and kickoff fixtures
+        run: node tests/scenarios-phase3-browser-e2e.cjs
+        env:
+          SCENARIOS_URL: https://birdbenjii003.github.io/Prop-lock-demo/
+      - name: Preserve result logs and mobile screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: scenarios-phase3-browser-evidence
+          path: test-results/
+          if-no-files-found: ignore
