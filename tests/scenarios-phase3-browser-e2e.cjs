@@ -67,12 +67,22 @@ async function main(){
   });
   await test('Choose a hosted player and preserve historical-team disclaimer',async()=>{
    const candidate=await page.evaluate(()=>{
-    const valid=importedProps.find(p=>p.sport==='NFL'&&p.playerKey&&p.team);
-    return valid&&{key:valid.playerKey,name:valid.name,team:valid.team};
+    const match={'Rushing Yards':'Carries','Receiving Yards':'Targets','Receptions':'Targets','Passing Yards':'Passing Attempts'};
+    for(const valid of importedProps){
+      const opportunity=match[valid.stat];
+      if(!opportunity||valid.sport!=='NFL'||!valid.playerKey||!valid.team)continue;
+      const peer=importedProps.find(p=>p.playerKey===valid.playerKey&&p.stat===opportunity);
+      if(!peer?.records?.length)continue;
+      const keys=new Set(peer.records.filter(r=>Number.isFinite(r.value)&&r.value>0).map(r=>r.season+':'+r.week));
+      if(valid.records?.filter(r=>keys.has(r.season+':'+r.week)).length>=10)
+        return {key:valid.playerKey,name:valid.name,team:valid.team,stat:valid.stat};
+    }
+    return null;
    });
    assert.ok(candidate?.team,'Hosted data has no team identity');
    team=candidate.team.toUpperCase();
    await page.locator('#cards [data-profile]').filter({hasText:candidate.name}).first().click();
+   await page.locator('#research [data-stat-id]').filter({hasText:candidate.stat}).first().click();
    await page.locator('#scenarioLookupGame').waitFor();
    assert.match(await page.locator('#research').innerText(),/historical and is NOT verified as a current roster assignment/);
    console.log('HISTORICAL_TEAM_LABEL',team);
