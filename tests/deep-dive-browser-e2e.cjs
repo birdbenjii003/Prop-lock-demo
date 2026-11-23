@@ -83,7 +83,8 @@ async function main(){
    await line.fill('50.5');
    await line.dispatchEvent('change');
    assert.equal(await page.locator('#lineNumber').inputValue(),'50.5');
-   assert.match(await page.locator('.dd3-content').innerText(),/50.5|Unavailable/);
+   // The active H2H tab need not repeat the line; verify the actual chart updated.
+   assert.match(await page.locator('#research .graphbox svg').getAttribute('aria-label'),/50\\.5/);
   });
   await step('All 16 tabs render with hosted NFL player evidence',async()=>{
    assert.equal(await page.locator('#research [data-stat-id]').count()>0,true,'Hosted player selection did not complete; preceding step must pass before tab checks');
