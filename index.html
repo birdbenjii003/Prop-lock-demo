@@ -85,15 +85,43 @@ const demoProps=[
 {id:'ncaaf-pass',sport:'NCAAF',name:'Sample College QB',team:'Western U',opp:'Eastern U',stat:'Passing Yards',line:215.5,logs:[232,198,241,218,176,265,223,207,254,219],usage:'Dropbacks and offensive tempo',scenario:'Compare tempo, weather, and game script.',trait:'Compare passing design with opponent coverage and pass rush.'}];
 let importedProps=[];let useImported=false;let nflSource='none',nflUpdated='',manualOverride=false,autoInProgress=false;let scenarioMultiplier=1;let scenarioLiveWeather=null;let scenarioWeatherStatus='No verified stadium feed loaded.';let scenarioGameContext=null;let scenarioKickoffForecastResult=null;let scenarioGameStatus='No upcoming schedule linked. Historical team labels cannot confirm current rosters.';let scenarioGameTeam=null;let scenarioRosterEvidence=null;let scenarioRosterRequestId=0;let scenarioIdEvidence=null;let scenarioIdRequestId=0;let scenarioCrosswalkCache=null;let scenarioCrosswalkCheckedAt=0;let traitSelections={};let selectedPosition='All';let activeProfile=null;const sports=['NFL','NBA','MLB','NHL','NCAAB','NCAAF'];let currentSport='NFL',currentCategory='All',query='',selectedId='nfl-wr',savedOnly=false;let saved=[];let lineOverrides={};let chartWindow=10;try{lineOverrides=JSON.parse(localStorage.getItem('prop-lock-lines-v11')||'{}')||{}}catch{lineOverrides={}}try{saved=JSON.parse(localStorage.getItem('prop-lock-watchlist')||'[]');if(!Array.isArray(saved))saved=[]}catch{saved=[]}
 const plLiveStore=new Map();
+let plScheduleRefreshStatus='Not requested yet. Schedule updates are opt-in.';
+let plScheduleRefreshing=false;
+async function refreshLiveNflSchedule(){
+ if(plScheduleRefreshing)return;
+ plScheduleRefreshing=true;
+ plScheduleRefreshStatus='Checking schedule source…';
+ renderLiveFeedMonitor();
+ const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),12000);
+ try{
+  const response=await fetch(scenarioScheduleUrl(),{cache:'no-store',signal:controller.signal});
+  if(!response.ok)throw Error('Schedule HTTP '+response.status);
+  const schedule=await response.json();
+  if(!Array.isArray(schedule.events))throw Error('Schedule events array missing');
+  const count=schedule.events.length;
+  // Store source retrieval evidence and bounded metadata; no player matchup is inferred.
+  const events=schedule.events.slice(0,100).map(e=>({id:String(e.id||''),start:e.date||null}))
+    .filter(e=>e.id&&e.id!=='undefined');
+  const at=new Date().toISOString();
+  const result=plRecordSource({sport:'NFL',type:'schedule',source:'ESPN',id:'scoreboard-window',
+   retrievedAt:at,verification:'unverified',payload:{count,events,endpoint:'ESPN schedule',windowDays:14}});
+  if(!result.ok)throw Error(result.error);
+  plScheduleRefreshStatus='Retrieved '+count+' scheduled events at '+at+'. Provider data not independently verified.';
+ }catch(error){plScheduleRefreshStatus='Schedule unavailable: '+(error.message||String(error))}
+ finally{clearTimeout(timer);plScheduleRefreshing=false;renderLiveFeedMonitor()}
+}
 function renderLiveFeedMonitor(){
  const panel=document.getElementById('liveFeedMonitor');
  if(!panel)return;
  const sport=PL_SPORTS.includes(currentSport)?currentSport:'NFL';
  const status=plFeedSummary(plLiveStore,sport);
  panel.innerHTML='<p>Sport: '+escapeHtml(sport)+' · All feeds must show source freshness and verification independently.</p>'+
+  (sport==='NFL'?'<button type="button" id="liveRefreshNflSchedule" '+(plScheduleRefreshing?'disabled':'')+'>Check NFL schedule feed</button><p id="liveScheduleRefreshStatus" class="scenario-note">'+escapeHtml(plScheduleRefreshStatus)+'</p>':'')+
   '<div class="validation-overflow"><table class="validation-table"><thead><tr><th>Source type</th><th>Freshness</th><th>Evidence</th><th>Retrieved</th></tr></thead><tbody>'+
   status.map(x=>'<tr><td>'+escapeHtml(x.type)+'</td><td>'+escapeHtml(x.state)+'</td><td>'+escapeHtml(x.verification)+'</td><td>'+escapeHtml(x.lastRetrieved||'Never')+'</td></tr>').join('')+
   '</tbody></table></div>';
+ const refresh=document.getElementById('liveRefreshNflSchedule');
+ if(refresh)refresh.onclick=()=>refreshLiveNflSchedule();
 }
 function plRecordSource(input){
  const result=plIngest(plLiveStore,input);
