@@ -27,10 +27,10 @@ function scenarioWeather(input,nowMs=Date.now()){
  if(!input)return {status:'NO_FEED',reason:'No stadium weather feed connected'};
  const {temperatureF,windMph,observedAt,source,venueVerified}=input;
  const observed=Date.parse(observedAt);
- if(!venueVerified||!source||!Number.isFinite(temperatureF)||!Number.isFinite(windMph)||windMph<0||
+ if(!source||!Number.isFinite(temperatureF)||!Number.isFinite(windMph)||windMph<0||
     !Number.isFinite(observed)||observed>nowMs+5*60*1000||nowMs-observed>90*60*1000)
   return {status:'UNVERIFIED_OR_STALE',reason:'Missing venue identity, timestamp, valid measurements or fresh observation'};
- return {status:'CURRENT_CONDITIONS',temperatureF,windMph,observedAt,source,
+ return {status:venueVerified?'CURRENT_CONDITIONS':'CURRENT_UNVERIFIED_VENUE',temperatureF,windMph,observedAt,source,
   reason:'Observed conditions at confirmed venue; NOT a game-time forecast unless timestamps match kickoff'};
 }
 function scenarioStudy(p,profiles,line,weather=null){
@@ -61,7 +61,7 @@ function scenarioStudy(p,profiles,line,weather=null){
 }
 function scenarioWeatherFromOpenMeteo(payload,venueVerified,observedAt){
  const c=payload?.current;
- if(!c||!venueVerified)return null;
+ if(!c)return null;
  const temp=Number(c.temperature_2m),wind=Number(c.wind_speed_10m);
  // Open-Meteo current values are requested with temperature_unit=fahrenheit and wind_speed_unit=mph.
  if(!Number.isFinite(temp)||!Number.isFinite(wind))return null;
