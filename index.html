@@ -57,6 +57,7 @@
 <script src="./scripts/quality.js"></script>
 <script src="./scripts/calibration.js"></script>
 <script src="./scripts/research.js"></script>
+<script src="./scripts/scenarios-v2.js"></script>
 <script src="./scripts/deep-dive-v2.js"></script>
 <script src="./scripts/deep-dive-workspace.js"></script>
 <script src="./scripts/deep-dive-views.js"></script>
@@ -77,7 +78,7 @@ const demoProps=[
 {id:'nhl-shots',sport:'NHL',name:'Sample Winger',team:'Northern Ice',opp:'Capital Ice',stat:'Shots on Goal',line:2.5,logs:[3,4,2,5,1,3,2,4,3,2],usage:'Ice time and shot attempts',scenario:'Account for power-play time and changing line assignments.',trait:'Compare shot locations against opponent defensive suppression patterns.'},
 {id:'ncaab-pts',sport:'NCAAB',name:'Sample College Guard',team:'State College',opp:'City College',stat:'Points',line:16.5,logs:[17,20,13,18,21,16,14,19,22,15],usage:'Minutes and offensive share',scenario:'Test pace, foul risk, and rotation volatility.',trait:'Match offensive role against opponent zone/man tendencies.'},
 {id:'ncaaf-pass',sport:'NCAAF',name:'Sample College QB',team:'Western U',opp:'Eastern U',stat:'Passing Yards',line:215.5,logs:[232,198,241,218,176,265,223,207,254,219],usage:'Dropbacks and offensive tempo',scenario:'Compare tempo, weather, and game script.',trait:'Compare passing design with opponent coverage and pass rush.'}];
-let importedProps=[];let useImported=false;let nflSource='none',nflUpdated='',manualOverride=false,autoInProgress=false;let scenarioMultiplier=1;let traitSelections={};let selectedPosition='All';let activeProfile=null;const sports=['NFL','NBA','MLB','NHL','NCAAB','NCAAF'];let currentSport='NFL',currentCategory='All',query='',selectedId='nfl-wr',savedOnly=false;let saved=[];let lineOverrides={};let chartWindow=10;try{lineOverrides=JSON.parse(localStorage.getItem('prop-lock-lines-v11')||'{}')||{}}catch{lineOverrides={}}try{saved=JSON.parse(localStorage.getItem('prop-lock-watchlist')||'[]');if(!Array.isArray(saved))saved=[]}catch{saved=[]}
+let importedProps=[];let useImported=false;let nflSource='none',nflUpdated='',manualOverride=false,autoInProgress=false;let scenarioMultiplier=1;let scenarioLiveWeather=null;let scenarioWeatherStatus='No verified stadium feed loaded.';let traitSelections={};let selectedPosition='All';let activeProfile=null;const sports=['NFL','NBA','MLB','NHL','NCAAB','NCAAF'];let currentSport='NFL',currentCategory='All',query='',selectedId='nfl-wr',savedOnly=false;let saved=[];let lineOverrides={};let chartWindow=10;try{lineOverrides=JSON.parse(localStorage.getItem('prop-lock-lines-v11')||'{}')||{}}catch{lineOverrides={}}try{saved=JSON.parse(localStorage.getItem('prop-lock-watchlist')||'[]');if(!Array.isArray(saved))saved=[]}catch{saved=[]}
 const propsForView=()=>useImported?importedProps:demoProps;const $=id=>document.getElementById(id);const escapeHtml=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function sportNav(){$('sports').innerHTML=sports.map(s=>`<button class="tab ${s===currentSport?'active':''}" data-sport="${s}" aria-pressed="${s===currentSport}">${s}</button>`).join('');document.querySelectorAll('[data-sport]').forEach(b=>b.onclick=()=>{currentSport=b.dataset.sport;currentCategory='All';selectedId=null;activeProfile=null;query='';$('search').value='';categories();render()});}
 function categories(){let a=[...new Set(propsForView().filter(p=>p.sport===currentSport).map(p=>p.stat))];$('category').innerHTML='<option value="All">All Prop Categories</option>'+a.map(s=>`<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`).join('');$('category').value=currentCategory;}
@@ -337,18 +338,37 @@ function scenarioStats(p,line,factor){
  return {n,avg:mean(a),med:median(a),over,under,equal:n-over-under};
 }
 function scenarioPanel(p,line){
- const presets=[['Lower',.75],['Normal',1],['Higher',1.25]];
- const x=scenarioStats(p,line,scenarioMultiplier);
- const card=(v,label)=>'<div><b>'+fmt(v.avg)+'</b><span>'+label+' · '+v.over+'/'+v.n+' adjusted overs</span></div>';
- return '<div class="panel"><div class="panel-head"><h3>02 · Scenarios</h3><span class="metricchip">V1.7 · HYPOTHETICAL</span></div>'+
- '<p>Compare how changing recorded production affects recent results. This is a sensitivity test, not a game-script or injury prediction.</p>'+
- '<div class="scenario-preset-row">'+presets.map(([name,m])=>'<button type="button" data-scenario="'+m+'" class="'+(Math.abs(scenarioMultiplier-m)<.001?'active':'')+'">'+name+' · '+Math.round(m*100)+'%</button>').join('')+'</div>'+
- '<label for="scenarioSlider" class="sublabel">Adjust historical production to '+Math.round(scenarioMultiplier*100)+'%</label>'+
- '<input id="scenarioSlider" class="line-range" type="range" min="0.6" max="1.4" step="0.05" value="'+scenarioMultiplier+'" />'+
- '<div class="scenario-results"><div><b>'+fmt(x.avg)+'</b><span>Adjusted L'+x.n+' average</span></div><div><b>'+x.over+'/'+x.n+'</b><span>Adjusted over</span></div><div><b>'+x.under+'/'+x.n+'</b><span>Adjusted under</span></div></div>'+
- '<p class="rowlabels">Adjusted median '+fmt(x.med)+' · Equal to line: '+x.equal+' · Selected research threshold: '+fmt(line)+'</p>'+
- '<h4>Compare illustrative conditions</h4><div class="scenario-results">'+presets.map(([name,m])=>card(scenarioStats(p,line,m),name)).join('')+'</div>'+
- '<p class="scenario-note">'+(x.n<10?'Limited sample: '+x.n+' games. ':'')+'All recorded outcomes are scaled equally. This does not establish future opportunities, efficiency, or matchup conditions. Adjusted counts are not predictive probabilities and cannot justify an Over/Under recommendation. No verified future-game inputs are connected.</p></div>';
+ const study=scenarioStudy(p,importedProps,line,scenarioLiveWeather);
+ const desc='<p>Scenario v2 uses recorded opportunities when available. It models linked game-script changes in pace and volume, identifies failure thresholds, and withholds unvalidated scenario probabilities.</p>';
+ const weather=study.weather;
+ const historical=study.historical?.status==='HISTORICAL_BASELINE_ONLY'
+  ?'Historical previous-only opportunity baseline: '+study.historical.tested+' evaluated games · MAE '+fmt(study.historical.mae)+' (prior-mean reference '+fmt(study.historical.naiveMae)+'). This does NOT validate game scripts.'
+  :'Historical opportunity baseline validation unavailable (insufficient matched records).';
+ const conditions=weather.status==='CURRENT_CONDITIONS'||weather.status==='CURRENT_UNVERIFIED_VENUE'
+  ?(weather.temperatureF>=85?'Heat flag: elevated temperature; no validated yardage adjustment. ':'')+(weather.windMph>=15?'Wind flag: stronger winds; no verified player-specific effect. ':'Low/moderate recorded wind; impact not estimated. ')
+  :'';
+ const weatherText=(weather.status==='CURRENT_CONDITIONS'||weather.status==='CURRENT_UNVERIFIED_VENUE')
+  ?'Current venue weather: '+fmt(weather.temperatureF)+'°F, '+fmt(weather.windMph)+' mph wind · '+escapeHtml(weather.observedAt)+' · '+escapeHtml(weather.source)+'. Observations are NOT automatically game-time forecasts. Venue association is user-supplied, not independently verified. ' +conditions
+  :escapeHtml(scenarioWeatherStatus)+' · Weather is not used to alter projections until independently calibrated.';
+ const rows=study.scenarios.map(x=>'<tr><td>'+escapeHtml(x.label)+'</td><td>'+fmt(x.opportunities)+'</td><td>'+fmt(x.estimate)+'</td><td>'+escapeHtml(x.assessment.replaceAll('_',' '))+'</td></tr>').join('');
+ const core=study.status==='ILLUSTRATIVE_NOT_CALIBRATED'
+ ?'<p class="scenario-note">Historical matched opportunity sample: '+study.base.n+' games · '+escapeHtml(study.base.type)+': '+fmt(study.base.opportunity)+'/game · Recorded production per opportunity: '+fmt(study.base.efficiency)+'.</p>'+
+ '<div class="validation-overflow"><table class="validation-table"><thead><tr><th>Condition</th><th>Estimated opportunities</th><th>Illustrative production</th><th>Vs selected line</th></tr></thead><tbody>'+rows+'</tbody></table></div>'+
+ '<p>Illustrative scenario range: '+fmt(study.estimatedRange.low)+'–'+fmt(study.estimatedRange.high)+'. Minimum opportunities at recorded efficiency to reach '+fmt(line)+': '+(study.failurePoint?fmt(study.failurePoint.requiredOpportunities):'Unavailable')+'.</p>'+
+ '<p class="scenario-note">Sensitivity between leading and trailing assumptions: '+fmt(study.sensitivityDelta)+' stat units (signed). Scenario weights and probabilities: <b>UNAVAILABLE — NOT CALIBRATED.</b></p>'
+ :'<p class="scenario-note">Opportunity-driven scenarios unavailable: '+escapeHtml(study.base.reason||'Historical opportunity records missing')+'. No fabricated projections.</p>';
+ const legacy='<details><summary>Legacy production slider (hypothetical only)</summary>'+
+ '<div class="scenario-preset-row">'+[['Lower',.75],['Normal',1],['Higher',1.25]].map(([name,m])=>'<button type="button" data-scenario="'+m+'" class="'+(Math.abs(scenarioMultiplier-m)<.001?'active':'')+'">'+name+' · '+Math.round(m*100)+'%</button>').join('')+'</div>'+
+ '<label for="scenarioSlider" class="sublabel">Scale historical production to '+Math.round(scenarioMultiplier*100)+'%</label><input id="scenarioSlider" class="line-range" type="range" min="0.6" max="1.4" step="0.05" value="'+scenarioMultiplier+'"/>'+
+ '<p class="scenario-note">Adjusted historical L10 average: '+fmt(scenarioStats(p,line,scenarioMultiplier).avg)+'. These uniform multipliers are NOT game-script or injury predictions.</p></details>';
+ return '<div class="panel"><div class="panel-head"><h3>02 · Scenarios</h3><span class="metricchip">V2.0 · EXPERIMENTAL</span></div>'+
+ desc+core+'<p class="scenario-note">'+historical+'</p>'+
+ '<h4>Live venue weather — optional</h4><p class="rowlabels">Enter coordinates for a stadium location you have independently checked. Only a button press requests current weather; these readings are not a kickoff forecast or a validated yardage adjustment. Outdoor venues only; retractable roofs require confirmed roof status.</p>'+
+ '<div class="line-controls"><input id="scenarioLat" type="number" step=".0001" min="-90" max="90" placeholder="Stadium latitude" aria-label="Verified stadium latitude"/>'+
+ '<input id="scenarioLon" type="number" step=".0001" min="-180" max="180" placeholder="Stadium longitude" aria-label="Verified stadium longitude"/>'+
+ '<button id="scenarioLoadWeather" type="button">Fetch current venue weather</button></div>'+
+ '<p class="scenario-note" id="scenarioWeatherStatus">'+weatherText+'</p>'+legacy+
+ '<p class="scenario-note">Game scripts are connected sensitivity assumptions, not weighted predictions. Injury, opponent traits and true game-time forecast remain unverified; those factors must not be silently applied. Historical scenario backtesting and calibrated probabilities are pending.</p></div>';
 }
 // Historic defensive allowance: all eligible opponents who faced a defense,
 // grouped at player/game/stat/role grain, not totals across a multi-player game.
@@ -517,6 +537,26 @@ function renderResearch(){
  document.querySelectorAll('[data-window]').forEach(b=>b.onclick=()=>{chartWindow=Number(b.dataset.window);renderResearch()});
  document.querySelectorAll('[data-scenario]').forEach(b=>b.onclick=()=>{scenarioMultiplier=Number(b.dataset.scenario);renderResearch()});
  const scenario=$('scenarioSlider');if(scenario)scenario.onchange=e=>{scenarioMultiplier=Number(e.target.value);renderResearch()};
+ const fetchWeather=$('scenarioLoadWeather');
+ if(fetchWeather)fetchWeather.onclick=async()=>{
+  const lat=Number($('scenarioLat')?.value),lon=Number($('scenarioLon')?.value);
+  if(!$('scenarioLat')?.value||!$('scenarioLon')?.value||!Number.isFinite(lat)||!Number.isFinite(lon)||Math.abs(lat)>90||Math.abs(lon)>180){
+   scenarioWeatherStatus='Valid stadium latitude and longitude are required. Venue identity is user-supplied and unverified.';$('scenarioWeatherStatus').textContent=scenarioWeatherStatus;return;
+  }
+  fetchWeather.disabled=true;$('scenarioWeatherStatus').textContent='Retrieving current conditions for the specified coordinates…';
+  try{
+   const params=new URLSearchParams({latitude:String(lat),longitude:String(lon),current:'temperature_2m,wind_speed_10m',temperature_unit:'fahrenheit',wind_speed_unit:'mph',timezone:'UTC'});
+   const response=await fetch('https://api.open-meteo.com/v1/forecast?'+params,{cache:'no-cache'});
+   if(!response.ok)throw Error('Weather provider HTTP '+response.status);
+   const data=await response.json();
+   const sample=scenarioWeatherFromOpenMeteo(data,false,data.current?.time?data.current.time+'Z':null);
+   const checked=scenarioWeather(sample);
+   if(checked.status!=='CURRENT_UNVERIFIED_VENUE')throw Error('Weather reading is stale or invalid');
+   scenarioLiveWeather=sample;
+   scenarioWeatherStatus='Current conditions retrieved. Coordinate identity was entered manually, not verified by a schedule provider.';
+  }catch(error){scenarioLiveWeather=null;scenarioWeatherStatus='Current weather unavailable: '+(error.message||String(error))}
+  renderResearch();
+ };
  document.querySelectorAll('[data-deep-dive-tab]').forEach(b=>b.onclick=()=>{deepDiveActiveTab=b.dataset.deepDiveTab;renderResearch()});
  const opponentSelect=$('opponentSelect');if(opponentSelect)opponentSelect.onchange=e=>{traitSelections[p.id]=e.target.value;renderResearch()};
  $('save').onclick=()=>{saved=isSaved?saved.filter(id=>id!==p.id):[...saved,p.id];try{localStorage.setItem('prop-lock-watchlist',JSON.stringify(saved))}catch{}render()};
