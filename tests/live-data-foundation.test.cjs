@@ -1,0 +1,34 @@
+'use strict';
+const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
+const api=vm.runInNewContext(fs.readFileSync('scripts/live-data-foundation.js','utf8')+
+ '\n({plEnvelope,plFreshness,plIngest,plFeedSummary,plRefreshDecision,PL_SPORTS,PL_TYPES,PL_TTLS})',{Date,Map});
+const now=Date.parse('2026-11-23T15:00:00Z'),at=ms=>new Date(ms).toISOString();
+const template={sport:'NFL',type:'schedule',source:'ESPN',id:'game-1',teamId:'ATL',
+ eventAt:at(now+4*3600000),retrievedAt:at(now),verification:'unverified',payload:{status:'pre'}};
+assert.equal(api.plEnvelope(template,now).ok,true);
+assert.equal(api.plEnvelope({...template,sport:'NASCAR'},now).error,'UNKNOWN_SPORT_OR_TYPE');
+assert.equal(api.plEnvelope({...template,source:''},now).error,'MISSING_PROVENANCE');
+assert.equal(api.plEnvelope({...template,retrievedAt:at(now+7200000)},now).error,'INVALID_TIMESTAMP');
+assert.equal(api.plEnvelope({...template,playerId:'bad id'},now).error,'INVALID_ID');
+assert.equal(api.plEnvelope({...template,type:'player_stats'},now).error,'PLAYER_ID_REQUIRED');
+assert.equal(api.plEnvelope({...template,type:'game_status'},now).error,'GAME_ID_REQUIRED');
+assert.equal(api.plEnvelope({...template,verification:'verified'},now).record.verification,'verified');
+assert.equal(api.plEnvelope({...template,verification:'random'},now).record.verification,'unverified');
+const store=new Map();
+assert.equal(api.plIngest(store,template,now).ok,true);
+assert.equal(api.plIngest(store,template,now).error,'DUPLICATE_OR_OLDER');
+assert.equal(api.plIngest(store,{...template,retrievedAt:at(now-5000)},now).error,'DUPLICATE_OR_OLDER');
+const fresher={...template,retrievedAt:at(now+3000)};
+assert.equal(api.plIngest(store,fresher,now+4000).ok,true);
+assert.equal(store.size,1);
+assert.equal(api.plFreshness([...store.values()][0],now+5000).state,'CURRENT');
+assert.equal(api.plFreshness([...store.values()][0],now+14*3600000).state,'STALE');
+assert.equal(api.plRefreshDecision([...store.values()][0],'schedule',now+5000).action,'REUSE');
+assert.equal(api.plRefreshDecision([...store.values()][0],'schedule',now+14*3600000).action,'FETCH');
+assert.equal(api.plRefreshDecision(null,'made_up',now).action,'BLOCK');
+const summary=api.plFeedSummary(store,'NFL',now+5000);
+assert.equal(summary.length,8);
+assert.equal(summary.find(x=>x.type==='schedule').state,'CURRENT');
+assert.equal(summary.find(x=>x.type==='injury').state,'NOT_CONNECTED');
+assert.ok(api.PL_SPORTS.includes('NCAAF'));
+console.log('Shared data contract, duplicate, freshness, quality and six-sport tests PASS');
