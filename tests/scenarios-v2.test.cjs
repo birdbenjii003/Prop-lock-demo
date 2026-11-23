@@ -26,7 +26,7 @@ const now=Date.parse('2026-11-22T18:00:00Z');
 const current={temperatureF:90,windMph:3,observedAt:'2026-11-22T17:30:00Z',source:'Test source',venueVerified:true};
 assert.equal(api.scenarioWeather(current,now).status,'CURRENT_CONDITIONS');
 assert.equal(api.scenarioWeather({...current,observedAt:'2026-11-22T14:00:00Z'},now).status,'UNVERIFIED_OR_STALE');
-assert.equal(api.scenarioWeather({...current,venueVerified:false},now).status,'UNVERIFIED_OR_STALE');
+assert.equal(api.scenarioWeather({...current,venueVerified:false},now).status,'CURRENT_UNVERIFIED_VENUE');
 assert.equal(api.scenarioWeather({...current,windMph:-2},now).status,'UNVERIFIED_OR_STALE');
 assert.equal(api.scenarioStudy(p,[p,carries],50.5,current).scenarios[0].estimate,x.scenarios[0].estimate,
  'Live weather must not silently alter uncalibrated production');
