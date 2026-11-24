@@ -31,9 +31,9 @@ def iso_utc(value):
 
 
 def endpoint(now):
-    start = now.strftime("%Y%m%d")
-    end = (now + dt.timedelta(days=14)).strftime("%Y%m%d")
-    return f"https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?dates={start}-{end}&limit=100"
+    # ESPN's default NFL scoreboard is a provider-selected game window.
+    # Do not assume a custom multi-day dates range is supported for this league.
+    return "https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?limit=100"
 
 
 def convert(payload, now):
@@ -83,7 +83,8 @@ def convert(payload, now):
         "source": "ESPN",
         "verification": "unverified",
         "fetchedAt": now.isoformat().replace("+00:00", "Z"),
-        "windowDays": 14,
+        "windowDays": None,
+        "scope": "provider_default_scoreboard",
         "count": len(items),
         "events": items,
         "notice": "Third-party schedule snapshot, not independently verified, no guaranteed refresh time or player matchup.",
@@ -104,10 +105,16 @@ def fetch(now, fixture=None):
         headers={"User-Agent": "PropLockResearchSnapshot/1.0", "Accept": "application/json"},
         method="GET",
     )
-    with urllib.request.urlopen(request, timeout=TIMEOUT_SECONDS) as response:
-        if response.status != 200:
-            raise ValueError(f"Unexpected HTTP {response.status}")
-        blob = response.read(MAX_BYTES + 1)
+    try:
+        with urllib.request.urlopen(request, timeout=TIMEOUT_SECONDS) as response:
+            if response.status != 200:
+                raise ValueError(f"Unexpected HTTP {response.status}")
+            blob = response.read(MAX_BYTES + 1)
+    except urllib.error.HTTPError as exc:
+        # Report only a short redacted body for debugging unsupported query formats.
+        detail = exc.read(512).decode("utf-8", errors="replace")
+        detail = "".join(c if c.isprintable() else " " for c in detail)[:250]
+        raise RuntimeError(f"ESPN scoreboard HTTP {exc.code}; provider detail: {detail}") from exc
     return read_json_bytes(blob)
 
 
