@@ -1,0 +1,37 @@
+name: Validate NFL roster index and next batch
+on:
+  push:
+    paths:
+      - 'scripts/build-nfl-roster-index.py'
+      - 'scripts/collect-nfl-roster-batch-v7.py'
+      - 'tests/test_nfl_roster_index.py'
+      - '.github/workflows/validate-nfl-roster-index.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  index-tests:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test all index safeguards offline
+        run: |
+          python -m unittest discover -s tests -p test_nfl_roster_pilot.py -v
+          python -m unittest discover -s tests -p test_nfl_roster_batch.py -v
+          python -m unittest discover -s tests -p test_nfl_roster_index.py -v
+      - name: Generate provisional index against published snapshots
+        run: |
+          python scripts/build-nfl-roster-index.py --out test-results/nfl_roster_index_test.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=json.loads(Path('test-results/nfl_roster_index_test.json').read_text())
+          assert p['coverage']['teamsExpected']==32
+          assert p['coverage']['teamsTracked']==7
+          assert p['coverage']['teamsPresent']>=4
+          print('Indexed existing roster snapshot coverage:', p['coverage'])
+          PY
