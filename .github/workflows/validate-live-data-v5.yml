@@ -1,0 +1,49 @@
+name: Validate published NFL schedule and roster pilot
+on:
+  push:
+    paths:
+      - 'index.html'
+      - 'scripts/collect-nfl-roster-pilot.py'
+      - 'tests/test_nfl_roster_pilot.py'
+      - 'tests/live-data-v5-publication-browser.cjs'
+      - '.github/workflows/validate-live-data-v5.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validation:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Test roster pilot without provider requests
+        run: python -m unittest discover -s tests -p test_nfl_roster_pilot.py -v
+      - name: Inspect existing published schedule file
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('data/live/nfl_schedule.json')
+          data=json.loads(p.read_text())
+          assert data['sport']=='NFL' and data['type']=='schedule'
+          assert data['verification']=='unverified'
+          assert len(data['events'])==data['count']
+          print('Published schedule schema PASS:', data['count'], 'events')
+          PY
+      - name: Check browser and test syntax
+        run: |
+          node --check tests/live-data-v5-publication-browser.cjs
+          node - <<'NODE'
+          const fs=require('node:fs'),vm=require('node:vm');
+          const html=fs.readFileSync('index.html','utf8');
+          const inline=html.match(/<script>\s*([\s\S]*?)<\/script>/);
+          if(!inline)throw Error('Main script missing');
+          new vm.Script(inline[1]);
+          console.log('Site syntax PASS');
+          NODE
