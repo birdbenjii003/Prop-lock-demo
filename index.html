@@ -201,6 +201,29 @@ async function loadPublishedNflSchedule(){
    '. This does not affect existing historical data.'}
  renderLiveFeedMonitor();
 }
+// Read-only roster pilot: not proof of a player's current team or active availability.
+let plPublishedRosterStatus='ATL roster pilot not checked.';
+async function loadPublishedNflRosterPilot(){
+ try{
+  const r=await fetch('./data/live/nfl_roster_pilot_ATL.json',{cache:'no-cache'});
+  if(!r.ok)throw Error('HTTP '+r.status);
+  const d=await r.json();
+  if(d?.schemaVersion!==1||d.sport!=='NFL'||d.type!=='roster'||d.source!=='ESPN'||
+     d.team!=='ATL'||d.scope!=='single_team_pilot'||d.verification!=='unverified'||
+     !Array.isArray(d.athletes)||d.count!==d.athletes.length||!d.count||
+     d.count>125||!Number.isFinite(Date.parse(d.fetchedAt))||
+     d.athletes.some(x=>!/^\d{1,12}$/.test(String(x.espnId))||!x.displayName))
+     throw Error('Invalid pilot roster schema');
+  const result=plRecordSource({sport:'NFL',type:'roster',source:'ESPN-PUBLISHED',
+    id:'ATL-pilot',teamId:'ATL',retrievedAt:d.fetchedAt,verification:'unverified',
+    payload:{count:d.count,scope:d.scope}});
+  if(!result.ok)throw Error(result.error);
+  plPublishedRosterStatus='ATL only: '+d.count+' roster names · collected '+d.fetchedAt+
+   ' · '+plFreshness(result.record).state+' · player-team assignment unverified.';
+ }catch(e){plPublishedRosterStatus='ATL roster pilot unavailable: '+(e.message||String(e))+
+   '. No current-player identity claims.'}
+ renderLiveFeedMonitor();
+}
 function renderLiveFeedMonitor(){
  const panel=document.getElementById('liveFeedMonitor');
  if(!panel)return;
@@ -208,6 +231,7 @@ function renderLiveFeedMonitor(){
  const status=plFeedSummary(plLiveStore,sport);
  panel.innerHTML='<p>Sport: '+escapeHtml(sport)+' · All feeds must show source freshness and verification independently.</p>'+
   (sport==='NFL'?'<p class="scenario-note" id="publishedScheduleStatus">'+escapeHtml(plPublishedScheduleStatus)+'</p>':'')+
+  (sport==='NFL'?'<p class="scenario-note" id="publishedRosterStatus">'+escapeHtml(plPublishedRosterStatus)+'</p>':'')+
   (sport==='NFL'?'<button type="button" id="liveRefreshNflSchedule" '+(plScheduleRefreshing?'disabled':'')+'>Check NFL schedule feed</button> <button type="button" id="liveToggleAutomatic">'+(plAutoRefresh?'Disable':'Enable')+' automatic checks</button><p class="scenario-note">Automatic checks are '+(plAutoRefresh?'enabled':'disabled')+' for this browser only, while the page is open. Schedule cache target: 12 hours; failures enforce cooldown.</p><p id="liveScheduleRefreshStatus" class="scenario-note">'+escapeHtml(plScheduleRefreshStatus)+'</p><p class="scenario-note">Recent checks: '+escapeHtml(plRefreshHistory.slice(-4).map(x=>x.status+' '+x.at+' '+x.detail).join(' | ')||'None')+'</p>':'')+
   '<div class="validation-overflow"><table class="validation-table"><thead><tr><th>Source type</th><th>Freshness</th><th>Evidence</th><th>Retrieved</th></tr></thead><tbody>'+
   status.map(x=>'<tr><td>'+escapeHtml(x.type)+'</td><td>'+escapeHtml(x.state)+'</td><td>'+escapeHtml(x.verification)+'</td><td>'+escapeHtml(x.lastRetrieved||'Never')+'</td></tr>').join('')+
@@ -1054,6 +1078,7 @@ $('autoNFL').onclick=()=>{manualOverride=false;loadAutomaticNFL(true)};
 // Do not overwrite a manual upload if an automatic request resolves later.
 loadAutomaticNFL();
 loadPublishedNflSchedule();
+loadPublishedNflRosterPilot();
 document.addEventListener('visibilitychange',()=>{if(plAutoRefresh)plScheduleTick()});
 if(plAutoRefresh)plScheduleTick();
 renderLiveFeedMonitor();

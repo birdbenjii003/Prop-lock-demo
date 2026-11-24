@@ -1,0 +1,36 @@
+name: Collect NFL roster pilot (manual, one team)
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: prop-lock-nfl-roster-pilot
+  cancel-in-progress: false
+jobs:
+  pilot:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run pilot collector tests
+        run: python -m unittest discover -s tests -p test_nfl_roster_pilot.py -v
+      - name: Collect pilot roster for ATL only
+        run: python scripts/collect-nfl-roster-pilot.py
+      - name: Publish only validated pilot roster
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- data/live/nfl_roster_pilot_ATL.json
+          if git diff --cached --quiet; then
+            echo "Unchanged pilot roster."
+            exit 0
+          fi
+          git commit -m "data: refresh one-team NFL roster pilot"
+          git push origin HEAD:main
