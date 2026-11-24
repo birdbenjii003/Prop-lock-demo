@@ -1,0 +1,40 @@
+name: Collect NFL schedule snapshot (free GitHub Actions)
+on:
+  schedule:
+    # Four checks per day, UTC. GitHub may delay scheduled runs.
+    - cron: '17 2,8,14,20 * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: prop-lock-nfl-schedule-snapshot
+  cancel-in-progress: false
+jobs:
+  collect:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate collector without network access
+        run: python -m unittest discover -s tests -p test_nfl_schedule_collector.py -v
+      - name: Collect bounded current NFL schedule
+        run: python scripts/collect-nfl-schedule.py
+      - name: Commit only the successful schedule snapshot
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- data/live/nfl_schedule.json
+          if git diff --cached --quiet; then
+            echo "No schedule snapshot changes."
+            exit 0
+          fi
+          git commit -m "data: refresh NFL schedule snapshot"
+          # No force pushes: fail safely if main changed; next run may try again.
+          git push origin HEAD:main
