@@ -1,0 +1,66 @@
+name: Collect NFL rosters — second controlled batch and index
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: prop-lock-nfl-roster-index-publish
+  cancel-in-progress: false
+jobs:
+  collect:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run offline index and batch regressions
+        run: |
+          python -m unittest discover -s tests -p test_nfl_roster_index.py -v
+      - name: Collect BAL DET SF with independent validation
+        run: python scripts/collect-nfl-roster-batch-v7.py
+      - name: Build identity-conflict index from surviving snapshots
+        run: python scripts/build-nfl-roster-index.py
+      - name: Publish valid roster snapshots and index without force pushes
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          for team in BAL DET SF; do
+            if [[ -f "data/live/nfl_roster_${team}.json" ]]; then
+              git add -- "data/live/nfl_roster_${team}.json"
+            fi
+          done
+          git add -- data/live/nfl_roster_index.json
+          if git diff --cached --quiet; then
+            echo "No new validated snapshots or index changes."
+          else
+            git commit -m "data: update NFL roster coverage index and second batch"
+            git push origin HEAD:main
+          fi
+      - name: Report independent successes and failures
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          batch=json.loads(Path('test-results/nfl-roster-batch-v7-report.json').read_text())
+          index=json.loads(Path('data/live/nfl_roster_index.json').read_text())
+          print('Roster coverage:', index['coverage'])
+          for row in batch['results']:
+              print(row['team'],row['status'],row.get('reason',''))
+          if not batch['allSuccessful']:
+              raise SystemExit('Some teams failed. Last-good snapshots preserved and index published.')
+          PY
+      - name: Save batch and coverage evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nfl-roster-v7-collection-evidence
+          path: |
+            test-results/nfl-roster-batch-v7-report.json
+            data/live/nfl_roster_index.json
+          if-no-files-found: ignore
