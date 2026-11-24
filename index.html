@@ -212,7 +212,7 @@ async function loadPublishedNflRosterPilot(){
      d.team!=='ATL'||d.scope!=='single_team_pilot'||d.verification!=='unverified'||
      !Array.isArray(d.athletes)||d.count!==d.athletes.length||!d.count||
      d.count>125||!Number.isFinite(Date.parse(d.fetchedAt))||
-     d.athletes.some(x=>!/^\\d{1,12}$/.test(String(x.espnId))||!x.displayName))
+     d.athletes.some(x=>!/^\d{1,12}$/.test(String(x.espnId))||!x.displayName))
      throw Error('Invalid pilot roster schema');
   const result=plRecordSource({sport:'NFL',type:'roster',source:'ESPN-PUBLISHED',
     id:'ATL-pilot',teamId:'ATL',retrievedAt:d.fetchedAt,verification:'unverified',
