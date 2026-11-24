@@ -238,7 +238,7 @@ async function loadPublishedNflRosterBatch(){
       value.verification!=='unverified'||!Array.isArray(value.athletes)||
       value.count!==value.athletes.length||!value.count||value.count>125||
       !Number.isFinite(Date.parse(value.fetchedAt))||
-      value.athletes.some(a=>!/^\\d{1,12}$/.test(String(a.espnId))||!a.displayName))
+      value.athletes.some(a=>!/^\d{1,12}$/.test(String(a.espnId))||!a.displayName))
       throw Error('INVALID_SCHEMA');
    const record=plRecordSource({sport:'NFL',type:'roster',source:'ESPN-PUBLISHED',
       id:team+'-batch',teamId:team,retrievedAt:value.fetchedAt,verification:'unverified',
