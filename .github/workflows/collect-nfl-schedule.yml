@@ -35,6 +35,6 @@ jobs:
             echo "No schedule snapshot changes."
             exit 0
           fi
-          git commit -m "data: refresh NFL schedule snapshot [skip ci]"
+          git commit -m "data: refresh NFL schedule snapshot"
           # No force pushes: fail safely if main changed; next run may try again.
           git push origin HEAD:main
