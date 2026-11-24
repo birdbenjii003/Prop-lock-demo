@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "sport": "NFL",
+  "type": "roster_index",
+  "verification": "unverified",
+  "source": "published_ESPN_snapshots",
+  "generatedAt": "2026-11-24T15:58:12Z",
+  "freshnessThresholdHours": 36,
+  "coverage": {
+    "teamsExpected": 32,
+    "teamsTracked": 7,
+    "teamsPresent": 7,
+    "teamsCurrent": 7,
+    "teamsStale": 0,
+    "teamsMissing": 0,
+    "teamsInvalid": 0,
+    "unresolvedCrossTeamIds": 0
+  },
+  "teams": [
+    {
+      "team": "ATL",
+      "state": "CURRENT",
+      "count": 79,
+      "fetchedAt": "2026-11-24T15:25:19Z"
+    },
+    {
+      "team": "BUF",
+      "state": "CURRENT",
+      "count": 74,
+      "fetchedAt": "2026-11-24T15:39:06Z"
+    },
+    {
+      "team": "KC",
+      "state": "CURRENT",
+      "count": 79,
+      "fetchedAt": "2026-11-24T15:39:06Z"
+    },
+    {
+      "team": "PHI",
+      "state": "CURRENT",
+      "count": 77,
+      "fetchedAt": "2026-11-24T15:39:06Z"
+    },
+    {
+      "team": "BAL",
+      "state": "CURRENT",
+      "count": 81,
+      "fetchedAt": "2026-11-24T15:58:06Z"
+    },
+    {
+      "team": "DET",
+      "state": "CURRENT",
+      "count": 85,
+      "fetchedAt": "2026-11-24T15:58:06Z"
+    },
+    {
+      "team": "SF",
+      "state": "CURRENT",
+      "count": 87,
+      "fetchedAt": "2026-11-24T15:58:06Z"
+    }
+  ],
+  "identityConflicts": [],
+  "notice": "Listing conflicts only: no verified player-team assignment or eligibility."
+}
