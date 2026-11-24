@@ -66,6 +66,24 @@ class CollectorTest(unittest.TestCase):
             self.assertEqual(path.read_bytes(), original)
             self.assertEqual(json.loads(original)["count"], 1)
 
+    def test_http_400_is_reported_without_writing_snapshot(self):
+        from unittest.mock import patch
+        import io
+        import urllib.error
+        with tempfile.TemporaryDirectory() as td:
+            path = Path(td) / "data/live/nfl_schedule.json"
+            good = collector.convert({"events": [event()]}, NOW)
+            collector.save_atomic(path, good)
+            before = path.read_bytes()
+            error = urllib.error.HTTPError(
+                collector.endpoint(NOW), 400, "Bad Request", {},
+                io.BytesIO(b'{"message":"Unsupported dates range"}'),
+            )
+            with patch.object(collector.urllib.request, "urlopen", side_effect=error):
+                with self.assertRaisesRegex(RuntimeError, "scoreboard HTTP 400"):
+                    collector.fetch(NOW)
+            self.assertEqual(path.read_bytes(), before)
+
     def test_fixture_only_when_opted(self):
         with tempfile.TemporaryDirectory() as td:
             fixture = Path(td) / "schedule.json"
