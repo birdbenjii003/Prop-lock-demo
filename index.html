@@ -252,6 +252,33 @@ async function loadPublishedNflRosterBatch(){
    ' · third-party roster listings only; player-team identities unverified.';
  renderLiveFeedMonitor();
 }
+// Public roster coverage index is diagnostic only; it never assigns a player to a current team.
+let plRosterIndexStatus='Published roster coverage index not checked.';
+async function loadPublishedNflRosterIndex(){
+ try{
+  const response=await fetch('./data/live/nfl_roster_index.json',{cache:'no-cache'});
+  if(!response.ok)throw Error('HTTP '+response.status);
+  const idx=await response.json();
+  const c=idx?.coverage;
+  if(idx?.schemaVersion!==1||idx.sport!=='NFL'||idx.type!=='roster_index'||
+    idx.verification!=='unverified'||!Number.isFinite(Date.parse(idx.generatedAt))||
+    !c||c.teamsExpected!==32||c.teamsTracked!==7||
+    !Array.isArray(idx.teams)||idx.teams.length!==7||
+    !Array.isArray(idx.identityConflicts)||idx.identityConflicts.length!==c.unresolvedCrossTeamIds||
+    !Number.isInteger(c.teamsPresent)||!Number.isInteger(c.teamsCurrent)||
+    !Number.isInteger(c.teamsInvalid)||!Number.isInteger(c.teamsMissing))
+    throw Error('INVALID_ROSTER_INDEX');
+  const ageHours=Math.max(0,(Date.now()-Date.parse(idx.generatedAt))/3600000);
+  plRosterIndexStatus='NFL roster coverage: '+c.teamsPresent+'/32 team snapshots published ('+
+    c.teamsCurrent+' current, '+c.teamsStale+' stale, '+c.teamsMissing+
+    ' missing in tracked set, '+c.teamsInvalid+' invalid) · '+c.unresolvedCrossTeamIds+
+    ' unresolved ESPN ID team conflicts · index generated '+idx.generatedAt+
+    (ageHours>36?' · INDEX OUTDATED':'')+
+    '. No verified player-team assignment.';
+ }catch(e){plRosterIndexStatus='Roster coverage index unavailable: '+(e.message||String(e))+
+   '. No verified player-team assignments.'}
+ renderLiveFeedMonitor();
+}
 function renderLiveFeedMonitor(){
  const panel=document.getElementById('liveFeedMonitor');
  if(!panel)return;
@@ -261,6 +288,7 @@ function renderLiveFeedMonitor(){
   (sport==='NFL'?'<p class="scenario-note" id="publishedScheduleStatus">'+escapeHtml(plPublishedScheduleStatus)+'</p>':'')+
   (sport==='NFL'?'<p class="scenario-note" id="publishedRosterStatus">'+escapeHtml(plPublishedRosterStatus)+'</p>':'')+
   (sport==='NFL'?'<p class="scenario-note" id="batchRosterStatus">'+escapeHtml(plBatchRosterStatus)+'</p>':'')+
+  (sport==='NFL'?'<p class="scenario-note" id="rosterIndexStatus">'+escapeHtml(plRosterIndexStatus)+'</p>':'')+
   (sport==='NFL'?'<button type="button" id="liveRefreshNflSchedule" '+(plScheduleRefreshing?'disabled':'')+'>Check NFL schedule feed</button> <button type="button" id="liveToggleAutomatic">'+(plAutoRefresh?'Disable':'Enable')+' automatic checks</button><p class="scenario-note">Automatic checks are '+(plAutoRefresh?'enabled':'disabled')+' for this browser only, while the page is open. Schedule cache target: 12 hours; failures enforce cooldown.</p><p id="liveScheduleRefreshStatus" class="scenario-note">'+escapeHtml(plScheduleRefreshStatus)+'</p><p class="scenario-note">Recent checks: '+escapeHtml(plRefreshHistory.slice(-4).map(x=>x.status+' '+x.at+' '+x.detail).join(' | ')||'None')+'</p>':'')+
   '<div class="validation-overflow"><table class="validation-table"><thead><tr><th>Source type</th><th>Freshness</th><th>Evidence</th><th>Retrieved</th></tr></thead><tbody>'+
   status.map(x=>'<tr><td>'+escapeHtml(x.type)+'</td><td>'+escapeHtml(x.state)+'</td><td>'+escapeHtml(x.verification)+'</td><td>'+escapeHtml(x.lastRetrieved||'Never')+'</td></tr>').join('')+
@@ -1109,6 +1137,7 @@ loadAutomaticNFL();
 loadPublishedNflSchedule();
 loadPublishedNflRosterPilot();
 loadPublishedNflRosterBatch();
+loadPublishedNflRosterIndex();
 document.addEventListener('visibilitychange',()=>{if(plAutoRefresh)plScheduleTick()});
 if(plAutoRefresh)plScheduleTick();
 renderLiveFeedMonitor();
