@@ -109,6 +109,9 @@ try{
  if(valid){
   plIngest(plLiveStore,valid);
   plRefreshState.successAt=Date.parse(valid.retrievedAt);
+ }else{
+  // A remembered success timestamp without a valid snapshot is not a reusable cache.
+  plRefreshState.successAt=0;
  }
 }catch{plScheduleRefreshStatus='Stored schedule cache unavailable; manual check remains available.'}
 function plSavePolicy(){
@@ -123,7 +126,7 @@ function plScheduleTick(){
  plRefreshTimer=null;
  if(!plAutoRefresh||document.hidden)return;
  const current=[...plLiveStore.values()].find(r=>r.sport==='NFL'&&r.type==='schedule'&&r.id==='scoreboard-window');
- const policy=plSchedulePolicy({...plRefreshState,inFlight:plScheduleRefreshing},Date.now());
+ const policy=plSchedulePolicy({...plRefreshState,successAt:current?plRefreshState.successAt:0,inFlight:plScheduleRefreshing},Date.now());
  if(policy.action==='FETCH'&&plRefreshDecision(current,'schedule').action==='FETCH')
   void refreshLiveNflSchedule(false);
  plRefreshTimer=setTimeout(plScheduleTick,5*60000);
