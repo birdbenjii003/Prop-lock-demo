@@ -59,6 +59,7 @@
 <script src="./scripts/calibration.js"></script>
 <script src="./scripts/research.js"></script>
 <script src="./scripts/live-data-foundation.js"></script>
+<script src="./scripts/live-data-refresh.js"></script>
 <script src="./scripts/scenarios-v2.js"></script>
 <script src="./scripts/scenarios-game-weather.js"></script>
 <script src="./scripts/scenarios-roster-identity.js"></script>
@@ -85,30 +86,96 @@ const demoProps=[
 {id:'ncaaf-pass',sport:'NCAAF',name:'Sample College QB',team:'Western U',opp:'Eastern U',stat:'Passing Yards',line:215.5,logs:[232,198,241,218,176,265,223,207,254,219],usage:'Dropbacks and offensive tempo',scenario:'Compare tempo, weather, and game script.',trait:'Compare passing design with opponent coverage and pass rush.'}];
 let importedProps=[];let useImported=false;let nflSource='none',nflUpdated='',manualOverride=false,autoInProgress=false;let scenarioMultiplier=1;let scenarioLiveWeather=null;let scenarioWeatherStatus='No verified stadium feed loaded.';let scenarioGameContext=null;let scenarioKickoffForecastResult=null;let scenarioGameStatus='No upcoming schedule linked. Historical team labels cannot confirm current rosters.';let scenarioGameTeam=null;let scenarioRosterEvidence=null;let scenarioRosterRequestId=0;let scenarioIdEvidence=null;let scenarioIdRequestId=0;let scenarioCrosswalkCache=null;let scenarioCrosswalkCheckedAt=0;let traitSelections={};let selectedPosition='All';let activeProfile=null;const sports=['NFL','NBA','MLB','NHL','NCAAB','NCAAF'];let currentSport='NFL',currentCategory='All',query='',selectedId='nfl-wr',savedOnly=false;let saved=[];let lineOverrides={};let chartWindow=10;try{lineOverrides=JSON.parse(localStorage.getItem('prop-lock-lines-v11')||'{}')||{}}catch{lineOverrides={}}try{saved=JSON.parse(localStorage.getItem('prop-lock-watchlist')||'[]');if(!Array.isArray(saved))saved=[]}catch{saved=[]}
 const plLiveStore=new Map();
-let plScheduleRefreshStatus='Not requested yet. Schedule updates are opt-in.';
+// Data collection is opt-in and page-open only; localStorage is best-effort cache.
+const PL_CACHE_KEY='pl-nfl-schedule-v3';
+const PL_POLICY_KEY='pl-nfl-refresh-policy-v3';
+const PL_AUTO_KEY='pl-nfl-auto-enabled-v3';
+let plScheduleRefreshStatus='Schedule checks are manual until automatic refresh is enabled.';
 let plScheduleRefreshing=false;
-async function refreshLiveNflSchedule(){
+let plAutoRefresh=false;
+let plRefreshState={successAt:0,failures:0,blockedUntil:0};
+let plRefreshHistory=[];
+let plRefreshTimer=null;
+try{
+ plAutoRefresh=localStorage.getItem(PL_AUTO_KEY)==='yes';
+ const saved=JSON.parse(localStorage.getItem(PL_POLICY_KEY)||'null');
+ if(saved&&typeof saved==='object'){
+  plRefreshState={successAt:Number(saved.successAt)||0,failures:Math.min(8,Math.max(0,Number(saved.failures)||0)),
+   blockedUntil:Number(saved.blockedUntil)||0};
+  plRefreshHistory=Array.isArray(saved.history)?saved.history.slice(-12):[];
+ }
+ const cache=JSON.parse(localStorage.getItem(PL_CACHE_KEY)||'null');
+ const valid=plSafeScheduleCache(cache);
+ if(valid){
+  plIngest(plLiveStore,valid);
+  plRefreshState.successAt=Date.parse(valid.retrievedAt);
+ }
+}catch{plScheduleRefreshStatus='Stored schedule cache unavailable; manual check remains available.'}
+function plSavePolicy(){
+ try{localStorage.setItem(PL_POLICY_KEY,JSON.stringify({...plRefreshState,history:plRefreshHistory}))}catch{}
+}
+function plLogRefresh(status,detail){
+ plRefreshHistory=plLimitedHistory(plRefreshHistory,{at:new Date().toISOString(),status,detail});
+ plSavePolicy();
+}
+function plScheduleTick(){
+ if(plRefreshTimer)clearTimeout(plRefreshTimer);
+ plRefreshTimer=null;
+ if(!plAutoRefresh||document.hidden)return;
+ const current=[...plLiveStore.values()].find(r=>r.sport==='NFL'&&r.type==='schedule'&&r.id==='scoreboard-window');
+ const policy=plSchedulePolicy({...plRefreshState,inFlight:plScheduleRefreshing},Date.now());
+ if(policy.action==='FETCH'&&plRefreshDecision(current,'schedule').action==='FETCH')
+  void refreshLiveNflSchedule(false);
+ plRefreshTimer=setTimeout(plScheduleTick,5*60000);
+}
+async function refreshLiveNflSchedule(manual=true){
  if(plScheduleRefreshing)return;
+ const now=Date.now();
+ const policy=plSchedulePolicy({...plRefreshState,inFlight:plScheduleRefreshing},now,manual);
+ if(policy.action==='SKIP'){
+  plScheduleRefreshStatus='Refresh paused: '+policy.reason+' until '+(policy.nextAt?new Date(policy.nextAt).toLocaleString():'the current request finishes')+'.';
+  renderLiveFeedMonitor();
+  return;
+ }
+ if(policy.action==='REUSE'){
+  plScheduleRefreshStatus='Using cached schedule until '+new Date(policy.nextAt).toLocaleString()+'.';
+  renderLiveFeedMonitor();
+  return;
+ }
  plScheduleRefreshing=true;
  plScheduleRefreshStatus='Checking schedule source…';
  renderLiveFeedMonitor();
  const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),12000);
  try{
   const response=await fetch(scenarioScheduleUrl(),{cache:'no-store',signal:controller.signal});
-  if(!response.ok)throw Error('Schedule HTTP '+response.status);
+  if(!response.ok){
+   const error=new Error('Schedule HTTP '+response.status);
+   error.httpStatus=response.status;
+   error.retryAfter=response.headers.get('retry-after');
+   throw error;
+  }
   const schedule=await response.json();
   if(!Array.isArray(schedule.events))throw Error('Schedule events array missing');
   const count=schedule.events.length;
-  // Store source retrieval evidence and bounded metadata; no player matchup is inferred.
   const events=schedule.events.slice(0,100).map(e=>({id:String(e.id||''),start:e.date||null}))
     .filter(e=>e.id&&e.id!=='undefined');
   const at=new Date().toISOString();
   const result=plRecordSource({sport:'NFL',type:'schedule',source:'ESPN',id:'scoreboard-window',
    retrievedAt:at,verification:'unverified',payload:{count,events,endpoint:'ESPN schedule',windowDays:14}});
-  if(!result.ok)throw Error(result.error);
+  if(!result.ok&&result.error!=='DUPLICATE_OR_OLDER')throw Error(result.error);
+  plRefreshState={successAt:Date.now(),failures:0,blockedUntil:0};
+  const latest=[...plLiveStore.values()].find(r=>r.type==='schedule'&&r.id==='scoreboard-window');
+  if(latest)try{localStorage.setItem(PL_CACHE_KEY,JSON.stringify({savedAt:Date.parse(latest.retrievedAt),record:latest}))}catch{}
+  plLogRefresh('SUCCESS',count+' schedule events; third-party unverified');
   plScheduleRefreshStatus='Retrieved '+count+' scheduled events at '+at+'. Provider data not independently verified.';
- }catch(error){plScheduleRefreshStatus='Schedule unavailable: '+(error.message||String(error))}
- finally{clearTimeout(timer);plScheduleRefreshing=false;renderLiveFeedMonitor()}
+ }catch(error){
+  plRefreshState={...plRefreshState,...plNextFailure(plRefreshState,error.httpStatus,error.retryAfter)};
+  const msg=error.message||String(error);
+  plLogRefresh('FAILED',msg);
+  plScheduleRefreshStatus='Schedule unavailable: '+msg+'. Retry after '+new Date(plRefreshState.blockedUntil).toLocaleString()+'.';
+ }finally{
+  clearTimeout(timer);plScheduleRefreshing=false;renderLiveFeedMonitor();
+ }
 }
 function renderLiveFeedMonitor(){
  const panel=document.getElementById('liveFeedMonitor');
@@ -116,12 +183,19 @@ function renderLiveFeedMonitor(){
  const sport=PL_SPORTS.includes(currentSport)?currentSport:'NFL';
  const status=plFeedSummary(plLiveStore,sport);
  panel.innerHTML='<p>Sport: '+escapeHtml(sport)+' · All feeds must show source freshness and verification independently.</p>'+
-  (sport==='NFL'?'<button type="button" id="liveRefreshNflSchedule" '+(plScheduleRefreshing?'disabled':'')+'>Check NFL schedule feed</button><p id="liveScheduleRefreshStatus" class="scenario-note">'+escapeHtml(plScheduleRefreshStatus)+'</p>':'')+
+  (sport==='NFL'?'<button type="button" id="liveRefreshNflSchedule" '+(plScheduleRefreshing?'disabled':'')+'>Check NFL schedule feed</button> <button type="button" id="liveToggleAutomatic">'+(plAutoRefresh?'Disable':'Enable')+' automatic checks</button><p class="scenario-note">Automatic checks are '+(plAutoRefresh?'enabled':'disabled')+' for this browser only, while the page is open. Schedule cache target: 12 hours; failures enforce cooldown.</p><p id="liveScheduleRefreshStatus" class="scenario-note">'+escapeHtml(plScheduleRefreshStatus)+'</p><p class="scenario-note">Recent checks: '+escapeHtml(plRefreshHistory.slice(-4).map(x=>x.status+' '+x.at+' '+x.detail).join(' | ')||'None')+'</p>':'')+
   '<div class="validation-overflow"><table class="validation-table"><thead><tr><th>Source type</th><th>Freshness</th><th>Evidence</th><th>Retrieved</th></tr></thead><tbody>'+
   status.map(x=>'<tr><td>'+escapeHtml(x.type)+'</td><td>'+escapeHtml(x.state)+'</td><td>'+escapeHtml(x.verification)+'</td><td>'+escapeHtml(x.lastRetrieved||'Never')+'</td></tr>').join('')+
   '</tbody></table></div>';
  const refresh=document.getElementById('liveRefreshNflSchedule');
- if(refresh)refresh.onclick=()=>refreshLiveNflSchedule();
+ if(refresh)refresh.onclick=()=>refreshLiveNflSchedule(true);
+ const toggle=document.getElementById('liveToggleAutomatic');
+ if(toggle)toggle.onclick=()=>{
+  plAutoRefresh=!plAutoRefresh;
+  try{localStorage.setItem(PL_AUTO_KEY,plAutoRefresh?'yes':'no')}catch{}
+  plScheduleRefreshStatus=plAutoRefresh?'Automatic refresh enabled while this page is open.':'Automatic refresh disabled.';
+  renderLiveFeedMonitor();plScheduleTick();
+ };
 }
 function plRecordSource(input){
  const result=plIngest(plLiveStore,input);
@@ -954,6 +1028,9 @@ async function loadAutomaticNFL(force=false){
 $('autoNFL').onclick=()=>{manualOverride=false;loadAutomaticNFL(true)};
 // Do not overwrite a manual upload if an automatic request resolves later.
 loadAutomaticNFL();
+document.addEventListener('visibilitychange',()=>{if(plAutoRefresh)plScheduleTick()});
+if(plAutoRefresh)plScheduleTick();
+renderLiveFeedMonitor();
 fetchPublishedValidation();
 loadDeepDiveIntervalAudit();
 loadDeepDiveQuality();
