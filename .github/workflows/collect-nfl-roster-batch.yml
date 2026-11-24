@@ -1,0 +1,60 @@
+name: Collect NFL rosters — controlled three-team batch
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: prop-lock-nfl-roster-batch
+  cancel-in-progress: false
+jobs:
+  collect:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate per-team failure and rate-limit handling offline
+        run: |
+          python -m unittest discover -s tests -p test_nfl_roster_pilot.py -v
+          python -m unittest discover -s tests -p test_nfl_roster_batch.py -v
+      - name: Collect BUF KC PHI in a bounded sequence
+        run: python scripts/collect-nfl-roster-batch.py
+      - name: Commit successfully validated snapshots only
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          for team in BUF KC PHI; do
+            if [[ -f "data/live/nfl_roster_${team}.json" ]]; then
+              git add -- "data/live/nfl_roster_${team}.json"
+            fi
+          done
+          if git diff --cached --quiet; then
+            echo "No new validated snapshots to commit."
+          else
+            git commit -m "data: update controlled NFL roster batch"
+            git push origin HEAD:main
+          fi
+      - name: Surface partial collection failures
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          data=json.loads(Path('test-results/nfl-roster-batch-report.json').read_text())
+          for result in data['results']:
+              print(result['team'],result['status'],result.get('reason',''))
+          if not data['allSuccessful']:
+              raise SystemExit('Batch partially failed: validated teams were preserved; see report')
+          PY
+      - name: Upload per-team collection report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nfl-roster-batch-report
+          path: test-results/nfl-roster-batch-report.json
+          if-no-files-found: ignore

@@ -1,0 +1,24 @@
+name: Validate NFL controlled roster batch
+on:
+  push:
+    paths:
+      - 'scripts/collect-nfl-roster-batch.py'
+      - 'tests/test_nfl_roster_batch.py'
+      - '.github/workflows/collect-nfl-roster-batch.yml'
+      - '.github/workflows/validate-nfl-roster-batch.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  batch-tests:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run offline pilot and batched NFL roster tests
+        run: |
+          python -m unittest discover -s tests -p test_nfl_roster_pilot.py -v
+          python -m unittest discover -s tests -p test_nfl_roster_batch.py -v
