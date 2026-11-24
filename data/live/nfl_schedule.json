@@ -1,0 +1,209 @@
+{
+  "schemaVersion": 1,
+  "sport": "NFL",
+  "type": "schedule",
+  "source": "ESPN",
+  "verification": "unverified",
+  "fetchedAt": "2026-11-24T05:34:54Z",
+  "windowDays": null,
+  "scope": "provider_default_scoreboard",
+  "count": 13,
+  "events": [
+    {
+      "id": "401873066",
+      "kickoff": "2026-11-20T01:15:00Z",
+      "teams": [
+        {
+          "abbreviation": "HOU",
+          "homeAway": "home"
+        },
+        {
+          "abbreviation": "IND",
+          "homeAway": "away"
+        }
+      ],
+      "state": "post"
+    },
+    {
+      "id": "401873067",
+      "kickoff": "2026-11-22T18:00:00Z",
+      "teams": [
+        {
+          "abbreviation": "KC",
+          "homeAway": "home"
+        },
+        {
+          "abbreviation": "ARI",
+          "homeAway": "away"
+        }
+      ],
+      "state": "post"
+    },
+    {
+      "id": "401873068",
+      "kickoff": "2026-11-22T18:00:00Z",
+      "teams": [
+        {
+          "abbreviation": "CAR",
+          "homeAway": "home"
+        },
+        {
+          "abbreviation": "BAL",
+          "homeAway": "away"
+        }
+      ],
+      "state": "post"
+    },
+    {
+      "id": "401873070",
+      "kickoff": "2026-11-22T18:00:00Z",
+      "teams": [
+        {
+          "abbreviation": "BUF",
+          "homeAway": "home"
+        },
+        {
+          "abbreviation": "MIA",
+          "homeAway": "away"
+        }
+      ],
+      "state": "post"
+    },
+    {
+      "id": "401873071",
+      "kickoff": "2026-11-22T18:00:00Z",
+      "teams": [
+        {
+          "abbreviation": "CHI",
+          "homeAway": "home"
+        },
+        {
+          "abbreviation": "NO",
+          "homeAway": "away"
+        }
+      ],
+      "state": "post"
+    },
+    {
+      "id": "401873072",
+      "kickoff": "2026-11-22T18:00:00Z",
+      "teams": [
+        {
+          "abbreviation": "DET",
+          "homeAway": "home"
+        },
+        {
+          "abbreviation": "TB",
+          "homeAway": "away"
+        }
+      ],
+      "state": "post"
+    },
+    {
+      "id": "401873073",
+      "kickoff": "2026-11-22T18:00:00Z",
+      "teams": [
+        {
+          "abbreviation": "DAL",
+          "homeAway": "home"
+        },
+        {
+          "abbreviation": "TEN",
+          "homeAway": "away"
+        }
+      ],
+      "state": "post"
+    },
+    {
+      "id": "401873076",
+      "kickoff": "2026-11-22T18:00:00Z",
+      "teams": [
+        {
+          "abbreviation": "PHI",
+          "homeAway": "home"
+        },
+        {
+          "abbreviation": "PIT",
+          "homeAway": "away"
+        }
+      ],
+      "state": "post"
+    },
+    {
+      "id": "401873074",
+      "kickoff": "2026-11-22T21:05:00Z",
+      "teams": [
+        {
+          "abbreviation": "LAC",
+          "homeAway": "home"
+        },
+        {
+          "abbreviation": "NYJ",
+          "homeAway": "away"
+        }
+      ],
+      "state": "post"
+    },
+    {
+      "id": "401873069",
+      "kickoff": "2026-11-22T21:25:00Z",
+      "teams": [
+        {
+          "abbreviation": "NYG",
+          "homeAway": "home"
+        },
+        {
+          "abbreviation": "JAX",
+          "homeAway": "away"
+        }
+      ],
+      "state": "post"
+    },
+    {
+      "id": "401873075",
+      "kickoff": "2026-11-22T21:25:00Z",
+      "teams": [
+        {
+          "abbreviation": "DEN",
+          "homeAway": "home"
+        },
+        {
+          "abbreviation": "LV",
+          "homeAway": "away"
+        }
+      ],
+      "state": "post"
+    },
+    {
+      "id": "401873077",
+      "kickoff": "2026-11-23T01:20:00Z",
+      "teams": [
+        {
+          "abbreviation": "SF",
+          "homeAway": "home"
+        },
+        {
+          "abbreviation": "MIN",
+          "homeAway": "away"
+        }
+      ],
+      "state": "post"
+    },
+    {
+      "id": "401873078",
+      "kickoff": "2026-11-24T01:15:00Z",
+      "teams": [
+        {
+          "abbreviation": "WSH",
+          "homeAway": "home"
+        },
+        {
+          "abbreviation": "CIN",
+          "homeAway": "away"
+        }
+      ],
+      "state": "post"
+    }
+  ],
+  "notice": "Third-party schedule snapshot, not independently verified, no guaranteed refresh time or player matchup."
+}
