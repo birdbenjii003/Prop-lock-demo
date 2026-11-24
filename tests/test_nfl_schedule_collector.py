@@ -32,6 +32,8 @@ class CollectorTest(unittest.TestCase):
         self.assertEqual(snapshot["events"][0]["teams"][0]["abbreviation"], "ATL")
         self.assertEqual(snapshot["events"][0]["id"], "401772222")
         self.assertEqual(snapshot["fetchedAt"], "2026-11-24T12:00:00Z")
+        self.assertIsNone(snapshot["windowDays"])
+        self.assertEqual(snapshot["scope"], "provider_default_scoreboard")
 
     def test_empty_is_valid(self):
         self.assertEqual(collector.convert({"events": []}, NOW)["count"], 0)
@@ -64,14 +66,33 @@ class CollectorTest(unittest.TestCase):
             self.assertEqual(path.read_bytes(), original)
             self.assertEqual(json.loads(original)["count"], 1)
 
+    def test_http_400_is_reported_without_writing_snapshot(self):
+        from unittest.mock import patch
+        import io
+        import urllib.error
+        with tempfile.TemporaryDirectory() as td:
+            path = Path(td) / "data/live/nfl_schedule.json"
+            good = collector.convert({"events": [event()]}, NOW)
+            collector.save_atomic(path, good)
+            before = path.read_bytes()
+            error = urllib.error.HTTPError(
+                collector.endpoint(NOW), 400, "Bad Request", {},
+                io.BytesIO(b'{"message":"Unsupported dates range"}'),
+            )
+            with patch.object(collector.urllib.request, "urlopen", side_effect=error):
+                with self.assertRaisesRegex(RuntimeError, "scoreboard HTTP 400"):
+                    collector.fetch(NOW)
+            self.assertEqual(path.read_bytes(), before)
+
     def test_fixture_only_when_opted(self):
         with tempfile.TemporaryDirectory() as td:
             fixture = Path(td) / "schedule.json"
             fixture.write_text(json.dumps({"events": [event()]}))
             self.assertEqual(collector.convert(collector.fetch(NOW, fixture), NOW)["count"], 1)
-            self.assertTrue(collector.endpoint(NOW).startswith(
-                "https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?dates="
-            ))
+            self.assertEqual(
+                collector.endpoint(NOW),
+                "https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?limit=100",
+            )
 
 
 if __name__ == "__main__":
