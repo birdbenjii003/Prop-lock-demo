@@ -4,6 +4,8 @@ on:
     paths:
       - 'index.html'
       - 'scripts/live-data-foundation.js'
+      - 'scripts/live-data-refresh.js'
+      - 'tests/live-data-refresh.test.cjs'
       - 'tests/live-data-foundation.test.cjs'
       - '.github/workflows/validate-live-data-foundation.yml'
   workflow_dispatch:
@@ -22,6 +24,8 @@ jobs:
         run: |
           node --check scripts/live-data-foundation.js
           node tests/live-data-foundation.test.cjs
+          node --check scripts/live-data-refresh.js
+          node tests/live-data-refresh.test.cjs
       - name: Confirm application inline script parses
         run: |
           node - <<'NODE'

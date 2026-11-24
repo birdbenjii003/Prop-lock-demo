@@ -1,0 +1,35 @@
+name: Live Data Foundation v3 controlled refresh browser acceptance
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  refresh-browser:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install pinned Chromium test tools
+        run: |
+          npm init -y
+          npm install --no-save --package-lock=false playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Validate refresh engine and browser syntax
+        run: |
+          node --check scripts/live-data-refresh.js
+          node --check tests/live-data-v3-browser-e2e.cjs
+          node tests/live-data-refresh.test.cjs
+      - name: Verify deployed opt-in refresh workflow with controlled fixtures
+        run: node tests/live-data-v3-browser-e2e.cjs
+        env:
+          LIVE_DATA_URL: https://birdbenjii003.github.io/Prop-lock-demo/
+      - name: Upload browser acceptance evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: live-data-v3-refresh-evidence
+          path: test-results/
+          if-no-files-found: ignore
