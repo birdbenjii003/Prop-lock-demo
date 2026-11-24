@@ -1,0 +1,384 @@
+{
+  "schemaVersion": 1,
+  "sport": "NFL",
+  "type": "roster",
+  "source": "ESPN",
+  "verification": "unverified",
+  "scope": "controlled_batch",
+  "team": "BUF",
+  "fetchedAt": "2026-11-24T15:39:06Z",
+  "count": 74,
+  "athletes": [
+    {
+      "espnId": "2976549",
+      "displayName": "Reid Ferguson",
+      "position": "LS"
+    },
+    {
+      "espnId": "2978313",
+      "displayName": "Shaq Thompson",
+      "position": "LB"
+    },
+    {
+      "espnId": "3042717",
+      "displayName": "Tre'Davious White",
+      "position": "CB"
+    },
+    {
+      "espnId": "3051324",
+      "displayName": "Dion Dawkins",
+      "position": "OT"
+    },
+    {
+      "espnId": "3056608",
+      "displayName": "Austin Corbett",
+      "position": "C"
+    },
+    {
+      "espnId": "3115293",
+      "displayName": "Kyle Allen",
+      "position": "QB"
+    },
+    {
+      "espnId": "3116733",
+      "displayName": "Bradley Chubb",
+      "position": "LB"
+    },
+    {
+      "espnId": "3122168",
+      "displayName": "Trent Sherfield",
+      "position": "WR"
+    },
+    {
+      "espnId": "3127294",
+      "displayName": "Greg Gaines",
+      "position": "DT"
+    },
+    {
+      "espnId": "3915411",
+      "displayName": "Ty Johnson",
+      "position": "RB"
+    },
+    {
+      "espnId": "3915416",
+      "displayName": "DJ Moore",
+      "position": "WR"
+    },
+    {
+      "espnId": "3915487",
+      "displayName": "Mike Danna",
+      "position": "DE"
+    },
+    {
+      "espnId": "3917232",
+      "displayName": "Tyler Bass",
+      "position": "PK"
+    },
+    {
+      "espnId": "3918298",
+      "displayName": "Josh Allen",
+      "position": "QB"
+    },
+    {
+      "espnId": "3930086",
+      "displayName": "Dawson Knox",
+      "position": "TE"
+    },
+    {
+      "espnId": "4030899",
+      "displayName": "Spencer Brown",
+      "position": "OT"
+    },
+    {
+      "espnId": "4033234",
+      "displayName": "Michael Hoecht",
+      "position": "DE"
+    },
+    {
+      "espnId": "4033748",
+      "displayName": "Connor McGovern",
+      "position": "C"
+    },
+    {
+      "espnId": "4035448",
+      "displayName": "Lloyd Cushenberry III",
+      "position": "C"
+    },
+    {
+      "espnId": "4036060",
+      "displayName": "Damar Hamlin",
+      "position": "S"
+    },
+    {
+      "espnId": "4036134",
+      "displayName": "Amani Hooker",
+      "position": "S"
+    },
+    {
+      "espnId": "4037235",
+      "displayName": "Greg Dortch",
+      "position": "WR"
+    },
+    {
+      "espnId": "4039034",
+      "displayName": "Shane Buechele",
+      "position": "QB"
+    },
+    {
+      "espnId": "4039303",
+      "displayName": "Ed Oliver",
+      "position": "DT"
+    },
+    {
+      "espnId": "4044133",
+      "displayName": "Sam Franklin Jr.",
+      "position": "S"
+    },
+    {
+      "espnId": "4240575",
+      "displayName": "Geno Stone",
+      "position": "S"
+    },
+    {
+      "espnId": "4241468",
+      "displayName": "Phidarian Mathis",
+      "position": "DT"
+    },
+    {
+      "espnId": "4241476",
+      "displayName": "Tyrell Shavers",
+      "position": "WR"
+    },
+    {
+      "espnId": "4242433",
+      "displayName": "Joshua Palmer",
+      "position": "WR"
+    },
+    {
+      "espnId": "4259166",
+      "displayName": "Terrel Bernard",
+      "position": "LB"
+    },
+    {
+      "espnId": "4291489",
+      "displayName": "Kader Kohou",
+      "position": "CB"
+    },
+    {
+      "espnId": "4362506",
+      "displayName": "Greg Rousseau",
+      "position": "LB"
+    },
+    {
+      "espnId": "4366349",
+      "displayName": "Joe Andreessen",
+      "position": "LB"
+    },
+    {
+      "espnId": "4367203",
+      "displayName": "Alec Anderson",
+      "position": "OT"
+    },
+    {
+      "espnId": "4368828",
+      "displayName": "Tylan Grable",
+      "position": "OT"
+    },
+    {
+      "espnId": "4373678",
+      "displayName": "Khalil Shakir",
+      "position": "WR"
+    },
+    {
+      "espnId": "4379399",
+      "displayName": "James Cook III",
+      "position": "RB"
+    },
+    {
+      "espnId": "4379778",
+      "displayName": "Christian Benford",
+      "position": "CB"
+    },
+    {
+      "espnId": "4385690",
+      "displayName": "Dalton Kincaid",
+      "position": "TE"
+    },
+    {
+      "espnId": "4401823",
+      "displayName": "Dee Alford",
+      "position": "CB"
+    },
+    {
+      "espnId": "4426498",
+      "displayName": "Nick Broeker",
+      "position": "G"
+    },
+    {
+      "espnId": "4426883",
+      "displayName": "DeWayne Carter",
+      "position": "DT"
+    },
+    {
+      "espnId": "4427348",
+      "displayName": "Te'Cory Couch",
+      "position": "CB"
+    },
+    {
+      "espnId": "4427843",
+      "displayName": "Chase Lundt",
+      "position": "OT"
+    },
+    {
+      "espnId": "4428548",
+      "displayName": "Javon Solomon",
+      "position": "LB"
+    },
+    {
+      "espnId": "4428696",
+      "displayName": "O'Cyrus Torrence",
+      "position": "G"
+    },
+    {
+      "espnId": "4429501",
+      "displayName": "Ray Davis",
+      "position": "RB"
+    },
+    {
+      "espnId": "4429805",
+      "displayName": "Frank Gore Jr.",
+      "position": "RB"
+    },
+    {
+      "espnId": "4430270",
+      "displayName": "Ja'Mori Maclin",
+      "position": "WR"
+    },
+    {
+      "espnId": "4432215",
+      "displayName": "Stephen Gosnell",
+      "position": "WR"
+    },
+    {
+      "espnId": "4432715",
+      "displayName": "Landon Jackson",
+      "position": "DE"
+    },
+    {
+      "espnId": "4568624",
+      "displayName": "Dorian Williams",
+      "position": "LB"
+    },
+    {
+      "espnId": "4568703",
+      "displayName": "Dorian Strong",
+      "position": "CB"
+    },
+    {
+      "espnId": "4573699",
+      "displayName": "Jackson Hawes",
+      "position": "TE"
+    },
+    {
+      "espnId": "4577066",
+      "displayName": "Keonta Jenkins",
+      "position": "LB"
+    },
+    {
+      "espnId": "4594321",
+      "displayName": "Kaleb Elarms-Orr",
+      "position": "LB"
+    },
+    {
+      "espnId": "4596480",
+      "displayName": "Jordan Hancock",
+      "position": "CB"
+    },
+    {
+      "espnId": "4606712",
+      "displayName": "Ar'maj Reed-Adams",
+      "position": "G"
+    },
+    {
+      "espnId": "4635008",
+      "displayName": "Keon Coleman",
+      "position": "WR"
+    },
+    {
+      "espnId": "4676004",
+      "displayName": "Cole Bishop",
+      "position": "S"
+    },
+    {
+      "espnId": "4682749",
+      "displayName": "Kani Walker",
+      "position": "CB"
+    },
+    {
+      "espnId": "4682758",
+      "displayName": "Tommy Doman Jr.",
+      "position": "P"
+    },
+    {
+      "espnId": "4683153",
+      "displayName": "Skyler Bell",
+      "position": "WR"
+    },
+    {
+      "espnId": "4684527",
+      "displayName": "T.J. Sanders",
+      "position": "DT"
+    },
+    {
+      "espnId": "4685347",
+      "displayName": "Zane Durant",
+      "position": "DT"
+    },
+    {
+      "espnId": "4688552",
+      "displayName": "Keleki Latu",
+      "position": "TE"
+    },
+    {
+      "espnId": "4688931",
+      "displayName": "Maxwell Hairston",
+      "position": "CB"
+    },
+    {
+      "espnId": "4831989",
+      "displayName": "Deone Walker",
+      "position": "DT"
+    },
+    {
+      "espnId": "4832035",
+      "displayName": "Davison Igbinosun",
+      "position": "CB"
+    },
+    {
+      "espnId": "4869533",
+      "displayName": "Jude Bowry",
+      "position": "OT"
+    },
+    {
+      "espnId": "4870886",
+      "displayName": "TJ Parker",
+      "position": "LB"
+    },
+    {
+      "espnId": "4875767",
+      "displayName": "Brock Lampe",
+      "position": "FB"
+    },
+    {
+      "espnId": "5076951",
+      "displayName": "Jalon Kilgore",
+      "position": "S"
+    },
+    {
+      "espnId": "5209587",
+      "displayName": "Travis Clayton",
+      "position": "OT"
+    }
+  ],
+  "notice": "Third-party team roster. Player identities, current-team assignment, health and game eligibility are not independently verified."
+}
