@@ -32,6 +32,8 @@ class CollectorTest(unittest.TestCase):
         self.assertEqual(snapshot["events"][0]["teams"][0]["abbreviation"], "ATL")
         self.assertEqual(snapshot["events"][0]["id"], "401772222")
         self.assertEqual(snapshot["fetchedAt"], "2026-11-24T12:00:00Z")
+        self.assertIsNone(snapshot["windowDays"])
+        self.assertEqual(snapshot["scope"], "provider_default_scoreboard")
 
     def test_empty_is_valid(self):
         self.assertEqual(collector.convert({"events": []}, NOW)["count"], 0)
@@ -69,9 +71,10 @@ class CollectorTest(unittest.TestCase):
             fixture = Path(td) / "schedule.json"
             fixture.write_text(json.dumps({"events": [event()]}))
             self.assertEqual(collector.convert(collector.fetch(NOW, fixture), NOW)["count"], 1)
-            self.assertTrue(collector.endpoint(NOW).startswith(
-                "https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?dates="
-            ))
+            self.assertEqual(
+                collector.endpoint(NOW),
+                "https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?limit=100",
+            )
 
 
 if __name__ == "__main__":
