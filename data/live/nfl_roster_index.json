@@ -4,17 +4,17 @@
   "type": "roster_index",
   "verification": "unverified",
   "source": "published_ESPN_snapshots",
-  "generatedAt": "2026-11-25T03:02:09Z",
+  "generatedAt": "2026-11-25T03:04:34Z",
   "freshnessThresholdHours": 36,
   "coverage": {
     "teamsExpected": 32,
     "teamsTracked": 32,
-    "teamsPresent": 25,
-    "teamsCurrent": 25,
+    "teamsPresent": 32,
+    "teamsCurrent": 32,
     "teamsStale": 0,
-    "teamsMissing": 7,
+    "teamsMissing": 0,
     "teamsInvalid": 0,
-    "unresolvedCrossTeamIds": 1
+    "unresolvedCrossTeamIds": 3
   },
   "teams": [
     {
@@ -157,15 +157,15 @@
     },
     {
       "team": "NYG",
-      "state": "MISSING",
-      "count": 0,
-      "fetchedAt": null
+      "state": "CURRENT",
+      "count": 83,
+      "fetchedAt": "2026-11-25T03:04:13Z"
     },
     {
       "team": "NYJ",
-      "state": "MISSING",
-      "count": 0,
-      "fetchedAt": null
+      "state": "CURRENT",
+      "count": 82,
+      "fetchedAt": "2026-11-25T03:04:13Z"
     },
     {
       "team": "PHI",
@@ -175,15 +175,15 @@
     },
     {
       "team": "PIT",
-      "state": "MISSING",
-      "count": 0,
-      "fetchedAt": null
+      "state": "CURRENT",
+      "count": 79,
+      "fetchedAt": "2026-11-25T03:04:13Z"
     },
     {
       "team": "SEA",
-      "state": "MISSING",
-      "count": 0,
-      "fetchedAt": null
+      "state": "CURRENT",
+      "count": 82,
+      "fetchedAt": "2026-11-25T03:04:13Z"
     },
     {
       "team": "SF",
@@ -193,21 +193,21 @@
     },
     {
       "team": "TB",
-      "state": "MISSING",
-      "count": 0,
-      "fetchedAt": null
+      "state": "CURRENT",
+      "count": 73,
+      "fetchedAt": "2026-11-25T03:04:13Z"
     },
     {
       "team": "TEN",
-      "state": "MISSING",
-      "count": 0,
-      "fetchedAt": null
+      "state": "CURRENT",
+      "count": 81,
+      "fetchedAt": "2026-11-25T03:04:13Z"
     },
     {
       "team": "WSH",
-      "state": "MISSING",
-      "count": 0,
-      "fetchedAt": null
+      "state": "CURRENT",
+      "count": 79,
+      "fetchedAt": "2026-11-25T03:04:13Z"
     }
   ],
   "identityConflicts": [
@@ -229,6 +229,50 @@
           "name": "Shane Buechele",
           "freshness": "CURRENT",
           "fetchedAt": "2026-11-25T03:01:42Z"
+        }
+      ],
+      "status": "TEAM_ID_CONFLICT_UNRESOLVED"
+    },
+    {
+      "espnId": "4427843",
+      "listedTeams": [
+        "BUF",
+        "SEA"
+      ],
+      "entries": [
+        {
+          "team": "BUF",
+          "name": "Chase Lundt",
+          "freshness": "CURRENT",
+          "fetchedAt": "2026-11-24T15:39:06Z"
+        },
+        {
+          "team": "SEA",
+          "name": "Chase Lundt",
+          "freshness": "CURRENT",
+          "fetchedAt": "2026-11-25T03:04:13Z"
+        }
+      ],
+      "status": "TEAM_ID_CONFLICT_UNRESOLVED"
+    },
+    {
+      "espnId": "5155179",
+      "listedTeams": [
+        "KC",
+        "SEA"
+      ],
+      "entries": [
+        {
+          "team": "KC",
+          "name": "Jacob De Jesus",
+          "freshness": "CURRENT",
+          "fetchedAt": "2026-11-24T15:39:06Z"
+        },
+        {
+          "team": "SEA",
+          "name": "Jacob De Jesus",
+          "freshness": "CURRENT",
+          "fetchedAt": "2026-11-25T03:04:13Z"
         }
       ],
       "status": "TEAM_ID_CONFLICT_UNRESOLVED"
