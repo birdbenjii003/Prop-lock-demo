@@ -262,8 +262,8 @@ async function loadPublishedNflRosterIndex(){
   const c=idx?.coverage;
   if(idx?.schemaVersion!==1||idx.sport!=='NFL'||idx.type!=='roster_index'||
     idx.verification!=='unverified'||!Number.isFinite(Date.parse(idx.generatedAt))||
-    !c||c.teamsExpected!==32||c.teamsTracked!==7||
-    !Array.isArray(idx.teams)||idx.teams.length!==7||
+    !c||c.teamsExpected!==32||![7,32].includes(c.teamsTracked)||
+    !Array.isArray(idx.teams)||idx.teams.length!==c.teamsTracked||
     !Array.isArray(idx.identityConflicts)||idx.identityConflicts.length!==c.unresolvedCrossTeamIds||
     !Number.isInteger(c.teamsPresent)||!Number.isInteger(c.teamsCurrent)||
     !Number.isInteger(c.teamsInvalid)||!Number.isInteger(c.teamsMissing))
@@ -271,7 +271,8 @@ async function loadPublishedNflRosterIndex(){
   const ageHours=Math.max(0,(Date.now()-Date.parse(idx.generatedAt))/3600000);
   plRosterIndexStatus='NFL roster coverage: '+c.teamsPresent+'/32 team snapshots published ('+
     c.teamsCurrent+' current, '+c.teamsStale+' stale, '+c.teamsMissing+
-    ' missing in tracked set, '+c.teamsInvalid+' invalid) · '+c.unresolvedCrossTeamIds+
+    ' missing in tracked set, '+c.teamsInvalid+' invalid; '+(32-c.teamsTracked)+
+    ' teams not yet indexed) · '+c.unresolvedCrossTeamIds+
     ' unresolved ESPN ID team conflicts · index generated '+idx.generatedAt+
     (ageHours>36?' · INDEX OUTDATED':'')+
     '. No verified player-team assignment.';
