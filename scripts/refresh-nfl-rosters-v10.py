@@ -9,6 +9,7 @@ import argparse
 import datetime as dt
 import importlib.util
 import json
+import os
 from pathlib import Path
 import time
 import urllib.error
@@ -31,11 +32,17 @@ def cohorts():
     return tuple(tuple(teams[i:i + MAX_CALLS]) for i in range(0, 32, MAX_CALLS))
 
 
-def choose_cohort(now, requested=None):
+def choose_cohort(now, requested=None, scheduled_cron=None):
     if requested is not None:
         if not isinstance(requested, int) or isinstance(requested, bool) or not 1 <= requested <= COHORT_COUNT:
             raise ValueError("Manual cohort must be 1–4")
         return requested
+    if scheduled_cron is not None:
+        # GitHub provides the original cron trigger, which is stable when the run starts late.
+        if scheduled_cron != '23 1,7,13,19 * * *':
+            raise ValueError('Unexpected scheduled trigger')
+        # A single cron expression does not identify which of its four hours
+        # fired; use GitHub run timestamp as a best-effort UTC selector.
     if now.tzinfo is None:
         raise ValueError("Run time requires timezone")
     hour = now.astimezone(UTC).hour
@@ -118,7 +125,7 @@ def main():
     parser.add_argument("--report", default="test-results/nfl-roster-v10-report.json")
     args = parser.parse_args()
     now = dt.datetime.now(UTC).replace(microsecond=0)
-    cohort = choose_cohort(now, args.cohort)
+    cohort = choose_cohort(now, args.cohort, os.environ.get('GITHUB_SCHEDULE_CRON') or None)
     result = collect_cohort(Path(args.data_dir), now, cohort)
     multi.batch.pilot.publish(Path(args.report), result)
     print(json.dumps({"cohort": cohort, "requestsAttempted": result["requestsAttempted"],
