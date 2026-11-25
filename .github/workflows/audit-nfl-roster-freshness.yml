@@ -1,0 +1,50 @@
+name: Audit NFL roster freshness (no provider calls)
+on:
+  schedule:
+    # Daily, best effort. GitHub cron can be delayed.
+    - cron: '41 10 * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: prop-lock-nfl-roster-index-publish
+  cancel-in-progress: false
+jobs:
+  freshness-audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate index logic offline
+        run: |
+          python -m unittest discover -s tests -p test_nfl_roster_index.py -v
+          python -m unittest discover -s tests -p test_nfl_roster_conflict_recheck.py -v
+      - name: Recalculate freshness across all 32 collected rosters
+        run: python scripts/build-nfl-roster-index.py --all-teams
+      - name: Publish current-or-stale evidence index (no roster fetch)
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- data/live/nfl_roster_index.json
+          if ! git diff --cached --quiet; then
+            git commit -m "data: audit NFL roster freshness without network calls"
+            git push origin HEAD:main
+          fi
+      - name: Show stale roster and unresolved identity statuses
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          index=json.loads(Path('data/live/nfl_roster_index.json').read_text())
+          print('Coverage:',index['coverage'])
+          print('Teams requiring new source evidence:',
+                [t['team'] for t in index['teams'] if t['state']!='CURRENT'])
+          print('Unresolved player IDs:',[x['espnId'] for x in index['identityConflicts']])
+          PY
