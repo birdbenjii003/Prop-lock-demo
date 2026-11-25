@@ -38,11 +38,13 @@ def choose_cohort(now, requested=None, scheduled_cron=None):
             raise ValueError("Manual cohort must be 1–4")
         return requested
     if scheduled_cron is not None:
-        # GitHub provides the original cron trigger, which is stable when the run starts late.
-        if scheduled_cron != '23 1,7,13,19 * * *':
-            raise ValueError('Unexpected scheduled trigger')
-        # A single cron expression does not identify which of its four hours
-        # fired; use GitHub run timestamp as a best-effort UTC selector.
+        triggers = {f"23 {hour} * * *": idx+1
+                    for idx, hour in enumerate(CRON_HOURS)}
+        if scheduled_cron not in triggers:
+            raise ValueError("Unexpected scheduled trigger")
+        # GitHub's original schedule field prevents delayed jobs selecting
+        # a different cohort based on when they actually start.
+        return triggers[scheduled_cron]
     if now.tzinfo is None:
         raise ValueError("Run time requires timezone")
     hour = now.astimezone(UTC).hour
