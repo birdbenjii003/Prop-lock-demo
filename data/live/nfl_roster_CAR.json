@@ -1,0 +1,429 @@
+{
+  "schemaVersion": 1,
+  "sport": "NFL",
+  "type": "roster",
+  "source": "ESPN",
+  "verification": "unverified",
+  "scope": "controlled_batch",
+  "team": "CAR",
+  "fetchedAt": "2026-11-25T02:59:10Z",
+  "count": 83,
+  "athletes": [
+    {
+      "espnId": "11759",
+      "displayName": "JJ Jansen",
+      "position": "LS"
+    },
+    {
+      "espnId": "15928",
+      "displayName": "Sam Martin",
+      "position": "P"
+    },
+    {
+      "espnId": "2576925",
+      "displayName": "Darren Waller",
+      "position": "TE"
+    },
+    {
+      "espnId": "2973051",
+      "displayName": "Taylor Moton",
+      "position": "OT"
+    },
+    {
+      "espnId": "3116179",
+      "displayName": "Nick Scott",
+      "position": "S"
+    },
+    {
+      "espnId": "3117253",
+      "displayName": "Bobby Okereke",
+      "position": "LB"
+    },
+    {
+      "espnId": "3917016",
+      "displayName": "Trevis Gipson",
+      "position": "LB"
+    },
+    {
+      "espnId": "3917592",
+      "displayName": "Robert Hunt",
+      "position": "G"
+    },
+    {
+      "espnId": "3917853",
+      "displayName": "Mike Jackson",
+      "position": "CB"
+    },
+    {
+      "espnId": "4034948",
+      "displayName": "Feleipe Franks",
+      "position": "TE"
+    },
+    {
+      "espnId": "4034959",
+      "displayName": "Jeremiah Moon",
+      "position": "LB"
+    },
+    {
+      "espnId": "4034962",
+      "displayName": "Stone Forsythe",
+      "position": "OT"
+    },
+    {
+      "espnId": "4035048",
+      "displayName": "Luke Fortner",
+      "position": "C"
+    },
+    {
+      "espnId": "4035232",
+      "displayName": "Tyrel Dodson",
+      "position": "LB"
+    },
+    {
+      "espnId": "4035462",
+      "displayName": "Isaiah Simmons",
+      "position": "S"
+    },
+    {
+      "espnId": "4035495",
+      "displayName": "Derrick Brown",
+      "position": "DT"
+    },
+    {
+      "espnId": "4035870",
+      "displayName": "Jake Curhan",
+      "position": "OT"
+    },
+    {
+      "espnId": "4036063",
+      "displayName": "Patrick Jones II",
+      "position": "LB"
+    },
+    {
+      "espnId": "4058925",
+      "displayName": "Tershawn Wharton",
+      "position": "DT"
+    },
+    {
+      "espnId": "4212909",
+      "displayName": "David Moore",
+      "position": "WR"
+    },
+    {
+      "espnId": "4239934",
+      "displayName": "AJ Dillon",
+      "position": "RB"
+    },
+    {
+      "espnId": "4240595",
+      "displayName": "Marco Wilson",
+      "position": "CB"
+    },
+    {
+      "espnId": "4240703",
+      "displayName": "Kenny Pickett",
+      "position": "QB"
+    },
+    {
+      "espnId": "4241416",
+      "displayName": "Chuba Hubbard",
+      "position": "RB"
+    },
+    {
+      "espnId": "4242230",
+      "displayName": "Saahdiq Charles",
+      "position": "G"
+    },
+    {
+      "espnId": "4242975",
+      "displayName": "Jaelan Phillips",
+      "position": "LB"
+    },
+    {
+      "espnId": "4243256",
+      "displayName": "Devin Lloyd",
+      "position": "LB"
+    },
+    {
+      "espnId": "4244607",
+      "displayName": "Akayleb Evans",
+      "position": "CB"
+    },
+    {
+      "espnId": "4256062",
+      "displayName": "Brady Christensen",
+      "position": "G"
+    },
+    {
+      "espnId": "4256224",
+      "displayName": "Claudin Cherelus",
+      "position": "LB"
+    },
+    {
+      "espnId": "4360763",
+      "displayName": "Brycen Tremayne",
+      "position": "WR"
+    },
+    {
+      "espnId": "4360773",
+      "displayName": "Nick Hampton",
+      "position": "LB"
+    },
+    {
+      "espnId": "4361429",
+      "displayName": "Rasheed Walker",
+      "position": "OT"
+    },
+    {
+      "espnId": "4362487",
+      "displayName": "Tre'von Moehrig",
+      "position": "S"
+    },
+    {
+      "espnId": "4362647",
+      "displayName": "Damien Lewis",
+      "position": "G"
+    },
+    {
+      "espnId": "4362847",
+      "displayName": "Jaycee Horn",
+      "position": "CB"
+    },
+    {
+      "espnId": "4372518",
+      "displayName": "Bobby Brown III",
+      "position": "DT"
+    },
+    {
+      "espnId": "4372780",
+      "displayName": "Tommy Tremble",
+      "position": "TE"
+    },
+    {
+      "espnId": "4427132",
+      "displayName": "Ikem Ekwonu",
+      "position": "OT"
+    },
+    {
+      "espnId": "4428796",
+      "displayName": "Casey Washington",
+      "position": "WR"
+    },
+    {
+      "espnId": "4428993",
+      "displayName": "Haynes King",
+      "position": "QB"
+    },
+    {
+      "espnId": "4429110",
+      "displayName": "Lathan Ransom",
+      "position": "S"
+    },
+    {
+      "espnId": "4429166",
+      "displayName": "Princely Umanmielen",
+      "position": "LB"
+    },
+    {
+      "espnId": "4430034",
+      "displayName": "Xavier Legette",
+      "position": "WR"
+    },
+    {
+      "espnId": "4430482",
+      "displayName": "Joshua Simon",
+      "position": "TE"
+    },
+    {
+      "espnId": "4431006",
+      "displayName": "Caelen Carson",
+      "position": "CB"
+    },
+    {
+      "espnId": "4431077",
+      "displayName": "TeRah Edwards",
+      "position": "DT"
+    },
+    {
+      "espnId": "4431147",
+      "displayName": "Cam Horsley",
+      "position": "DT"
+    },
+    {
+      "espnId": "4431551",
+      "displayName": "Lee Hunter",
+      "position": "DT"
+    },
+    {
+      "espnId": "4431588",
+      "displayName": "Ja'Tavion Sanders",
+      "position": "TE"
+    },
+    {
+      "espnId": "4432374",
+      "displayName": "Ahmani Marshall",
+      "position": "RB"
+    },
+    {
+      "espnId": "4566384",
+      "displayName": "Zakee Wheatley",
+      "position": "S"
+    },
+    {
+      "espnId": "4567096",
+      "displayName": "John Metchie III",
+      "position": "WR"
+    },
+    {
+      "espnId": "4567416",
+      "displayName": "Ja'Markis Weston",
+      "position": "LB"
+    },
+    {
+      "espnId": "4568263",
+      "displayName": "Ryan Fitzgerald",
+      "position": "PK"
+    },
+    {
+      "espnId": "4576075",
+      "displayName": "Corey Bullock",
+      "position": "C"
+    },
+    {
+      "espnId": "4594449",
+      "displayName": "DeVonta Smith",
+      "position": "CB"
+    },
+    {
+      "espnId": "4602967",
+      "displayName": "Aaron Hall",
+      "position": "DT"
+    },
+    {
+      "espnId": "4678008",
+      "displayName": "Jonathon Brooks",
+      "position": "RB"
+    },
+    {
+      "espnId": "4683243",
+      "displayName": "Mitchell Evans",
+      "position": "TE"
+    },
+    {
+      "espnId": "4683506",
+      "displayName": "Albert Reese IV",
+      "position": "OT"
+    },
+    {
+      "espnId": "4685350",
+      "displayName": "Trevor Etienne",
+      "position": "RB"
+    },
+    {
+      "espnId": "4685472",
+      "displayName": "Tetairoa McMillan",
+      "position": "WR"
+    },
+    {
+      "espnId": "4685720",
+      "displayName": "Bryce Young",
+      "position": "QB"
+    },
+    {
+      "espnId": "4686911",
+      "displayName": "Jakorian Bennett",
+      "position": "CB"
+    },
+    {
+      "espnId": "4687513",
+      "displayName": "Cam Jackson",
+      "position": "DT"
+    },
+    {
+      "espnId": "4695883",
+      "displayName": "Jalen Coker",
+      "position": "WR"
+    },
+    {
+      "espnId": "4696902",
+      "displayName": "Torricelli Simpkins III",
+      "position": "G"
+    },
+    {
+      "espnId": "4697636",
+      "displayName": "Chau Smith-Wade",
+      "position": "CB"
+    },
+    {
+      "espnId": "4700676",
+      "displayName": "C.J. Ravenell",
+      "position": "DE"
+    },
+    {
+      "espnId": "4709392",
+      "displayName": "Anthony Tyus III",
+      "position": "RB"
+    },
+    {
+      "espnId": "4714157",
+      "displayName": "Thomas Incoom",
+      "position": "LB"
+    },
+    {
+      "espnId": "4833355",
+      "displayName": "Nic Scourton",
+      "position": "LB"
+    },
+    {
+      "espnId": "4870694",
+      "displayName": "Monroe Freeling",
+      "position": "OT"
+    },
+    {
+      "espnId": "4874515",
+      "displayName": "Sam Hecht",
+      "position": "C"
+    },
+    {
+      "espnId": "4875592",
+      "displayName": "Jackson Kuwatch",
+      "position": "LB"
+    },
+    {
+      "espnId": "4875848",
+      "displayName": "Parker Petersen",
+      "position": "DT"
+    },
+    {
+      "espnId": "4876995",
+      "displayName": "Ja'seem Reed",
+      "position": "WR"
+    },
+    {
+      "espnId": "4880613",
+      "displayName": "Bam Martin-Scott",
+      "position": "LB"
+    },
+    {
+      "espnId": "5091739",
+      "displayName": "Chris Brazzell II",
+      "position": "WR"
+    },
+    {
+      "espnId": "5151083",
+      "displayName": "Will Lee III",
+      "position": "CB"
+    },
+    {
+      "espnId": "5225251",
+      "displayName": "Malcolm DeWalt IV",
+      "position": "DB"
+    },
+    {
+      "espnId": "5279357",
+      "displayName": "Mapalo Mwansa",
+      "position": "LB"
+    }
+  ],
+  "notice": "Third-party roster listing, not a verified active team or game-status record."
+}

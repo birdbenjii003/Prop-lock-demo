@@ -4,42 +4,30 @@
   "type": "roster_index",
   "verification": "unverified",
   "source": "published_ESPN_snapshots",
-  "generatedAt": "2026-11-24T15:58:12Z",
+  "generatedAt": "2026-11-25T02:59:36Z",
   "freshnessThresholdHours": 36,
   "coverage": {
     "teamsExpected": 32,
-    "teamsTracked": 7,
-    "teamsPresent": 7,
-    "teamsCurrent": 7,
+    "teamsTracked": 32,
+    "teamsPresent": 16,
+    "teamsCurrent": 16,
     "teamsStale": 0,
-    "teamsMissing": 0,
+    "teamsMissing": 16,
     "teamsInvalid": 0,
     "unresolvedCrossTeamIds": 0
   },
   "teams": [
     {
+      "team": "ARI",
+      "state": "CURRENT",
+      "count": 88,
+      "fetchedAt": "2026-11-25T02:59:10Z"
+    },
+    {
       "team": "ATL",
       "state": "CURRENT",
       "count": 79,
       "fetchedAt": "2026-11-24T15:25:19Z"
-    },
-    {
-      "team": "BUF",
-      "state": "CURRENT",
-      "count": 74,
-      "fetchedAt": "2026-11-24T15:39:06Z"
-    },
-    {
-      "team": "KC",
-      "state": "CURRENT",
-      "count": 79,
-      "fetchedAt": "2026-11-24T15:39:06Z"
-    },
-    {
-      "team": "PHI",
-      "state": "CURRENT",
-      "count": 77,
-      "fetchedAt": "2026-11-24T15:39:06Z"
     },
     {
       "team": "BAL",
@@ -48,16 +36,178 @@
       "fetchedAt": "2026-11-24T15:58:06Z"
     },
     {
+      "team": "BUF",
+      "state": "CURRENT",
+      "count": 74,
+      "fetchedAt": "2026-11-24T15:39:06Z"
+    },
+    {
+      "team": "CAR",
+      "state": "CURRENT",
+      "count": 83,
+      "fetchedAt": "2026-11-25T02:59:10Z"
+    },
+    {
+      "team": "CHI",
+      "state": "CURRENT",
+      "count": 82,
+      "fetchedAt": "2026-11-25T02:59:10Z"
+    },
+    {
+      "team": "CIN",
+      "state": "CURRENT",
+      "count": 74,
+      "fetchedAt": "2026-11-25T02:59:10Z"
+    },
+    {
+      "team": "CLE",
+      "state": "CURRENT",
+      "count": 79,
+      "fetchedAt": "2026-11-25T02:59:10Z"
+    },
+    {
+      "team": "DAL",
+      "state": "CURRENT",
+      "count": 77,
+      "fetchedAt": "2026-11-25T02:59:10Z"
+    },
+    {
+      "team": "DEN",
+      "state": "CURRENT",
+      "count": 80,
+      "fetchedAt": "2026-11-25T02:59:10Z"
+    },
+    {
       "team": "DET",
       "state": "CURRENT",
       "count": 85,
       "fetchedAt": "2026-11-24T15:58:06Z"
     },
     {
+      "team": "GB",
+      "state": "CURRENT",
+      "count": 81,
+      "fetchedAt": "2026-11-25T02:59:10Z"
+    },
+    {
+      "team": "HOU",
+      "state": "CURRENT",
+      "count": 85,
+      "fetchedAt": "2026-11-25T02:59:10Z"
+    },
+    {
+      "team": "IND",
+      "state": "MISSING",
+      "count": 0,
+      "fetchedAt": null
+    },
+    {
+      "team": "JAX",
+      "state": "MISSING",
+      "count": 0,
+      "fetchedAt": null
+    },
+    {
+      "team": "KC",
+      "state": "CURRENT",
+      "count": 79,
+      "fetchedAt": "2026-11-24T15:39:06Z"
+    },
+    {
+      "team": "LAC",
+      "state": "MISSING",
+      "count": 0,
+      "fetchedAt": null
+    },
+    {
+      "team": "LAR",
+      "state": "MISSING",
+      "count": 0,
+      "fetchedAt": null
+    },
+    {
+      "team": "LV",
+      "state": "MISSING",
+      "count": 0,
+      "fetchedAt": null
+    },
+    {
+      "team": "MIA",
+      "state": "MISSING",
+      "count": 0,
+      "fetchedAt": null
+    },
+    {
+      "team": "MIN",
+      "state": "MISSING",
+      "count": 0,
+      "fetchedAt": null
+    },
+    {
+      "team": "NE",
+      "state": "MISSING",
+      "count": 0,
+      "fetchedAt": null
+    },
+    {
+      "team": "NO",
+      "state": "MISSING",
+      "count": 0,
+      "fetchedAt": null
+    },
+    {
+      "team": "NYG",
+      "state": "MISSING",
+      "count": 0,
+      "fetchedAt": null
+    },
+    {
+      "team": "NYJ",
+      "state": "MISSING",
+      "count": 0,
+      "fetchedAt": null
+    },
+    {
+      "team": "PHI",
+      "state": "CURRENT",
+      "count": 77,
+      "fetchedAt": "2026-11-24T15:39:06Z"
+    },
+    {
+      "team": "PIT",
+      "state": "MISSING",
+      "count": 0,
+      "fetchedAt": null
+    },
+    {
+      "team": "SEA",
+      "state": "MISSING",
+      "count": 0,
+      "fetchedAt": null
+    },
+    {
       "team": "SF",
       "state": "CURRENT",
       "count": 87,
       "fetchedAt": "2026-11-24T15:58:06Z"
+    },
+    {
+      "team": "TB",
+      "state": "MISSING",
+      "count": 0,
+      "fetchedAt": null
+    },
+    {
+      "team": "TEN",
+      "state": "MISSING",
+      "count": 0,
+      "fetchedAt": null
+    },
+    {
+      "team": "WSH",
+      "state": "MISSING",
+      "count": 0,
+      "fetchedAt": null
     }
   ],
   "identityConflicts": [],
