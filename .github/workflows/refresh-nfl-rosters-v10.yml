@@ -2,7 +2,10 @@ name: Refresh NFL rosters — controlled scheduled cohorts v10
 on:
   schedule:
     # Four distinct eight-team cohorts across UTC day. GitHub cron is best effort.
-    - cron: '23 1,7,13,19 * * *'
+    - cron: '23 1 * * *'
+    - cron: '23 7 * * *'
+    - cron: '23 13 * * *'
+    - cron: '23 19 * * *'
   workflow_dispatch:
     inputs:
       cohort:
@@ -40,6 +43,7 @@ jobs:
         env:
           EVENT_NAME: ${{ github.event_name }}
           MANUAL_COHORT: ${{ inputs.cohort }}
+          GITHUB_SCHEDULE_CRON: ${{ github.event.schedule }}
         run: |
           if [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
             python scripts/refresh-nfl-rosters-v10.py --cohort "$MANUAL_COHORT"
