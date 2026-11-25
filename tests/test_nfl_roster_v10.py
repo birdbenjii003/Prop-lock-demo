@@ -43,6 +43,15 @@ class RotationTest(unittest.TestCase):
             with self.assertRaises(ValueError):
                 v10.choose_cohort(NOW,invalid)
 
+    def test_delayed_cron_still_selects_original_cohort(self):
+        late=NOW.replace(hour=9)
+        self.assertEqual(v10.choose_cohort(late,scheduled_cron="23 1 * * *"),1)
+        self.assertEqual(v10.choose_cohort(late,scheduled_cron="23 7 * * *"),2)
+        self.assertEqual(v10.choose_cohort(late,scheduled_cron="23 13 * * *"),3)
+        self.assertEqual(v10.choose_cohort(late,scheduled_cron="23 19 * * *"),4)
+        with self.assertRaises(ValueError):
+            v10.choose_cohort(late,scheduled_cron="0 * * * *")
+
     def test_only_missing_or_stale_rosters_requested_and_delay_enforced(self):
         with tempfile.TemporaryDirectory() as folder:
             team=v10.cohorts()[2][0]
