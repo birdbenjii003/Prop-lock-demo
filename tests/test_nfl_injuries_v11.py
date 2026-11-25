@@ -114,6 +114,21 @@ class InjuryPilotTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,"Unsupported"):
             inj.decode_bounded_response(Response(b"{}","br"))
 
+    def test_unknown_live_group_shape_is_diagnosed_without_player_details(self):
+        payload={"injuries":[{"team":{"id":"1234","name":"Unmapped Club"},
+            "items":[{"athlete":{"id":"98765","displayName":"Private Example"}}]}]}
+        with self.assertRaisesRegex(ValueError,"teamKeys=.*id.*name") as caught:
+            inj.normalized(payload,NOW,{})
+        message=str(caught.exception)
+        self.assertIn("injuriesType=NoneType",message)
+        self.assertNotIn("98765",message)
+        self.assertNotIn("Private Example",message)
+        self.assertNotIn("Unmapped Club",message)
+
+    def test_malformed_group_shape_has_index_and_no_data_dump(self):
+        with self.assertRaisesRegex(ValueError,"group=0,type=str"):
+            inj.normalized({"injuries":["unsupported"]},NOW,{})
+
     def test_size_and_count_bounds(self):
         src=source()
         src["injuries"]*=30
