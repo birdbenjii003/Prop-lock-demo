@@ -1,0 +1,42 @@
+name: Validate scheduled NFL roster refresh v10
+on:
+  push:
+    paths:
+      - 'scripts/refresh-nfl-rosters-v10.py'
+      - 'tests/test_nfl_roster_v10.py'
+      - '.github/workflows/refresh-nfl-rosters-v10.yml'
+      - '.github/workflows/validate-nfl-roster-v10.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  rotation-tests:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate old and scheduled roster collection safety offline
+        run: |
+          python -m unittest discover -s tests -p test_nfl_roster_v8_multi.py -v
+          python -m unittest discover -s tests -p test_nfl_roster_conflict_recheck.py -v
+          python -m unittest discover -s tests -p test_nfl_roster_v10.py -v
+      - name: Verify scheduled cohort limits and 32-team published source coverage
+        run: |
+          python - <<'PY'
+          import importlib.util,json
+          from pathlib import Path
+          p=Path('scripts/refresh-nfl-rosters-v10.py')
+          spec=importlib.util.spec_from_file_location('v10',p)
+          v10=importlib.util.module_from_spec(spec)
+          spec.loader.exec_module(v10)
+          assert len(v10.cohorts())==4
+          assert all(len(g)==8 for g in v10.cohorts())
+          assert len(set(t for g in v10.cohorts() for t in g))==32
+          assert v10.MAX_CALLS==8
+          data=json.loads(Path('data/live/nfl_roster_index.json').read_text())
+          assert data['coverage']['teamsPresent']==32
+          print('Scheduled roster cohort contract PASS')
+          PY
