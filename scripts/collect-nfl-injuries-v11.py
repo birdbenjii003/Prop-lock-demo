@@ -129,6 +129,63 @@ def group_shape_summary(group, position):
             f"injuriesLength={len(members) if isinstance(members,list) else 'n/a'}")
 
 
+# Explicit NFL ESPN IDs. Check both ID and franchise display name to avoid misassignment.
+ESPN_NFL_TEAMS = {
+    "1": ("ATL", "Atlanta Falcons"),
+    "2": ("BUF", "Buffalo Bills"),
+    "3": ("CHI", "Chicago Bears"),
+    "4": ("CIN", "Cincinnati Bengals"),
+    "5": ("CLE", "Cleveland Browns"),
+    "6": ("DAL", "Dallas Cowboys"),
+    "7": ("DEN", "Denver Broncos"),
+    "8": ("DET", "Detroit Lions"),
+    "9": ("GB", "Green Bay Packers"),
+    "10": ("TEN", "Tennessee Titans"),
+    "11": ("IND", "Indianapolis Colts"),
+    "12": ("KC", "Kansas City Chiefs"),
+    "13": ("LV", "Las Vegas Raiders"),
+    "14": ("LAR", "Los Angeles Rams"),
+    "15": ("MIA", "Miami Dolphins"),
+    "16": ("MIN", "Minnesota Vikings"),
+    "17": ("NE", "New England Patriots"),
+    "18": ("NO", "New Orleans Saints"),
+    "19": ("NYG", "New York Giants"),
+    "20": ("NYJ", "New York Jets"),
+    "21": ("PHI", "Philadelphia Eagles"),
+    "22": ("ARI", "Arizona Cardinals"),
+    "23": ("PIT", "Pittsburgh Steelers"),
+    "24": ("LAC", "Los Angeles Chargers"),
+    "25": ("SF", "San Francisco 49ers"),
+    "26": ("SEA", "Seattle Seahawks"),
+    "27": ("TB", "Tampa Bay Buccaneers"),
+    "28": ("WSH", "Washington Commanders"),
+    "29": ("CAR", "Carolina Panthers"),
+    "30": ("JAX", "Jacksonville Jaguars"),
+    "33": ("BAL", "Baltimore Ravens"),
+    "34": ("HOU", "Houston Texans"),
+}
+
+def injury_group_team_code(group):
+    team = group.get("team")
+    if isinstance(team, dict):
+        code = team.get("abbreviation")
+        if team.get("id") is not None:
+            matched = ESPN_NFL_TEAMS.get(str(team["id"]))
+            if matched is None or matched[0] != code:
+                raise ValueError("Conflicting nested NFL injury team ID")
+        return code
+    if team is not None:
+        raise ValueError("Unknown injury team structure")
+    team_id, name = group.get("id"), group.get("displayName")
+    if isinstance(team_id, bool) or not isinstance(team_id, (str, int)):
+        raise ValueError("Missing flat NFL injury team ID")
+    matched = ESPN_NFL_TEAMS.get(str(team_id))
+    if matched is None:
+        raise ValueError("Unknown flat NFL injury team ID")
+    if not isinstance(name, str) or name.strip() != matched[1]:
+        raise ValueError("Flat NFL injury team ID/name mismatch")
+    return matched[0]
+
 def normalized(payload, now, roster_ids):
     if not isinstance(payload, dict) or not isinstance(payload.get("injuries"), list):
         raise ValueError("Unknown injury source schema: requires injuries array")
@@ -140,8 +197,10 @@ def normalized(payload, now, roster_ids):
     for position, group in enumerate(groups):
         if not isinstance(group, dict):
             raise ValueError("Malformed injury team group: " + group_shape_summary(group, position))
-        team = group.get("team")
-        code = team.get("abbreviation") if isinstance(team, dict) else None
+        try:
+            code = injury_group_team_code(group)
+        except ValueError as exc:
+            raise ValueError(str(exc) + ": " + group_shape_summary(group, position)) from exc
         members = group.get("injuries")
         if code not in allowed or not isinstance(members, list) or len(members) > 150:
             raise ValueError("Unsupported injury group team or list: " + group_shape_summary(group, position))
