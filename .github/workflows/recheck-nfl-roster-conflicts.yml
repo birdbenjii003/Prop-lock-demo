@@ -1,0 +1,72 @@
+name: Recheck unresolved NFL roster conflicts (manual)
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: prop-lock-nfl-roster-index-publish
+  cancel-in-progress: false
+jobs:
+  recheck:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate conflict recheck without network calls
+        run: python -m unittest discover -s tests -p test_nfl_roster_conflict_recheck.py -v
+      - name: Recheck only teams implicated by current unresolved conflicts
+        run: python scripts/recheck-nfl-roster-conflicts.py
+      - name: Rebuild full index without resolving conflicting identity by assumption
+        run: python scripts/build-nfl-roster-index.py --all-teams
+      - name: Publish validated rechecked snapshots, shared cooldown and index
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          python - <<'PY'
+          import json, subprocess
+          from pathlib import Path
+          report=json.loads(Path('test-results/nfl-conflict-recheck.json').read_text())
+          for entry in report['results']:
+              if entry['status']=='PUBLISHED':
+                  team=entry['team']
+                  assert team in report['teams']
+                  subprocess.check_call(['git','add','--',str(Path('data/live')/f'nfl_roster_{team}.json')])
+          PY
+          git add -- data/live/nfl_roster_index.json
+          if [[ -f data/live/nfl_roster_cooldown.json ]]; then
+            git add -- data/live/nfl_roster_cooldown.json
+          fi
+          if git diff --cached --quiet; then
+            echo "No changes to publish."
+          else
+            git commit -m "data: recheck conflict roster evidence and refresh index"
+            git push origin HEAD:main
+          fi
+      - name: Report unresolved conflicts and source errors honestly
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          report=json.loads(Path('test-results/nfl-conflict-recheck.json').read_text())
+          index=json.loads(Path('data/live/nfl_roster_index.json').read_text())
+          print('Provider recheck:', report)
+          print('Unresolved ESPN ID conflicts:',index['coverage']['unresolvedCrossTeamIds'])
+          if not report['allSuccessful']:
+              raise SystemExit('Partial recheck or cooldown: last-good evidence retained')
+          PY
+      - name: Save conflict evidence and recheck report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nfl-conflict-recheck-evidence
+          path: |
+            test-results/nfl-conflict-recheck.json
+            data/live/nfl_roster_index.json
+          if-no-files-found: ignore
