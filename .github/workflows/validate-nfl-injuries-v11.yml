@@ -1,0 +1,39 @@
+name: Validate NFL injury pilot v11 (offline)
+on:
+  push:
+    paths:
+      - 'scripts/collect-nfl-injuries-v11.py'
+      - 'tests/test_nfl_injuries_v11.py'
+      - 'index.html'
+      - '.github/workflows/collect-nfl-injuries-v11.yml'
+      - '.github/workflows/validate-nfl-injuries-v11.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  injury-tests:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run offline injury pilot and roster index regressions
+        run: |
+          python -m unittest discover -s tests -p test_nfl_injuries_v11.py -v
+          python -m unittest discover -s tests -p test_nfl_roster_index.py -v
+      - name: Validate website injury status display syntax
+        run: |
+          node - <<'NODE'
+          const fs=require('node:fs'),vm=require('node:vm');
+          const html=fs.readFileSync('index.html','utf8');
+          const main=html.match(/<script>\s*([\s\S]*?)<\/script>/);
+          if(!main)throw Error('Main script absent');
+          new vm.Script(main[1]);
+          if(!html.includes('injuryPilotStatus'))throw Error('Injury status display absent');
+          console.log('NFL injury pilot UI parse PASS');
+          NODE
