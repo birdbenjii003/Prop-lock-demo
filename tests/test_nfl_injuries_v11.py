@@ -157,6 +157,26 @@ class InjuryPilotTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             inj.normalized(data,NOW,{})
 
+    def test_injury_entry_schema_diagnostic_reports_keys_without_values(self):
+        payload={"injuries":[{"id":"1","displayName":"Atlanta Falcons","injuries":[
+          {"athlete":{"uid":"secret-id","name":"Private Player"},
+           "status":{"code":"PRIVATE_MEDICAL_STATUS"},
+           "details":"PRIVATE_HEALTH_DETAIL"}]}]}
+        with self.assertRaisesRegex(ValueError,"Injury entry lacks athlete ID") as caught:
+            inj.normalized(payload,NOW,{})
+        message=str(caught.exception)
+        self.assertIn("group=0,entry=0",message)
+        self.assertIn("athleteKeys=['name', 'uid']",message)
+        self.assertIn("statusKeys=['code']",message)
+        for private in ("secret-id","Private Player","PRIVATE_MEDICAL_STATUS","PRIVATE_HEALTH_DETAIL"):
+            self.assertNotIn(private,message)
+
+    def test_missing_status_reports_structure_without_guessing(self):
+        payload={"injuries":[{"id":"2","displayName":"Buffalo Bills","injuries":[
+          {"athlete":{"id":"123456","displayName":"Example Athlete"},"status":None}]}]}
+        with self.assertRaisesRegex(ValueError,"statusType=NoneType"):
+            inj.normalized(payload,NOW,{})
+
     def test_size_and_count_bounds(self):
         src=source()
         src["injuries"]*=30
