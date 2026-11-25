@@ -2,6 +2,8 @@
 import datetime as dt
 import importlib.util
 import json
+import gzip
+import io
 import tempfile
 import unittest
 from pathlib import Path
@@ -82,6 +84,35 @@ class InjuryPilotTests(unittest.TestCase):
             fresh["fetchedAt"]=NOW.isoformat().replace("+00:00","Z")
             file.write_text(json.dumps(fresh))
             self.assertEqual(inj.roster_evidence(td,NOW)["123456"],["ATL"])
+
+    def test_bounded_plain_and_gzip_responses(self):
+        class Response:
+            def __init__(self, blob, encoding=""):
+                self.stream=io.BytesIO(blob)
+                self.headers={"Content-Encoding":encoding,"Content-Length":str(len(blob))}
+            def read(self,n):
+                return self.stream.read(n)
+        sample=json.dumps(source()).encode()
+        self.assertEqual(inj.decode_bounded_response(Response(sample)),source())
+        packed=gzip.compress(sample)
+        self.assertEqual(inj.decode_bounded_response(Response(packed,"gzip")),source())
+        with self.assertRaises(ValueError):
+            inj.decode_bounded_response(Response(b"not-gzip","gzip"))
+
+    def test_wire_size_and_gzip_expansion_fail_closed(self):
+        class Response:
+            def __init__(self, blob, encoding=""):
+                self.stream=io.BytesIO(blob)
+                self.headers={"Content-Encoding":encoding,"Content-Length":str(len(blob))}
+            def read(self,n):
+                return self.stream.read(n)
+        with self.assertRaisesRegex(ValueError,"wire"):
+            inj.decode_bounded_response(Response(b"z"*(inj.MAX_WIRE_BYTES+1)))
+        expanded=gzip.compress(b"x"*(inj.MAX_BYTES+1))
+        with self.assertRaisesRegex(ValueError,"Decoded"):
+            inj.decode_bounded_response(Response(expanded,"gzip"))
+        with self.assertRaisesRegex(ValueError,"Unsupported"):
+            inj.decode_bounded_response(Response(b"{}","br"))
 
     def test_size_and_count_bounds(self):
         src=source()
