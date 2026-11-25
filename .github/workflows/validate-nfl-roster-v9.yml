@@ -1,0 +1,54 @@
+name: Validate NFL roster conflict recheck and freshness audit
+on:
+  push:
+    paths:
+      - 'scripts/recheck-nfl-roster-conflicts.py'
+      - 'tests/test_nfl_roster_conflict_recheck.py'
+      - 'index.html'
+      - '.github/workflows/recheck-nfl-roster-conflicts.yml'
+      - '.github/workflows/audit-nfl-roster-freshness.yml'
+      - '.github/workflows/validate-nfl-roster-v9.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validation:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run legacy roster, index and conflict unit tests
+        run: |
+          python -m unittest discover -s tests -p test_nfl_roster_index.py -v
+          python -m unittest discover -s tests -p test_nfl_roster_v8.py -v
+          python -m unittest discover -s tests -p test_nfl_roster_v8_multi.py -v
+          python -m unittest discover -s tests -p test_nfl_roster_conflict_recheck.py -v
+      - name: Verify published 32-team index contains no guessed resolutions
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('data/live/nfl_roster_index.json').read_text())
+          assert d['coverage']['teamsExpected']==32
+          assert d['coverage']['teamsPresent']==32
+          for conflict in d['identityConflicts']:
+              assert conflict['status']=='TEAM_ID_CONFLICT_UNRESOLVED'
+              assert 'verifiedTeam' not in conflict
+          print('Published unresolved source evidence valid:',d['coverage'])
+          PY
+      - name: Parse browser script
+        run: |
+          node - <<'NODE'
+          const fs=require('node:fs'),vm=require('node:vm');
+          const html=fs.readFileSync('index.html','utf8');
+          const code=html.match(/<script>\s*([\s\S]*?)<\/script>/);
+          if(!code)throw Error('Main script not found');
+          new vm.Script(code[1]);
+          console.log('Roster conflict monitor script parses');
+          NODE
