@@ -12,6 +12,7 @@ import json
 from pathlib import Path
 import time
 import urllib.error
+import urllib.request
 
 ROOT = Path(__file__).resolve().parent.parent
 UTC = dt.timezone.utc
@@ -80,12 +81,22 @@ def retry_after_seconds(raw, now):
 
 
 def fetch_team(team):
-    # Source endpoint is restricted to the selected allowed teams only.
+    # Use exactly the existing allowlisted endpoint; preserve Retry-After metadata.
+    req = urllib.request.Request(batch.team_url(team), headers={
+        "User-Agent": "PropLockResearchRosterBatch/1.0",
+        "Accept": "application/json"})
     try:
-        return batch.fetch_team(team)
-    except batch.RateLimited as exc:
-        # Batch client currently normalizes 429; use default cooldown in this case.
-        raise Throttled(str(exc), retry_after=None) from exc
+        with urllib.request.urlopen(req, timeout=batch.pilot.TIMEOUT_SECONDS) as response:
+            if response.status != 200:
+                raise RuntimeError(f"Roster HTTP {response.status}")
+            raw = response.read(batch.pilot.MAX_BYTES + 1)
+    except urllib.error.HTTPError as exc:
+        if exc.code == 429:
+            raise Throttled("HTTP 429", retry_after=exc.headers.get("Retry-After")) from exc
+        raise RuntimeError(f"Roster HTTP {exc.code}") from exc
+    if len(raw) > batch.pilot.MAX_BYTES:
+        raise ValueError("Roster exceeds source size cap")
+    return json.loads(raw.decode("utf-8"))
 
 
 class Throttled(Exception):
