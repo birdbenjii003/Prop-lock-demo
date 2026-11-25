@@ -1,0 +1,102 @@
+name: Refresh NFL rosters — controlled scheduled cohorts v10
+on:
+  schedule:
+    # Four distinct eight-team cohorts across UTC day. GitHub cron is best effort.
+    - cron: '23 1,7,13,19 * * *'
+  workflow_dispatch:
+    inputs:
+      cohort:
+        description: Cohort to refresh (1–4); selected team snapshots reused if fresh
+        required: true
+        type: choice
+        default: '1'
+        options:
+          - '1'
+          - '2'
+          - '3'
+          - '4'
+permissions:
+  contents: write
+concurrency:
+  group: prop-lock-nfl-roster-index-publish
+  cancel-in-progress: false
+jobs:
+  refresh:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 9
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate scheduled rotation and current collector safeguards offline
+        run: |
+          python -m unittest discover -s tests -p test_nfl_roster_v10.py -v
+          python -m unittest discover -s tests -p test_nfl_roster_v8_multi.py -v
+      - name: Fetch only missing or stale roster evidence in selected cohort
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          MANUAL_COHORT: ${{ inputs.cohort }}
+        run: |
+          if [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
+            python scripts/refresh-nfl-rosters-v10.py --cohort "$MANUAL_COHORT"
+          else
+            python scripts/refresh-nfl-rosters-v10.py
+          fi
+      - name: Rebuild 32-team roster coverage and unresolved conflict index
+        run: python scripts/build-nfl-roster-index.py --all-teams
+      - name: Commit only validated changed rosters, cooldown and index
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          python - <<'PY'
+          import json,subprocess
+          from pathlib import Path
+          report=json.loads(Path('test-results/nfl-roster-v10-report.json').read_text())
+          for entry in report['results']:
+              if entry['status']=='PUBLISHED':
+                  team=entry['team']
+                  assert team in report['selectedTeams']
+                  assert team in ('ARI ATL BAL BUF CAR CHI CIN CLE DAL DEN DET GB HOU IND JAX KC LAC LAR LV MIA MIN NE NO NYG NYJ PHI PIT SEA SF TB TEN WSH').split()
+                  path=Path('data/live')/('nfl_roster_pilot_ATL.json' if team=='ATL' else f'nfl_roster_{team}.json')
+                  assert path.is_file()
+                  subprocess.check_call(['git','add','--',str(path)])
+          PY
+          git add -- data/live/nfl_roster_index.json
+          if [[ -f data/live/nfl_roster_cooldown.json ]]; then
+            git add -- data/live/nfl_roster_cooldown.json
+          fi
+          if git diff --cached --quiet; then
+            echo "All roster snapshots still current and no index change."
+          else
+            git commit -m "data: refresh scheduled NFL roster cohort"
+            git push origin HEAD:main
+          fi
+      - name: Report status and partial failures
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          report=json.loads(Path('test-results/nfl-roster-v10-report.json').read_text())
+          index=json.loads(Path('data/live/nfl_roster_index.json').read_text())
+          print('Run cohort:',report['cohort'],'requests:',report['requestsAttempted'],'state:',report['status'])
+          print('Snapshot coverage:',index['coverage'])
+          for result in report['results']:
+              print(result['team'],result['status'],result.get('reason',''))
+          if not report['allSuccessful']:
+              raise SystemExit('Some team refreshes failed or rate-limited; last-good snapshots preserved')
+          PY
+      - name: Preserve collection audit evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nfl-roster-v10-scheduled-evidence
+          path: |
+            test-results/nfl-roster-v10-report.json
+            data/live/nfl_roster_index.json
+            data/live/nfl_roster_cooldown.json
+          if-no-files-found: ignore
