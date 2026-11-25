@@ -71,10 +71,12 @@ def read_roster(path, team, now):
             "athletes": cleaned}
 
 
-def index_snapshots(folder, now):
+def index_snapshots(folder, now, manifest=None):
+    if manifest is None:
+        manifest = MANIFEST
     teams = []
     identity = {}
-    for team, filename in MANIFEST.items():
+    for team, filename in manifest.items():
         path = Path(folder) / filename
         if not path.exists():
             teams.append({"team": team, "state": "MISSING", "count": 0, "fetchedAt": None})
@@ -105,7 +107,7 @@ def index_snapshots(folder, now):
         "freshnessThresholdHours": MAX_AGE_HOURS,
         "coverage": {
             "teamsExpected": 32,
-            "teamsTracked": len(MANIFEST),
+            "teamsTracked": len(manifest),
             "teamsPresent": sum(x["state"] in ("CURRENT", "STALE") for x in teams),
             "teamsCurrent": sum(x["state"] == "CURRENT" for x in teams),
             "teamsStale": sum(x["state"] == "STALE" for x in teams),
@@ -122,9 +124,18 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--data-dir", default="data/live")
     parser.add_argument("--out", default=str(OUT))
+    parser.add_argument("--all-teams", action="store_true", help="Include the full explicit NFL manifest; missing teams remain MISSING")
     args = parser.parse_args()
     now = dt.datetime.now(UTC).replace(microsecond=0)
-    result = index_snapshots(args.data_dir, now)
+    if args.all_teams:
+        roster_plan_path = ROOT / 'scripts/nfl-roster-plan.py'
+        plan_spec = importlib.util.spec_from_file_location('roster_plan', roster_plan_path)
+        plan = importlib.util.module_from_spec(plan_spec)
+        plan_spec.loader.exec_module(plan)
+        manifest = plan.full_manifest()
+    else:
+        manifest = MANIFEST
+    result = index_snapshots(args.data_dir, now, manifest=manifest)
     # Import atomic writer already validated for NFL snapshot publishing.
     spec = importlib.util.spec_from_file_location("pilot", ROOT / "scripts/collect-nfl-roster-pilot.py")
     pilot = importlib.util.module_from_spec(spec)
