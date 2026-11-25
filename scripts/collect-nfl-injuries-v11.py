@@ -7,6 +7,8 @@ structures; no missing injury implies health. Never changes research projections
 import argparse
 import datetime as dt
 import hashlib
+import gzip
+import io
 import importlib.util
 import json
 from pathlib import Path
@@ -17,7 +19,8 @@ import urllib.request
 ROOT = Path(__file__).resolve().parent.parent
 URL = "https://site.api.espn.com/apis/site/v2/sports/football/nfl/injuries"
 OUT = Path("data/live/nfl_injuries.json")
-MAX_BYTES = 3_000_000
+MAX_BYTES = 12_000_000  # Upper bound for decoded JSON response; previously 3 MB
+MAX_WIRE_BYTES = 12_000_000  # Upper bound on downloaded bytes, compressed or plain
 MAX_GROUPS = 40
 MAX_RECORDS = 1000
 UTC = dt.timezone.utc
@@ -32,19 +35,59 @@ roster_index = load_module("injury_roster_index", "scripts/build-nfl-roster-inde
 roster_plan = load_module("injury_roster_plan", "scripts/nfl-roster-plan.py")
 pilot = load_module("injury_atomic_writer", "scripts/collect-nfl-roster-pilot.py")
 
+def decode_bounded_response(response):
+    """Bound HTTP payload bytes AND decoded JSON bytes, including gzip bombs.
+
+    The ESPN injury endpoint exceeded the original 3 MB cap. Raise the
+    hard limit to 12 MB, but never read or decompress without explicit caps.
+    """
+    encoding = response.headers.get("Content-Encoding", "").strip().lower()
+    if encoding not in ("", "identity", "gzip"):
+        raise ValueError("Unsupported injury response encoding")
+    declared = response.headers.get("Content-Length")
+    if declared is not None:
+        try:
+            if int(declared) > MAX_WIRE_BYTES:
+                raise ValueError("Injury wire Content-Length exceeds 12 MB cap")
+        except (TypeError, ValueError) as exc:
+            if str(exc) == "Injury wire Content-Length exceeds 12 MB cap":
+                raise
+            raise ValueError("Invalid injury Content-Length") from exc
+    wire = response.read(MAX_WIRE_BYTES + 1)
+    if len(wire) > MAX_WIRE_BYTES:
+        raise ValueError("Injury wire payload exceeds 12 MB cap")
+    if encoding == "gzip":
+        try:
+            with gzip.GzipFile(fileobj=io.BytesIO(wire), mode="rb") as stream:
+                decoded = stream.read(MAX_BYTES + 1)
+                if len(decoded) > MAX_BYTES:
+                    raise ValueError("Decoded injury source exceeds 12 MB cap")
+                if stream.read(1):
+                    raise ValueError("Decoded injury source exceeds 12 MB cap")
+        except (EOFError, OSError) as exc:
+            raise ValueError("Invalid or truncated injury gzip response") from exc
+    else:
+        decoded = wire
+    if len(decoded) > MAX_BYTES:
+        raise ValueError("Decoded injury source exceeds 12 MB cap")
+    try:
+        return json.loads(decoded.decode("utf-8"))
+    except (UnicodeError, json.JSONDecodeError) as exc:
+        raise ValueError("Invalid injury JSON response") from exc
+
+
 def fetch():
     request = urllib.request.Request(URL, headers={
-        "Accept": "application/json", "User-Agent": "PropLockResearchInjuryPilot/1.0"})
+        "Accept": "application/json",
+        "Accept-Encoding": "gzip",
+        "User-Agent": "PropLockResearchInjuryPilot/1.0"})
     try:
         with urllib.request.urlopen(request, timeout=15) as response:
             if response.status != 200:
                 raise ValueError("Injury source returned unexpected HTTP status")
-            blob = response.read(MAX_BYTES + 1)
+            return decode_bounded_response(response)
     except urllib.error.HTTPError as exc:
         raise RuntimeError(f"Injury source HTTP {exc.code}") from exc
-    if len(blob) > MAX_BYTES:
-        raise ValueError("Injury source exceeds 3 MB cap")
-    return json.loads(blob.decode("utf-8"))
 
 def roster_evidence(folder, now):
     """Only same-team, unique ESPN IDs in non-stale published snapshots count."""
@@ -146,7 +189,7 @@ def main():
     now = dt.datetime.now(UTC).replace(microsecond=0)
     if args.fixture:
         blob = Path(args.fixture).read_bytes()
-        if len(blob) > MAX_BYTES: raise ValueError("Oversized fixture")
+        if len(blob) > MAX_BYTES: raise ValueError("Oversized injury fixture")
         payload = json.loads(blob.decode("utf-8"))
     else:
         payload = fetch()
