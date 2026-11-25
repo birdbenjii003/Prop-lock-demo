@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       group:
-        description: Select one small group of remaining NFL teams (max three)
+        description: Starting roster group (choose 1, 4 or 7 for 3-run coverage of all remaining teams)
         required: true
         type: choice
         default: '1'
@@ -17,6 +17,15 @@ on:
           - '7'
           - '8'
           - '9'
+      groups:
+        description: Number of consecutive groups (1–3); three groups mean at most nine team requests
+        required: true
+        type: choice
+        default: '3'
+        options:
+          - '1'
+          - '2'
+          - '3'
 permissions:
   contents: write
 concurrency:
@@ -38,8 +47,9 @@ jobs:
         run: |
           python -m unittest discover -s tests -p test_nfl_roster_index.py -v
           python -m unittest discover -s tests -p test_nfl_roster_v8.py -v
-      - name: Collect selected batch with explicit three-request maximum
-        run: python scripts/collect-nfl-roster-v8.py --group "${{ inputs.group }}"
+          python -m unittest discover -s tests -p test_nfl_roster_v8_multi.py -v
+      - name: Collect at most nine team rosters from up to three adjacent groups
+        run: python scripts/collect-nfl-roster-v8-multi.py --start-group "${{ inputs.group }}" --groups "${{ inputs.groups }}"
       - name: Rebuild full 32-team coverage and conflict index
         run: python scripts/build-nfl-roster-index.py --all-teams
       - name: Publish validated snapshots and global index only
@@ -51,7 +61,7 @@ jobs:
           import json
           import subprocess
           from pathlib import Path
-          report=json.loads(Path('test-results/nfl-roster-v8-report.json').read_text())
+          report=json.loads(Path('test-results/nfl-roster-v8-multi-report.json').read_text())
           for row in report['results']:
               if row['status']=='PUBLISHED':
                   team=row['team']
@@ -60,6 +70,9 @@ jobs:
                   assert path.is_file()
                   subprocess.check_call(['git','add','--',str(path)])
           PY
+          if [[ -f data/live/nfl_roster_cooldown.json ]]; then
+            git add -- data/live/nfl_roster_cooldown.json
+          fi
           git add -- data/live/nfl_roster_index.json
           if git diff --cached --quiet; then
             echo "No modified validated snapshots."
@@ -72,13 +85,13 @@ jobs:
           python - <<'PY'
           import json
           from pathlib import Path
-          report=json.loads(Path('test-results/nfl-roster-v8-report.json').read_text())
+          report=json.loads(Path('test-results/nfl-roster-v8-multi-report.json').read_text())
           index=json.loads(Path('data/live/nfl_roster_index.json').read_text())
           print('Coverage:',index['coverage'])
           for row in report['results']:
               print(row['team'],row['status'],row.get('reason',''))
           if not report['allSuccessful']:
-              raise SystemExit('Partial batch failure; successful team snapshots remain published')
+              raise SystemExit('Partial or rate-limited batch; already validated snapshots and cooldown retained')
           PY
       - name: Upload per-team report and coverage for diagnosis
         if: always()
@@ -86,6 +99,7 @@ jobs:
         with:
           name: nfl-roster-v8-batch-evidence
           path: |
-            test-results/nfl-roster-v8-report.json
+            test-results/nfl-roster-v8-multi-report.json
             data/live/nfl_roster_index.json
+            data/live/nfl_roster_cooldown.json
           if-no-files-found: ignore
