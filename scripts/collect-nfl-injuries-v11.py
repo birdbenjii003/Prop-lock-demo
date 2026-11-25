@@ -186,6 +186,23 @@ def injury_group_team_code(group):
         raise ValueError("Flat NFL injury team ID/name mismatch")
     return matched[0]
 
+def injury_entry_shape_summary(member, group_position, injury_position):
+    """Only schema shape, never raw athlete IDs, names or medical details."""
+    if not isinstance(member, dict):
+        return f"group={group_position},entry={injury_position},type={type(member).__name__}"
+    athlete = member.get("athlete")
+    status = member.get("status")
+    keys = sorted(k for k in member if isinstance(k, str))
+    athlete_keys = sorted(k for k in athlete if isinstance(k, str)) if isinstance(athlete, dict) else []
+    status_keys = sorted(k for k in status if isinstance(k, str)) if isinstance(status, dict) else []
+    return (f"group={group_position},entry={injury_position},keys={keys[:16]},"
+            f"athleteType={type(athlete).__name__},athleteKeys={athlete_keys[:16]},"
+            f"statusType={type(status).__name__},statusKeys={status_keys[:12]},"
+            f"athleteIdPresent={isinstance(athlete,dict) and athlete.get('id') is not None},"
+            f"athleteDisplayNamePresent={isinstance(athlete,dict) and bool(athlete.get('displayName'))},"
+            f"athleteFullNamePresent={isinstance(athlete,dict) and bool(athlete.get('fullName'))})")
+
+
 def normalized(payload, now, roster_ids):
     if not isinstance(payload, dict) or not isinstance(payload.get("injuries"), list):
         raise ValueError("Unknown injury source schema: requires injuries array")
@@ -207,16 +224,16 @@ def normalized(payload, now, roster_ids):
         if code in group_teams:
             raise ValueError("Repeated team injury group")
         group_teams.add(code)
-        for member in members:
+        for injury_position, member in enumerate(members):
             if not isinstance(member, dict):
-                raise ValueError("Invalid injury entry")
+                raise ValueError("Invalid injury entry: " + injury_entry_shape_summary(member, position, injury_position))
             athlete = member.get("athlete")
             athlete_id = str(athlete.get("id") or "") if isinstance(athlete, dict) else ""
             name = athlete.get("displayName") or athlete.get("fullName") if isinstance(athlete, dict) else None
             designation = status_text(member.get("status"))
             if not re.fullmatch(r"\d{1,12}", athlete_id) or not isinstance(name, str) or \
                not 2 <= len(name.strip()) <= 100 or designation is None:
-                raise ValueError("Injury entry lacks athlete ID, name or status")
+                raise ValueError("Injury entry lacks athlete ID, name or status: " + injury_entry_shape_summary(member, position, injury_position))
             key = (code, athlete_id)
             if key in seen:
                 raise ValueError("Repeated team/athlete injury entry")
