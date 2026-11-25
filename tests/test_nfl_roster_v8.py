@@ -82,7 +82,9 @@ class V8Tests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             teams=planner.group_teams(2)
             path=Path(tmp)/f"nfl_roster_{teams[0]}.json"
-            path.write_text(json.dumps(cached(teams[0],age=40)))
+            original_snapshot = cached(teams[0], age=40)
+            path.write_text(json.dumps(original_snapshot))
+            original_bytes = path.read_bytes()
             def invalid(team):
                 if team==teams[0]:
                     return {"athletes":[]}
@@ -90,7 +92,8 @@ class V8Tests(unittest.TestCase):
             result=runner.collect_group(2,Path(tmp),NOW,invalid,lambda _:None)
             self.assertFalse(result["allSuccessful"])
             self.assertEqual(result["results"][0]["status"],"FAILED")
-            self.assertEqual(json.loads(path.read_text()),cached(teams[0]))
+            self.assertEqual(json.loads(path.read_text()),original_snapshot)
+            self.assertEqual(path.read_bytes(),original_bytes)
             self.assertEqual(result["results"][1]["status"],"PUBLISHED")
 
     def test_rate_limit_stops_remaining_requests(self):
