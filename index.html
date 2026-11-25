@@ -273,7 +273,11 @@ async function loadPublishedNflRosterIndex(){
     c.teamsCurrent+' current, '+c.teamsStale+' stale, '+c.teamsMissing+
     ' missing in tracked set, '+c.teamsInvalid+' invalid; '+(32-c.teamsTracked)+
     ' teams not yet indexed) · '+c.unresolvedCrossTeamIds+
-    ' unresolved ESPN ID team conflicts · index generated '+idx.generatedAt+
+    ' unresolved ESPN ID team conflicts'+
+    (idx.identityConflicts.length?' ['+idx.identityConflicts.slice(0,6).map(x=>
+      String(x.espnId)+' ('+(Array.isArray(x.listedTeams)?x.listedTeams.join('/'): '?')+')'
+    ).join(', ')+(idx.identityConflicts.length>6?', …':'')+']':'')+
+    ' · index generated '+idx.generatedAt+
     (ageHours>36?' · INDEX OUTDATED':'')+
     '. No verified player-team assignment.';
  }catch(e){plRosterIndexStatus='Roster coverage index unavailable: '+(e.message||String(e))+
