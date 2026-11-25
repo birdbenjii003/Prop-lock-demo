@@ -1,0 +1,38 @@
+name: Collect NFL injury pilot (manual, one league request)
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: prop-lock-nfl-injury-pilot
+  cancel-in-progress: false
+jobs:
+  pilot:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate injury parser and last-good safety offline
+        run: python -m unittest discover -s tests -p test_nfl_injuries_v11.py -v
+      - name: Fetch one bounded ESPN injury response and validate schema
+        run: python scripts/collect-nfl-injuries-v11.py
+      - name: Publish only validated changed injury data
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if [[ -f data/live/nfl_injuries.json ]]; then
+            git add -- data/live/nfl_injuries.json
+          fi
+          if git diff --cached --quiet; then
+            echo "No changed injury listing: original source timestamp remains unchanged."
+          else
+            git commit -m "data: publish bounded NFL injury pilot snapshot"
+            git push origin HEAD:main
+          fi
