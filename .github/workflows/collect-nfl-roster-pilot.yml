@@ -4,7 +4,7 @@ on:
 permissions:
   contents: write
 concurrency:
-  group: prop-lock-nfl-roster-pilot
+  group: prop-lock-nfl-roster-index-publish
   cancel-in-progress: false
 jobs:
   pilot:
@@ -22,12 +22,15 @@ jobs:
         run: python -m unittest discover -s tests -p test_nfl_roster_pilot.py -v
       - name: Collect pilot roster for ATL only
         run: python scripts/collect-nfl-roster-pilot.py
-      - name: Publish only validated pilot roster
+      - name: Rebuild shared roster index including all teams
+        run: python scripts/build-nfl-roster-index.py --all-teams
+      - name: Publish only validated pilot roster and current index
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -- data/live/nfl_roster_pilot_ATL.json
+          git add -- data/live/nfl_roster_index.json
           if git diff --cached --quiet; then
             echo "Unchanged pilot roster."
             exit 0

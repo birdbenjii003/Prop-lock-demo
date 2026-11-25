@@ -24,7 +24,7 @@ jobs:
       - name: Collect BAL DET SF with independent validation
         run: python scripts/collect-nfl-roster-batch-v7.py
       - name: Build identity-conflict index from surviving snapshots
-        run: python scripts/build-nfl-roster-index.py
+        run: python scripts/build-nfl-roster-index.py --all-teams
       - name: Publish valid roster snapshots and index without force pushes
         run: |
           set -euo pipefail

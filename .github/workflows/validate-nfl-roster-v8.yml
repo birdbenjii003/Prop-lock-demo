@@ -1,0 +1,58 @@
+name: Validate reusable NFL roster batch v8
+on:
+  push:
+    paths:
+      - 'scripts/nfl-roster-plan.py'
+      - 'scripts/collect-nfl-roster-v8.py'
+      - 'scripts/build-nfl-roster-index.py'
+      - 'tests/test_nfl_roster_v8.py'
+      - 'scripts/collect-nfl-roster-v8-multi.py'
+      - 'tests/test_nfl_roster_v8_multi.py'
+      - '.github/workflows/collect-nfl-roster-v8.yml'
+      - 'index.html'
+      - '.github/workflows/validate-nfl-roster-v8.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  planner-tests:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Test the existing roster pilot, batch, index and new planner
+        run: |
+          python -m unittest discover -s tests -p test_nfl_roster_pilot.py -v
+          python -m unittest discover -s tests -p test_nfl_roster_batch.py -v
+          python -m unittest discover -s tests -p test_nfl_roster_index.py -v
+          python -m unittest discover -s tests -p test_nfl_roster_v8.py -v
+          python -m unittest discover -s tests -p test_nfl_roster_v8_multi.py -v
+      - name: Build full 32-team index against existing published evidence
+        run: |
+          python scripts/build-nfl-roster-index.py --all-teams --out test-results/nfl_roster_index_v8_test.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          x=json.loads(Path('test-results/nfl_roster_index_v8_test.json').read_text())
+          assert x['coverage']['teamsExpected']==32
+          assert x['coverage']['teamsTracked']==32
+          assert x['coverage']['teamsPresent']>=7
+          print('Known real published coverage:',x['coverage'])
+          PY
+      - name: Verify browser main inline script parses
+        run: |
+          node - <<'NODE'
+          const fs=require('node:fs'),vm=require('node:vm');
+          const html=fs.readFileSync('index.html','utf8');
+          const m=html.match(/<script>\s*([\s\S]*?)<\/script>/);
+          if(!m)throw Error('Main script missing');
+          new vm.Script(m[1]);
+          if(!html.includes('loadPublishedNflRosterIndex()'))throw Error('Index display unavailable');
+          console.log('Expanded roster monitor parse PASS');
+          NODE

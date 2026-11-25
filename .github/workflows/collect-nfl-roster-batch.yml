@@ -4,7 +4,7 @@ on:
 permissions:
   contents: write
 concurrency:
-  group: prop-lock-nfl-roster-batch
+  group: prop-lock-nfl-roster-index-publish
   cancel-in-progress: false
 jobs:
   collect:
@@ -24,7 +24,9 @@ jobs:
           python -m unittest discover -s tests -p test_nfl_roster_batch.py -v
       - name: Collect BUF KC PHI in a bounded sequence
         run: python scripts/collect-nfl-roster-batch.py
-      - name: Commit successfully validated snapshots only
+      - name: Rebuild shared roster index including all teams
+        run: python scripts/build-nfl-roster-index.py --all-teams
+      - name: Commit successfully validated snapshots and current index
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
@@ -34,6 +36,7 @@ jobs:
               git add -- "data/live/nfl_roster_${team}.json"
             fi
           done
+          git add -- data/live/nfl_roster_index.json
           if git diff --cached --quiet; then
             echo "No new validated snapshots to commit."
           else
