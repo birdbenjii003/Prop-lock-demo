@@ -6,7 +6,7 @@
   "verification": "unverified",
   "scope": "controlled_batch",
   "team": "IND",
-  "fetchedAt": "2026-11-25T03:01:42Z",
+  "fetchedAt": "2026-11-25T13:03:32Z",
   "count": 78,
   "athletes": [
     {
@@ -400,5 +400,5 @@
       "position": "RB"
     }
   ],
-  "notice": "Third-party roster listing, not a verified active team or game-status record."
+  "notice": "Rechecked team roster listing; does not certify athlete's current team."
 }

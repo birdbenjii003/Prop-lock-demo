@@ -6,8 +6,8 @@
   "verification": "unverified",
   "scope": "controlled_batch",
   "team": "BUF",
-  "fetchedAt": "2026-11-24T15:39:06Z",
-  "count": 74,
+  "fetchedAt": "2026-11-25T13:03:32Z",
+  "count": 72,
   "athletes": [
     {
       "espnId": "2976549",
@@ -120,11 +120,6 @@
       "position": "WR"
     },
     {
-      "espnId": "4039034",
-      "displayName": "Shane Buechele",
-      "position": "QB"
-    },
-    {
       "espnId": "4039303",
       "displayName": "Ed Oliver",
       "position": "DT"
@@ -223,11 +218,6 @@
       "espnId": "4427348",
       "displayName": "Te'Cory Couch",
       "position": "CB"
-    },
-    {
-      "espnId": "4427843",
-      "displayName": "Chase Lundt",
-      "position": "OT"
     },
     {
       "espnId": "4428548",
@@ -380,5 +370,5 @@
       "position": "OT"
     }
   ],
-  "notice": "Third-party team roster. Player identities, current-team assignment, health and game eligibility are not independently verified."
+  "notice": "Rechecked team roster listing; does not certify athlete's current team."
 }

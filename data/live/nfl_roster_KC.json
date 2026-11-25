@@ -6,8 +6,8 @@
   "verification": "unverified",
   "scope": "controlled_batch",
   "team": "KC",
-  "fetchedAt": "2026-11-24T15:39:06Z",
-  "count": 79,
+  "fetchedAt": "2026-11-25T13:03:32Z",
+  "count": 78,
   "athletes": [
     {
       "espnId": "15683",
@@ -395,15 +395,10 @@
       "position": "WR"
     },
     {
-      "espnId": "5155179",
-      "displayName": "Jacob De Jesus",
-      "position": "WR"
-    },
-    {
       "espnId": "5278708",
       "displayName": "Melvin Smith Jr.",
       "position": "CB"
     }
   ],
-  "notice": "Third-party team roster. Player identities, current-team assignment, health and game eligibility are not independently verified."
+  "notice": "Rechecked team roster listing; does not certify athlete's current team."
 }
