@@ -114,6 +114,21 @@ def status_text(value):
     value = value.strip()
     return value[:70] if 1 <= len(value) <= 70 else None
 
+def group_shape_summary(group, position):
+    """Safe shape-only diagnostics: never emit athlete names, IDs or injury details."""
+    if not isinstance(group, dict):
+        return f"group={position},type={type(group).__name__}"
+    keys = sorted(k for k in group if isinstance(k, str))
+    team = group.get("team")
+    members = group.get("injuries")
+    team_keys = sorted(k for k in team if isinstance(k, str)) if isinstance(team, dict) else []
+    return (f"group={position},keys={keys[:12]},"
+            f"teamType={type(team).__name__},teamKeys={team_keys[:12]},"
+            f"teamAbbrPresent={isinstance(team,dict) and isinstance(team.get('abbreviation'),str)},"
+            f"injuriesType={type(members).__name__},"
+            f"injuriesLength={len(members) if isinstance(members,list) else 'n/a'}")
+
+
 def normalized(payload, now, roster_ids):
     if not isinstance(payload, dict) or not isinstance(payload.get("injuries"), list):
         raise ValueError("Unknown injury source schema: requires injuries array")
@@ -122,14 +137,14 @@ def normalized(payload, now, roster_ids):
         raise ValueError("Unknown/empty NFL injury groups: not publishing")
     allowed = set(roster_plan.ALL_TEAMS)
     output, seen, group_teams = [], set(), set()
-    for group in groups:
+    for position, group in enumerate(groups):
         if not isinstance(group, dict):
-            raise ValueError("Malformed injury team group")
+            raise ValueError("Malformed injury team group: " + group_shape_summary(group, position))
         team = group.get("team")
         code = team.get("abbreviation") if isinstance(team, dict) else None
         members = group.get("injuries")
         if code not in allowed or not isinstance(members, list) or len(members) > 150:
-            raise ValueError("Unsupported injury group team or list")
+            raise ValueError("Unsupported injury group team or list: " + group_shape_summary(group, position))
         if code in group_teams:
             raise ValueError("Repeated team injury group")
         group_teams.add(code)
