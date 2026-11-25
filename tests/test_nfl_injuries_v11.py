@@ -129,6 +129,34 @@ class InjuryPilotTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,"group=0,type=str"):
             inj.normalized({"injuries":["unsupported"]},NOW,{})
 
+    def test_observed_flat_espn_team_group_format(self):
+        payload={"injuries":[
+            {"id":"1","displayName":"Atlanta Falcons","injuries":[
+                {"athlete":{"id":"123456","displayName":"Example Athlete"},"status":"Out"}]},
+            {"id":"2","displayName":"Buffalo Bills","injuries":[]}
+        ]}
+        result=inj.normalized(payload,NOW,{"123456":["ATL"]})
+        self.assertEqual(result["teamsReported"],["ATL","BUF"])
+        self.assertEqual(result["count"],1)
+        self.assertEqual(result["injuries"][0]["team"],"ATL")
+        self.assertEqual(result["injuries"][0]["rosterEvidence"],"ROSTER_MATCH")
+
+    def test_flat_group_unknown_or_mismatched_team_is_rejected(self):
+        for item in [
+            {"id":"999","displayName":"Unknown Club","injuries":[]},
+            {"id":"1","displayName":"Buffalo Bills","injuries":[]},
+            {"id":"1","injuries":[]},
+            {"id":True,"displayName":"Atlanta Falcons","injuries":[]}
+        ]:
+            with self.subTest(item=item):
+                with self.assertRaises(ValueError):
+                    inj.normalized({"injuries":[item]},NOW,{})
+
+    def test_nested_group_numeric_id_must_agree_with_abbreviation(self):
+        data={"injuries":[{"team":{"id":"2","abbreviation":"ATL"},"injuries":[]}]}
+        with self.assertRaises(ValueError):
+            inj.normalized(data,NOW,{})
+
     def test_size_and_count_bounds(self):
         src=source()
         src["injuries"]*=30
