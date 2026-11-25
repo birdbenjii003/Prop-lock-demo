@@ -6,6 +6,9 @@ on:
       - 'scripts/collect-nfl-roster-v8.py'
       - 'scripts/build-nfl-roster-index.py'
       - 'tests/test_nfl_roster_v8.py'
+      - 'scripts/collect-nfl-roster-v8-multi.py'
+      - 'tests/test_nfl_roster_v8_multi.py'
+      - '.github/workflows/collect-nfl-roster-v8.yml'
       - 'index.html'
       - '.github/workflows/validate-nfl-roster-v8.yml'
   workflow_dispatch:
@@ -29,6 +32,7 @@ jobs:
           python -m unittest discover -s tests -p test_nfl_roster_batch.py -v
           python -m unittest discover -s tests -p test_nfl_roster_index.py -v
           python -m unittest discover -s tests -p test_nfl_roster_v8.py -v
+          python -m unittest discover -s tests -p test_nfl_roster_v8_multi.py -v
       - name: Build full 32-team index against existing published evidence
         run: |
           python scripts/build-nfl-roster-index.py --all-teams --out test-results/nfl_roster_index_v8_test.json
