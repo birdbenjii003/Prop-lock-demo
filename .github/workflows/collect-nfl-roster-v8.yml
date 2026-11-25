@@ -1,0 +1,91 @@
+name: Collect NFL rosters — reusable manual batch v8
+on:
+  workflow_dispatch:
+    inputs:
+      group:
+        description: Select one small group of remaining NFL teams (max three)
+        required: true
+        type: choice
+        default: '1'
+        options:
+          - '1'
+          - '2'
+          - '3'
+          - '4'
+          - '5'
+          - '6'
+          - '7'
+          - '8'
+          - '9'
+permissions:
+  contents: write
+concurrency:
+  group: prop-lock-nfl-roster-index-publish
+  cancel-in-progress: false
+jobs:
+  collect:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate roster safety, request caps and cache behavior offline
+        run: |
+          python -m unittest discover -s tests -p test_nfl_roster_index.py -v
+          python -m unittest discover -s tests -p test_nfl_roster_v8.py -v
+      - name: Collect selected batch with explicit three-request maximum
+        run: python scripts/collect-nfl-roster-v8.py --group "${{ inputs.group }}"
+      - name: Rebuild full 32-team coverage and conflict index
+        run: python scripts/build-nfl-roster-index.py --all-teams
+      - name: Publish validated snapshots and global index only
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          python - <<'PY'
+          import json
+          import subprocess
+          from pathlib import Path
+          report=json.loads(Path('test-results/nfl-roster-v8-report.json').read_text())
+          for row in report['results']:
+              if row['status']=='PUBLISHED':
+                  team=row['team']
+                  assert team in report['selectedTeams'] and team.isalpha() and 2<=len(team)<=3
+                  path=Path('data/live')/f'nfl_roster_{team}.json'
+                  assert path.is_file()
+                  subprocess.check_call(['git','add','--',str(path)])
+          PY
+          git add -- data/live/nfl_roster_index.json
+          if git diff --cached --quiet; then
+            echo "No modified validated snapshots."
+          else
+            git commit -m "data: refresh selected NFL roster batch and global index"
+            git push origin HEAD:main
+          fi
+      - name: Surface source failures after preserving good data
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          report=json.loads(Path('test-results/nfl-roster-v8-report.json').read_text())
+          index=json.loads(Path('data/live/nfl_roster_index.json').read_text())
+          print('Coverage:',index['coverage'])
+          for row in report['results']:
+              print(row['team'],row['status'],row.get('reason',''))
+          if not report['allSuccessful']:
+              raise SystemExit('Partial batch failure; successful team snapshots remain published')
+          PY
+      - name: Upload per-team report and coverage for diagnosis
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nfl-roster-v8-batch-evidence
+          path: |
+            test-results/nfl-roster-v8-report.json
+            data/live/nfl_roster_index.json
+          if-no-files-found: ignore
