@@ -3,6 +3,7 @@ import datetime as dt
 import importlib.util
 import json
 import gzip
+import hashlib
 import io
 import tempfile
 import unittest
@@ -189,7 +190,7 @@ class InjuryPilotTests(unittest.TestCase):
         self.assertEqual(result["count"],1)
         record=result["injuries"][0]
         self.assertIsNone(record["espnId"])
-        self.assertEqual(record["sourceInjuryId"],"456789")
+        self.assertEqual(record["sourceInjuryId"],"sha256:"+hashlib.sha256(b"456789").hexdigest())
         self.assertEqual(record["team"],"ATL")
         self.assertEqual(record["designation"],"Questionable")
         self.assertEqual(record["rosterEvidence"],"TEAM_UNVERIFIED")
@@ -234,12 +235,23 @@ class InjuryPilotTests(unittest.TestCase):
                     {"id":event_id,"athlete":{"displayName":"Example Runner"},"status":"Questionable"}]}]}
                 result=inj.normalized(payload,NOW,{event_id:["ATL"]})
                 record=result["injuries"][0]
-                self.assertEqual(record["sourceInjuryId"],event_id)
+                self.assertEqual(record["sourceInjuryId"],"sha256:"+hashlib.sha256(event_id.encode()).hexdigest())
                 self.assertIsNone(record["espnId"])
                 self.assertEqual(record["rosterEvidence"],"TEAM_UNVERIFIED")
 
-    def test_unsafe_or_oversized_event_ids_still_fail_closed(self):
-        for event_id in ("not safe", "<script>", "\\n", "", "X"*129, "/private/path", "🚫"):
+    def test_unusual_printable_event_ids_are_hashed_not_assumed_to_be_athlete_ids(self):
+        for event_id in ("A/B|C?D!", "event id", "<script>", "🚫"):
+            with self.subTest(event_id=event_id):
+                payload={"injuries":[{"id":"1","displayName":"Atlanta Falcons","injuries":[
+                    {"id":event_id,"athlete":{"displayName":"Example Runner"},"status":"Out"}]}]}
+                record=inj.normalized(payload,NOW,{})["injuries"][0]
+                self.assertEqual(record["sourceInjuryId"],
+                                 "sha256:"+hashlib.sha256(event_id.encode()).hexdigest())
+                self.assertIsNone(record["espnId"])
+                self.assertNotIn(event_id, str(record))
+
+    def test_empty_control_or_oversized_event_ids_still_fail_closed(self):
+        for event_id in ("", "\\n", "\\x00", "X"*129):
             with self.subTest(event_id=event_id):
                 payload={"injuries":[{"id":"1","displayName":"Atlanta Falcons","injuries":[
                     {"id":event_id,"athlete":{"displayName":"Example Runner"},"status":"Out"}]}]}
