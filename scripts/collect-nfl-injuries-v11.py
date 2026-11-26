@@ -229,25 +229,35 @@ def normalized(payload, now, roster_ids):
                 raise ValueError("Invalid injury entry: " + injury_entry_shape_summary(member, position, injury_position))
             athlete = member.get("athlete")
             athlete_id = str(athlete.get("id") or "") if isinstance(athlete, dict) else ""
-            name = athlete.get("displayName") or athlete.get("fullName") if isinstance(athlete, dict) else None
+            name = (athlete.get("displayName") or athlete.get("fullName")) if isinstance(athlete, dict) else None
             designation = status_text(member.get("status"))
-            if not re.fullmatch(r"\d{1,12}", athlete_id) or not isinstance(name, str) or \
-               not 2 <= len(name.strip()) <= 100 or designation is None:
-                raise ValueError("Injury entry lacks athlete ID, name or status: " + injury_entry_shape_summary(member, position, injury_position))
-            key = (code, athlete_id)
+            injury_id = member.get("id")
+            source_injury_id = str(injury_id) if isinstance(injury_id, (str, int)) and not isinstance(injury_id, bool) else None
+            if source_injury_id is not None and not re.fullmatch(r"\\d{1,20}", source_injury_id):
+                raise ValueError("Invalid injury event identifier: " + injury_entry_shape_summary(member, position, injury_position))
+            # The entry's top-level id is an INJURY EVENT identifier, never an athlete ID.
+            # The observed ESPN athlete dict omits id. Keep its listing as unlinked
+            # evidence only, provided the separate injury event id is valid.
+            has_athlete_id = bool(re.fullmatch(r"\\d{1,12}", athlete_id))
+            if not isinstance(name, str) or not 2 <= len(name.strip()) <= 100 or \\
+               designation is None or (not has_athlete_id and source_injury_id is None):
+                raise ValueError("Injury entry lacks valid name, status or source identity: " + injury_entry_shape_summary(member, position, injury_position))
+            # Multiple injury reports can exist for one athlete. Prefer the unique
+            # event ID; do not collapse separate injuries or infer current eligibility.
+            key = (code, "injury", source_injury_id) if source_injury_id else (code, "athlete", athlete_id)
             if key in seen:
-                raise ValueError("Repeated team/athlete injury entry")
+                raise ValueError("Repeated injury evidence entry")
             seen.add(key)
-            matches = roster_ids.get(athlete_id, [])
-            evidence = "ROSTER_MATCH" if matches == [code] else (
-                "ROSTER_CONFLICT" if len(matches) > 1 else "TEAM_UNVERIFIED")
-            # A matching third-party roster snapshot is not official participation proof.
-            output.append({"espnId": athlete_id, "displayName": name.strip(),
-                           "team": code, "designation": designation,
-                           "rosterEvidence": evidence})
+            matches = roster_ids.get(athlete_id, []) if has_athlete_id else []
+            evidence = ("ROSTER_MATCH" if matches == [code] else
+                        "ROSTER_CONFLICT" if len(matches) > 1 else "TEAM_UNVERIFIED")
+            output.append({"espnId": athlete_id if has_athlete_id else None,
+                           "sourceInjuryId": source_injury_id,
+                           "displayName": name.strip(), "team": code,
+                           "designation": designation, "rosterEvidence": evidence})
             if len(output) > MAX_RECORDS:
                 raise ValueError("Injury report exceeds record cap")
-    output.sort(key=lambda r: (r["team"], r["espnId"]))
+    output.sort(key=lambda r: (r["team"], r["espnId"] or "", r["sourceInjuryId"] or ""))
     return {"schemaVersion": 1, "sport": "NFL", "type": "injuries",
             "source": "ESPN", "verification": "unverified",
             "scope": "league_injury_pilot", "fetchedAt": now.isoformat().replace("+00:00", "Z"),
