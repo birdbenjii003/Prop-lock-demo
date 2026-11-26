@@ -5,7 +5,7 @@
   "source": "ESPN",
   "verification": "unverified",
   "scope": "league_injury_pilot",
-  "fetchedAt": "2026-11-26T15:31:47Z",
+  "fetchedAt": "2026-11-26T23:59:19Z",
   "teamsReported": [
     "ARI",
     "ATL",
@@ -44,7 +44,7 @@
   "injuries": [
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:2205cf4a612eff4dbdb6b7bea3b9a5a71b08815d81b1b781120c91d0c2b7d986",
+      "sourceInjuryId": "sha256:04eebb1cf0fd03f288398140db92a722a0a991fc5e1dfb0c545b7e374c2f9c4c",
       "displayName": "Carson Beck",
       "team": "ARI",
       "designation": "Questionable",
@@ -86,14 +86,6 @@
       "espnId": null,
       "sourceInjuryId": "sha256:477d2bcc7d283badc6d98c5bebcad8005892f85ecfee5290029b0fa3c7c1d889",
       "displayName": "Teagan Quitoriano",
-      "team": "ARI",
-      "designation": "Active",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
-      "sourceInjuryId": "sha256:497e48625a511382447cb5b27dc444c0e822066cd41abea0eceec62231e51869",
-      "displayName": "Hunter Long",
       "team": "ARI",
       "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
@@ -156,10 +148,18 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:87a92f2b61b3daa32e963f3bb481563222deb217c7a7d69bc5caa47d8e987bea",
-      "displayName": "Hjalte Froholdt",
+      "sourceInjuryId": "sha256:8baa1e0d012a9afdabfb2238959903ba0ba405e1f638c990aa3420740944cbb1",
+      "displayName": "Hunter Long",
       "team": "ARI",
-      "designation": "Active",
+      "designation": "Questionable",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
+      "sourceInjuryId": "sha256:a1713b4f3a0500356f6a5a12cc90371389d27e97cea62d225fe88fdb6a5f2c1d",
+      "displayName": "Karson Sharar",
+      "team": "ARI",
+      "designation": "Questionable",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -268,6 +268,14 @@
     },
     {
       "espnId": null,
+      "sourceInjuryId": "sha256:2c44d510a980e6f36cfff500c074e94d5b45db1ac81c25b76003f97911881279",
+      "displayName": "James Pearce Jr.",
+      "team": "ATL",
+      "designation": "Active",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
       "sourceInjuryId": "sha256:2d2afb3c7e32f48b041044a76457c1cbb7e94310258484de60efddf50b7ebba1",
       "displayName": "Kyle Pitts Sr.",
       "team": "ATL",
@@ -292,14 +300,6 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:410e08840add864fc9e04d258701146f546c506f1e78ad20b120eb5cd4c7222d",
-      "displayName": "James Pearce Jr.",
-      "team": "ATL",
-      "designation": "Questionable",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
       "sourceInjuryId": "sha256:4190b27eb9563b3fad550a4571dd52afba30b74f80a697e704c4d895464fa366",
       "displayName": "Avieon Terrell",
       "team": "ATL",
@@ -310,14 +310,6 @@
       "espnId": null,
       "sourceInjuryId": "sha256:5bda25cdead1c3fd7c7376a38b26bb4c8889599d08ec36d686e5fca1ec13d3c9",
       "displayName": "Austin Hooper",
-      "team": "ATL",
-      "designation": "Active",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
-      "sourceInjuryId": "sha256:867e311ae9a50afbb0f4642496638a4578376fa95e926241c3a4f61ac4b1912b",
-      "displayName": "Cameron Thomas",
       "team": "ATL",
       "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
@@ -348,10 +340,26 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:aee09feb2f6d3a54b45fe982d30b37babe59fb0e8c7545e3f3d5ad15a9a7a130",
+      "sourceInjuryId": "sha256:9ff0b84f8cd93f4bd973a5419803c7d965b16f5078ae98dc05cdcc2a39c2eade",
+      "displayName": "Jahan Dotson",
+      "team": "ATL",
+      "designation": "Questionable",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
+      "sourceInjuryId": "sha256:a5469da433b2afeb2b57d908cc0514b20f4378abfdee80caf3c7e2d0a7891037",
+      "displayName": "Za'Darius Smith",
+      "team": "ATL",
+      "designation": "Questionable",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
+      "sourceInjuryId": "sha256:b152f9266261b3ec24db05d26d7b73e3f718a20a2ee8cf5c0c66746daa0982ea",
       "displayName": "Kendal Daniels",
       "team": "ATL",
-      "designation": "Active",
+      "designation": "Questionable",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -412,24 +420,16 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:d9d8a0286a107c32a9a9239a49f6ecdf3814b83cdc13cfcb830ff02b41c89a34",
-      "displayName": "Jahan Dotson",
+      "sourceInjuryId": "sha256:de5aa48e8f00ed3727d5ecc63f331e6ccb31a2067ee4d1cd4466c6fd72a9aa13",
+      "displayName": "Matthew Bergeron",
       "team": "ATL",
       "designation": "Questionable",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:daddd0ab79915df265d984fd7ec448069808dc2fc968ba4b73d95b89db9b4227",
-      "displayName": "C.J. Henderson",
-      "team": "ATL",
-      "designation": "Active",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
-      "sourceInjuryId": "sha256:de5aa48e8f00ed3727d5ecc63f331e6ccb31a2067ee4d1cd4466c6fd72a9aa13",
-      "displayName": "Matthew Bergeron",
+      "sourceInjuryId": "sha256:e75ed91cc31bff5ab70aaa3819d3de41ad2e830ae87ff1460e7c0dc7b16f7447",
+      "displayName": "Cameron Thomas",
       "team": "ATL",
       "designation": "Questionable",
       "rosterEvidence": "TEAM_UNVERIFIED"
@@ -444,10 +444,10 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:08673177cbc14f88801df14e5415ef81557f09c784ee5bf68740896f2c357341",
-      "displayName": "Jaylinn Hawkins",
+      "sourceInjuryId": "sha256:287d083076c9a53030a19740f5b8446e41149ef75eafe1382ced3b93f99004ba",
+      "displayName": "Zay Flowers",
       "team": "BAL",
-      "designation": "Questionable",
+      "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -476,10 +476,10 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:3a76a0b75af7b978a62bccb683c1cfe5eb8a0bfc806858871b58396427a13e07",
-      "displayName": "Elijah Sarratt",
+      "sourceInjuryId": "sha256:502792ec647b2fe56d502ec1a87822ce1380f22c5dbfdaff502badabea998317",
+      "displayName": "Jaylinn Hawkins",
       "team": "BAL",
-      "designation": "Active",
+      "designation": "Questionable",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -524,8 +524,8 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:7e96a510ea0f6f6a65b267cbfbc1277858a9e4511ba54f97231d3fc238f088de",
-      "displayName": "Rashod Bateman",
+      "sourceInjuryId": "sha256:7bfd5c69f8495dcdd96c8d13c3b72a967f53fcbc7687e3526bea2a55e366e0c3",
+      "displayName": "Olaivavega Ioane",
       "team": "BAL",
       "designation": "Questionable",
       "rosterEvidence": "TEAM_UNVERIFIED"
@@ -556,6 +556,14 @@
     },
     {
       "espnId": null,
+      "sourceInjuryId": "sha256:aab9c440bc9429c5473f814a36d1c3cd837e711033723fa141f36ec07ced5462",
+      "displayName": "Rashod Bateman",
+      "team": "BAL",
+      "designation": "Active",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
       "sourceInjuryId": "sha256:acc2a83c5edadf3899f16de3f9d77748ce2e7aff4cc981e7d6241594eb9c30e0",
       "displayName": "Marlon Humphrey",
       "team": "BAL",
@@ -568,6 +576,14 @@
       "displayName": "Roquan Smith",
       "team": "BAL",
       "designation": "Active",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
+      "sourceInjuryId": "sha256:bf34523814d98ac4859c215170c85f16a9375f429153c7bf16dcdb241c4f8f82",
+      "displayName": "Derrick Henry",
+      "team": "BAL",
+      "designation": "Questionable",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -588,10 +604,18 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:dcf8976167edd809cbe7e44a413b44d8d017fb7702b8630c23fea3ccfad9a69d",
-      "displayName": "Aeneas Peebles",
+      "sourceInjuryId": "sha256:cdbb3a526f370f977f43e8c9a0b2c922c972e9eaa55419ee2911907f47dc3228",
+      "displayName": "Chidobe Awuzie",
       "team": "BAL",
       "designation": "Questionable",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
+      "sourceInjuryId": "sha256:ce2b9931e8fc5582b5838ac01314205d6010348d8366708e24b1c6a89d57a8e5",
+      "displayName": "Aeneas Peebles",
+      "team": "BAL",
+      "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -604,42 +628,18 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:e889f9edd5d8508a56361f06f645477b35e0540d166709bc115e4b539ed0bcf8",
-      "displayName": "Trey Hendrickson",
+      "sourceInjuryId": "sha256:eb375f57f2b5b19b9f6bbb262fd20dc70b663eb5f3f869fea4e5071249241ade",
+      "displayName": "Mike Green",
       "team": "BAL",
       "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:eb375f57f2b5b19b9f6bbb262fd20dc70b663eb5f3f869fea4e5071249241ade",
-      "displayName": "Mike Green",
-      "team": "BAL",
-      "designation": "Questionable",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
-      "sourceInjuryId": "sha256:ebc80c1fc4bbf2de6348a497350176028fab4859131c1e70233e86f56830b600",
-      "displayName": "Zay Flowers",
-      "team": "BAL",
-      "designation": "Questionable",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
-      "sourceInjuryId": "sha256:f906fc9d6688aac8e55c32defe1b37ae55ebee5d0ff1a2f62265bb3f55d68173",
+      "sourceInjuryId": "sha256:fd46a0c5492a416abb00f5da8fab41fd7752091127b37132aefadf21ed03a024",
       "displayName": "John Simpson",
       "team": "BAL",
-      "designation": "Questionable",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
-      "sourceInjuryId": "sha256:fc30c6f3dbb7c7e90240d08dccc8af152f1f1eba4702816c80ca9bfae1809463",
-      "displayName": "Derrick Henry",
-      "team": "BAL",
-      "designation": "Questionable",
+      "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -844,42 +844,10 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:13152f00ec875f9439473fd9670934b2120f07bf1cbe05f4a0bddfc283bca7dd",
-      "displayName": "Mitchell Evans",
-      "team": "CAR",
-      "designation": "Active",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
       "sourceInjuryId": "sha256:15f1a84def13830d833b5c63452f81ac3bef6678b42948349d8acd2fc1c15be0",
       "displayName": "Thomas Incoom",
       "team": "CAR",
       "designation": "Injured Reserve",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
-      "sourceInjuryId": "sha256:198a3ba5971f802c5de636b95b296aadccc8619f1aeef7d4b30cd8c86177698c",
-      "displayName": "Tommy Tremble",
-      "team": "CAR",
-      "designation": "Active",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
-      "sourceInjuryId": "sha256:1c2b31479d5ddc2b155a8df898eb61e9b12f6835458c40f1f29c2614a9e25ffb",
-      "displayName": "Jonathon Brooks",
-      "team": "CAR",
-      "designation": "Injured Reserve",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
-      "sourceInjuryId": "sha256:1fe7e2f70eadf99f88d3bf1e3811d780cbf7c816a7bb2bfaaffc1a79bc221a38",
-      "displayName": "Feleipe Franks",
-      "team": "CAR",
-      "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -900,6 +868,14 @@
     },
     {
       "espnId": null,
+      "sourceInjuryId": "sha256:2f0351ad76bee7984b3db3d32248baa1e3bb0b7b88d0540bc96dc9a6146772bd",
+      "displayName": "Patrick Jones II",
+      "team": "CAR",
+      "designation": "Questionable",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
       "sourceInjuryId": "sha256:36ca912e6a326315ff68384a8d2b1543498ab660171b601ab67dfc939ce85969",
       "displayName": "John Metchie III",
       "team": "CAR",
@@ -916,18 +892,26 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:66b2f4858c3ec68984cceb73cef5dfafb0dc2f72ce86055a84cf6832a71abaaf",
-      "displayName": "Brady Christensen",
+      "sourceInjuryId": "sha256:46f13639740a28271500c234a936372bf0edc231f65d8c1136853206dbfadd90",
+      "displayName": "Feleipe Franks",
       "team": "CAR",
-      "designation": "Injured Reserve",
+      "designation": "Questionable",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:6bf5f2128d45ef693a7c1a506e54e77e75c0c850efa85f84cee283692e4acb52",
-      "displayName": "Ja'Tavion Sanders",
+      "sourceInjuryId": "sha256:62956a266251fb28aded4e3b1909428ef922419baf3181e11f354487307c99aa",
+      "displayName": "Tommy Tremble",
       "team": "CAR",
-      "designation": "Active",
+      "designation": "Questionable",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
+      "sourceInjuryId": "sha256:66b2f4858c3ec68984cceb73cef5dfafb0dc2f72ce86055a84cf6832a71abaaf",
+      "displayName": "Brady Christensen",
+      "team": "CAR",
+      "designation": "Injured Reserve",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -948,6 +932,22 @@
     },
     {
       "espnId": null,
+      "sourceInjuryId": "sha256:6e2da022c4661da4ca0e206ffbcb4acad01e1ccc5bc0e44c9a806396803c3532",
+      "displayName": "Jonathon Brooks",
+      "team": "CAR",
+      "designation": "Injured Reserve",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
+      "sourceInjuryId": "sha256:6ef4fe3c6903b24a8e2ce36822f0a6ef93b176298c3db1b66582149269b7e3ec",
+      "displayName": "Darren Waller",
+      "team": "CAR",
+      "designation": "Questionable",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
       "sourceInjuryId": "sha256:760a06a7ea65cbd52784e3a127730c0e196d221d318a3c3534498ce67efc8066",
       "displayName": "Ryan Fitzgerald",
       "team": "CAR",
@@ -964,14 +964,6 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:7c0872bd8d12ab23d5ebc671482161c4e867677e324e447862c9a6c6cf7c5ae4",
-      "displayName": "Tetairoa McMillan",
-      "team": "CAR",
-      "designation": "Questionable",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
       "sourceInjuryId": "sha256:7fc61b846b278ebcfe502f72134176b93ae41d07f49a948a3e123e1138d2355e",
       "displayName": "Bobby Okereke",
       "team": "CAR",
@@ -980,10 +972,10 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:8dba99279f7b85120399fe92a96d91db5b630de8fe940621ab23ad4916c105be",
-      "displayName": "Mike Jackson",
+      "sourceInjuryId": "sha256:a6ec76decf58012a455f578ba233cdd70f63d500fb4417efb8dcb813c54ffadd",
+      "displayName": "Jackson Kuwatch",
       "team": "CAR",
-      "designation": "Active",
+      "designation": "Questionable",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -992,6 +984,14 @@
       "displayName": "Xavier Legette",
       "team": "CAR",
       "designation": "Active",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
+      "sourceInjuryId": "sha256:c29a7bd1cebfa4aa73ecb78dea3990ddad616fb931edd4e708b02112c741b185",
+      "displayName": "Jaelan Phillips",
+      "team": "CAR",
+      "designation": "Questionable",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -1020,18 +1020,18 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:effd062eea472eb86fa52cbff46bbfea920fcbf6545de47e1618e89e2e393c9d",
-      "displayName": "Chuba Hubbard",
+      "sourceInjuryId": "sha256:f10b6ea6be944062c5f25795ea3481212b9e7f18a53506538da65e5d620e673a",
+      "displayName": "Mitchell Evans",
       "team": "CAR",
-      "designation": "Active",
+      "designation": "Questionable",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:f9de63eedde3d1f9afc04903eda589a21eb7d978043afc53d2dc4128400b9c4a",
-      "displayName": "Darren Waller",
+      "sourceInjuryId": "sha256:fbaa79b9beb90fac756787334fbbf846cf5032f75cc6931d1723691232a1340b",
+      "displayName": "Tetairoa McMillan",
       "team": "CAR",
-      "designation": "Active",
+      "designation": "Questionable",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -1044,34 +1044,18 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:0dc390df71a78718112e476551b68901ce4c303752a1039aa3c7ed0813544f71",
+      "sourceInjuryId": "sha256:07e6c64e96e8b92b95ce562af9c81c5061b0d2b490afecb1f512e2735bacfb1d",
+      "displayName": "Isaac Yiadom",
+      "team": "CHI",
+      "designation": "Out",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
+      "sourceInjuryId": "sha256:3ce186612ee92313e82980baa586b290d53e69a8b4e5d201df54aa5df8cf61b4",
       "displayName": "Jordan McFadden",
       "team": "CHI",
-      "designation": "Active",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
-      "sourceInjuryId": "sha256:142aff8bb99d19108508570ce63de2eb838670adf9767461250f4d13a5931edc",
-      "displayName": "Colston Loveland",
-      "team": "CHI",
-      "designation": "Active",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
-      "sourceInjuryId": "sha256:3d2d44b8985ba8fa0a361ed7efb0d1e67b7b6c7b8694d7d3ff55be6934d95942",
-      "displayName": "D'Andre Swift",
-      "team": "CHI",
-      "designation": "Active",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
-      "sourceInjuryId": "sha256:3d96f7ef9d4d9a1372bc1e6c06f95bf0494136190f4b44f238426ec68ecb6ed0",
-      "displayName": "Luther Burden III",
-      "team": "CHI",
-      "designation": "Active",
+      "designation": "Out",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -1084,10 +1068,10 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:493cbe04497f47d693a2a3eab30e21cdbde3a67129dd95634534daed901ef05c",
-      "displayName": "Kyle Monangai",
+      "sourceInjuryId": "sha256:47544fc79eb8db395ebef95fafe25b86bc83e60e6a221617461a18def4197347",
+      "displayName": "Case Keenum",
       "team": "CHI",
-      "designation": "Active",
+      "designation": "Out",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -1108,8 +1092,8 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:6682c5497b15b3e1c031e8840b668a27e4f71034c8ab137e4752a5a9e46a44b7",
-      "displayName": "Rome Odunze",
+      "sourceInjuryId": "sha256:648d5f2d9def47bc1dc06aca6c3d4aabb79d3b2da4f90546218840b51af1aa38",
+      "displayName": "D'Marco Jackson",
       "team": "CHI",
       "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
@@ -1140,10 +1124,26 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:7cbc018e0278db6c80fa550e6d7844c7c91455a895277b097f612f4b6f030b28",
-      "displayName": "Caleb Williams",
+      "sourceInjuryId": "sha256:8b099ed866f6c4caa84a874cc743441bd718f4c96112f7c4f56f667cc377ead3",
+      "displayName": "Kyle Monangai",
       "team": "CHI",
       "designation": "Active",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
+      "sourceInjuryId": "sha256:8bcd699864e6331ebe252e07e11e48d8f3c709176f098601439aa3c353696152",
+      "displayName": "Colston Loveland",
+      "team": "CHI",
+      "designation": "Questionable",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
+      "sourceInjuryId": "sha256:931f0e294a023d5edf4c1e0a6ccc9b0fee3f202009d59e0cc10ea2c6c5035f05",
+      "displayName": "Elijah Hicks",
+      "team": "CHI",
+      "designation": "Out",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -1156,18 +1156,26 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:a9aa4a309ec845903e8f51814eb74ab18bacaf689f33c1c1e679689cf780063f",
-      "displayName": "Cairo Santos",
+      "sourceInjuryId": "sha256:96513e7c628261b4b613d532f6303a6b8278ac906a2b93f86745d0f2b678b3cd",
+      "displayName": "Jayden Loving",
+      "team": "CHI",
+      "designation": "Out",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
+      "sourceInjuryId": "sha256:a2ab695b2249a353250dd2800bd0a4a9cc7dcde5dcfbbc4910903ee66f2ebbe0",
+      "displayName": "Luther Burden III",
       "team": "CHI",
       "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:ba2d8a27afdfa9f17347439043b2328aa602bf525c8a225b13a471bb4f9a3e4e",
-      "displayName": "Tyrique Stevenson Sr.",
+      "sourceInjuryId": "sha256:a9aa4a309ec845903e8f51814eb74ab18bacaf689f33c1c1e679689cf780063f",
+      "displayName": "Cairo Santos",
       "team": "CHI",
-      "designation": "Questionable",
+      "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -1188,18 +1196,18 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:d16812b85db5c22b1ef89f5d0327cb9d9a2fda4578920d1e3d3a0d3e29f4726f",
-      "displayName": "D'Marco Jackson",
+      "sourceInjuryId": "sha256:ccc09a0e4fc79f4012d06046f7de0fdb1c065a60ab2cc993fc7400615cfaa417",
+      "displayName": "Tyrique Stevenson Sr.",
       "team": "CHI",
-      "designation": "Questionable",
+      "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:e26d7c331d5715f21256d0a89611c2d19070a546660bbb011532d2676a059e36",
-      "displayName": "Elijah Hicks",
+      "sourceInjuryId": "sha256:dfdcd162763c7677046e493b786d4b6593ee1e7eee905e53308777b11a034e3d",
+      "displayName": "D'Andre Swift",
       "team": "CHI",
-      "designation": "Out",
+      "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -1212,10 +1220,10 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:f98aca10b10a96a26eef2361d7b620f15732761a386c68569fb0a29677c87746",
-      "displayName": "Isaac Yiadom",
+      "sourceInjuryId": "sha256:eb44b6f318de4e6c792731fc7e78e7dc7a5120f8166b6290c18fce1bb4b5f160",
+      "displayName": "Caleb Williams",
       "team": "CHI",
-      "designation": "Active",
+      "designation": "Questionable",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -1230,14 +1238,6 @@
       "espnId": null,
       "sourceInjuryId": "sha256:fe1f854177d9ff8b5fdd242c4515289927b78c2b91286831ecf189255764aefb",
       "displayName": "Kalif Raymond",
-      "team": "CHI",
-      "designation": "Active",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
-      "sourceInjuryId": "sha256:ff72a6b698b9cbff740f6b112997ea747858674156b899d7fc2c447fd73cf3f6",
-      "displayName": "Jayden Loving",
       "team": "CHI",
       "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
@@ -1447,7 +1447,7 @@
       "sourceInjuryId": "sha256:0c86a12fa234f39d7dd346f6f5b6aa5f06c4baa4d22501961015f5e73cd7f1d5",
       "displayName": "Blake Whiteheart",
       "team": "CLE",
-      "designation": "Questionable",
+      "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -1464,14 +1464,6 @@
       "displayName": "Noah Igbinoghene",
       "team": "CLE",
       "designation": "Active",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
-      "sourceInjuryId": "sha256:14b5d7359e5cf43eaa55a7c31740b9d1d7f3916b33d57695388d29b5a2237c3f",
-      "displayName": "Denzel Boston",
-      "team": "CLE",
-      "designation": "Questionable",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -1528,6 +1520,14 @@
       "displayName": "Taylen Green",
       "team": "CLE",
       "designation": "Active",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
+      "sourceInjuryId": "sha256:8132a98eb1d8a8013db84e057e68ef5c9637317efb40fd77813eaf2be02faac0",
+      "displayName": "Denzel Boston",
+      "team": "CLE",
+      "designation": "Questionable",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -1612,6 +1612,14 @@
     },
     {
       "espnId": null,
+      "sourceInjuryId": "sha256:e1b001f700ec63cabdf5d555d2ddab46609a802c212bce4cd36d6fc5986a783c",
+      "displayName": "Harold Fannin Jr.",
+      "team": "CLE",
+      "designation": "Active",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
       "sourceInjuryId": "sha256:e5672c81c12fd8037a3335c9d24a4630b1f304de4c2ff87a10036248c7d1e4e7",
       "displayName": "Raheim Sanders",
       "team": "CLE",
@@ -1632,22 +1640,6 @@
       "displayName": "Parker Brailsford",
       "team": "CLE",
       "designation": "Active",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
-      "sourceInjuryId": "sha256:f7bbdf70c50e3aaf9d52a77d5a0a2ea606d454e734b86d35f4f62fae579fa02f",
-      "displayName": "Harold Fannin Jr.",
-      "team": "CLE",
-      "designation": "Questionable",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
-      "sourceInjuryId": "sha256:00bb4225707c75f990657d31a8c223736ee88f4edd5e3486d93ea21782d0f05f",
-      "displayName": "Jake Ferguson",
-      "team": "DAL",
-      "designation": "Out",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -1724,10 +1716,18 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:56391642b8d58bcd15764ecf557867fe0d3befa927fc8d9c04ed235b654162ef",
+      "sourceInjuryId": "sha256:53a2945d02cba2c6ae34000b5460d562eae07617c0c1ad4db414a901dc173cb4",
       "displayName": "Jalen Thompson",
       "team": "DAL",
-      "designation": "Questionable",
+      "designation": "Active",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
+      "sourceInjuryId": "sha256:5ea4c932e912b865434f91739aaa64d3df46959c4fb41d1957c44c7b757e2c2d",
+      "displayName": "Jonathan Bullard",
+      "team": "DAL",
+      "designation": "Out",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -1780,18 +1780,18 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:836d5c21379b6d12f7b9a2ce95ae1e205067c7fd1698a3eff8bf63e692a081d3",
-      "displayName": "Tyler Booker",
+      "sourceInjuryId": "sha256:8e6c16d55c01f2d9ccded695dd12c25199f1938f17ac714fd751955c847635c7",
+      "displayName": "Jaishawn Barham",
       "team": "DAL",
       "designation": "Out",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:8e6c16d55c01f2d9ccded695dd12c25199f1938f17ac714fd751955c847635c7",
-      "displayName": "Jaishawn Barham",
+      "sourceInjuryId": "sha256:9a06cd150dabd6ac86ed199de4f7dbaa6f0a715620b14aab4f85a1d1738fb91f",
+      "displayName": "Jake Ferguson",
       "team": "DAL",
-      "designation": "Active",
+      "designation": "Out",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -1800,6 +1800,14 @@
       "displayName": "George Pickens",
       "team": "DAL",
       "designation": "Active",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
+      "sourceInjuryId": "sha256:a6aa08573ffc69336ac58341cd947c8159184251168b2d311afaf8aad86fe44a",
+      "displayName": "Tyler Booker",
+      "team": "DAL",
+      "designation": "Out",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -1816,14 +1824,6 @@
       "displayName": "Jonathan Mingo",
       "team": "DAL",
       "designation": "Out",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
-      "sourceInjuryId": "sha256:d1673e38715f67b2831e836c33e136fa42cebd62f97a67ce66621ed6eb445417",
-      "displayName": "Jonathan Bullard",
-      "team": "DAL",
-      "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -1860,14 +1860,6 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:1fbc696445934eb2b251340c95f854e18d2cf2daa347f6c98d90fcbae92387c3",
-      "displayName": "Lil'Jordan Humphrey",
-      "team": "DEN",
-      "designation": "Active",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
       "sourceInjuryId": "sha256:2086d7e2db2bad7cb0c30623e32ebcf058be48986910342d49a4f4c2d0b68363",
       "displayName": "Jaylen Waddle",
       "team": "DEN",
@@ -1886,6 +1878,14 @@
       "espnId": null,
       "sourceInjuryId": "sha256:2853f5209f94b1e4249c80ea6c69fb506c6421a7f3aa2b8dbd0e491fe6c7d127",
       "displayName": "Evan Engram",
+      "team": "DEN",
+      "designation": "Active",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
+      "sourceInjuryId": "sha256:2ebb4ff8438242355b87447fb71cd9d096df8c713289d7b6b60610d242d15f38",
+      "displayName": "Cody Schrader",
       "team": "DEN",
       "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
@@ -1940,18 +1940,18 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:85a1c3e4fd2e477cd5c4b3218cc8b9e59c281a64ef00a6b7306eae8572281b6c",
-      "displayName": "Jonah Coleman",
+      "sourceInjuryId": "sha256:74a1c376739df13c79651a99d848d972bde871485183a2e9f3abc5199cc33d88",
+      "displayName": "Tyler Badie",
       "team": "DEN",
-      "designation": "Active",
+      "designation": "Questionable",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:86c46d1e34bc1e9e062c12b2d64656176fd18f5341fe2025b7d4cc6580c7ef37",
-      "displayName": "Tyler Badie",
+      "sourceInjuryId": "sha256:85a1c3e4fd2e477cd5c4b3218cc8b9e59c281a64ef00a6b7306eae8572281b6c",
+      "displayName": "Jonah Coleman",
       "team": "DEN",
-      "designation": "Injured Reserve",
+      "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -1964,10 +1964,10 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:9b107553853ae4d143a306b61432c6a9a37f5338f3a526a1df6580e03b8f8b59",
-      "displayName": "Sam Ehlinger",
+      "sourceInjuryId": "sha256:9b1016230f9c0e742290f9908eba92610d65452f0d9e2c765eaf4894acbcc010",
+      "displayName": "Caleb Lohner",
       "team": "DEN",
-      "designation": "Active",
+      "designation": "Injured Reserve",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -2015,7 +2015,7 @@
       "sourceInjuryId": "sha256:d6bbb7e09abc1cad54c5494f24aa25b533d5b4e4fb812b11fbd70d19012b38f4",
       "displayName": "Sai'vion Jones",
       "team": "DEN",
-      "designation": "Out",
+      "designation": "Injured Reserve",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -2044,10 +2044,10 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:1496a2838d84658c7fc605b7fbdf8d0ac61117567c3972a4ef812415087e3459",
-      "displayName": "Cade Mays",
+      "sourceInjuryId": "sha256:05f7c7e9d0cc083c2bce4e0f7cef2a0a24318b8b46e9a9d27214542928c344b3",
+      "displayName": "Keith Abney II",
       "team": "DET",
-      "designation": "Injured Reserve",
+      "designation": "Out",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -2060,18 +2060,18 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:206f591413aaeea536d758a99e8dd06b0020cb66770c9585b22b7815e5c2590f",
-      "displayName": "Rock Ya-Sin",
+      "sourceInjuryId": "sha256:1ec85b4a5b4fdc3d8b38cd4c393699b0303d17eaf3c7e965d401f368c92a1721",
+      "displayName": "Amon-Ra St. Brown",
       "team": "DET",
       "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:20f45a0bf7772cad2c83c0dcb081ef6e4aaf01c1c86bf0c5acf41ec3ed4dd959",
-      "displayName": "Chuck Clark",
+      "sourceInjuryId": "sha256:206f591413aaeea536d758a99e8dd06b0020cb66770c9585b22b7815e5c2590f",
+      "displayName": "Rock Ya-Sin",
       "team": "DET",
-      "designation": "Questionable",
+      "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -2092,8 +2092,40 @@
     },
     {
       "espnId": null,
+      "sourceInjuryId": "sha256:3a9d6bfbbbce5640c67699d478600f9a3615fbad3c0b7bc2cb76a37defcf2d42",
+      "displayName": "Sam LaPorta",
+      "team": "DET",
+      "designation": "Active",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
+      "sourceInjuryId": "sha256:3c2fefb9092a14be5b8d3b07cc784dca9d56d166fcaa2d4d9baef4abee9667d8",
+      "displayName": "Chuck Clark",
+      "team": "DET",
+      "designation": "Out",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
       "sourceInjuryId": "sha256:42e3f55fa3c33bf65814c5dbaf45c69aee5f0065dade2c0177ac7744c5922648",
       "displayName": "Jake Bates",
+      "team": "DET",
+      "designation": "Active",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
+      "sourceInjuryId": "sha256:48ce596cb6b42beda1b1cf1ff38ae2676049c1cb7ab64ce08635a11cb141d72e",
+      "displayName": "Malcolm Rodriguez",
+      "team": "DET",
+      "designation": "Active",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
+      "sourceInjuryId": "sha256:519faa880486f5a802c98822a3f0eca4080323c6dc166ba1ec90fa23c56a3ed8",
+      "displayName": "Jahmyr Gibbs",
       "team": "DET",
       "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
@@ -2108,15 +2140,15 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:58d974f9fa7614d15c59eb39490b72e45c6e20c98498a23c1587e888aa6aeb72",
-      "displayName": "Jared Goff",
+      "sourceInjuryId": "sha256:5adc7cd362098ff89e2af0b9a77d5fa6d9b2f72906a7b7d81b5aa8a56dfb32b0",
+      "displayName": "Tate Ratledge",
       "team": "DET",
       "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:61c65e33f2a3888f6d868807bafc68b7deaa36144497eed2d7d62021fd4ec01c",
+      "sourceInjuryId": "sha256:5f6e7ebadefb57ed2977c365cefc83486973da5c072654691d45aaec3cd7a684",
       "displayName": "Ennis Rakestraw Jr.",
       "team": "DET",
       "designation": "Out",
@@ -2124,32 +2156,8 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:9017ecd92bdaeeb94465ea4469970a612b1944d3fbd7ab4a254e915a8230ac1f",
-      "displayName": "Tyrus Wheat",
-      "team": "DET",
-      "designation": "Active",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
-      "sourceInjuryId": "sha256:90c4434d3222c9477bb2bf62c83639db4a6a1b6c87b0e8c6c5c0192cf76adab6",
+      "sourceInjuryId": "sha256:8950cf7f1d0d29dfa541c67ee21d84e7b18f1374ec80cdb9a22899bfdf173b8d",
       "displayName": "Jameson Williams",
-      "team": "DET",
-      "designation": "Active",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
-      "sourceInjuryId": "sha256:912670f341054f5004e1f7556a3241ea6554a517d4a060bc0836c177e85ceff1",
-      "displayName": "Jahmyr Gibbs",
-      "team": "DET",
-      "designation": "Active",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
-      "sourceInjuryId": "sha256:9150e913b751f31973c9a7fa99a7884c5a7404010fe9db09862ab9ca0c58c457",
-      "displayName": "Keith Abney II",
       "team": "DET",
       "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
@@ -2180,16 +2188,16 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:a267da8c2654f075c09d6b93223d54ef913806d444087515201a8dac18fbdaed",
-      "displayName": "DJ Wonnum",
+      "sourceInjuryId": "sha256:afeef541c46dfd6cf6ffe63bc894a54a41a72bb2590a47450aa7b0d9e490967e",
+      "displayName": "Jacob Saylors",
       "team": "DET",
-      "designation": "Questionable",
+      "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:afeef541c46dfd6cf6ffe63bc894a54a41a72bb2590a47450aa7b0d9e490967e",
-      "displayName": "Jacob Saylors",
+      "sourceInjuryId": "sha256:ba7a365e4d240538b06c6a96785f51b30f5274f953e3266a25adb05c2fec5ec1",
+      "displayName": "Jared Goff",
       "team": "DET",
       "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
@@ -2204,24 +2212,16 @@
     },
     {
       "espnId": null,
+      "sourceInjuryId": "sha256:be4d81e9131373aa93e83845f6d797e05355f4899135a725b3643c49d239481e",
+      "displayName": "Tyrus Wheat",
+      "team": "DET",
+      "designation": "Out",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
       "sourceInjuryId": "sha256:bf2b52fbffe7bcad02e6a1d101c242940c7da146237763d56ad8df1b8401b999",
       "displayName": "D.J. Reed",
-      "team": "DET",
-      "designation": "Active",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
-      "sourceInjuryId": "sha256:d87767e086068a57aeef900658a4bf318151d7bea6c9872cd0addb12c6ce2be0",
-      "displayName": "Amon-Ra St. Brown",
-      "team": "DET",
-      "designation": "Active",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
-      "sourceInjuryId": "sha256:dfdd94895b0d7e84b86fba8afc4094fd3f11dea5239184ca770439b655e03c19",
-      "displayName": "Sam LaPorta",
       "team": "DET",
       "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
@@ -2236,10 +2236,10 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:fd75b72a805491a5400f414c59aaa4779b682b1921282481ad2504ef2faaeccd",
-      "displayName": "Joe Bachie",
+      "sourceInjuryId": "sha256:e26c3dd5dc502896abf6a8c69b1e4118965c426f2db6398b7a612fadfb7a25e7",
+      "displayName": "DJ Wonnum",
       "team": "DET",
-      "designation": "Active",
+      "designation": "Out",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -2254,14 +2254,6 @@
       "espnId": null,
       "sourceInjuryId": "sha256:43f2ff593238e461e7d62652899749660804b0063ee02ffbf3780d2d235e8b4f",
       "displayName": "Tucker Kraft",
-      "team": "GB",
-      "designation": "Active",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
-      "sourceInjuryId": "sha256:495fbb266d786fc553ed05dde4fb6fa6617d7f8ed5aaab8df2c254c0301eb02c",
-      "displayName": "Bo Melton",
       "team": "GB",
       "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
@@ -2292,8 +2284,8 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:5a3093d3b9113c41305db15967324dbcf81e1621a87dcd779c052af92d5545ee",
-      "displayName": "Xavier McKinney",
+      "sourceInjuryId": "sha256:5c016eae01df23630e0ad7bf3de6ec6a31699b7a9c30857c2ca1a44f144bbc9e",
+      "displayName": "Chris Brooks",
       "team": "GB",
       "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
@@ -2310,6 +2302,14 @@
       "espnId": null,
       "sourceInjuryId": "sha256:6a3715377de9d1ae6b167d7f2f7d8641d6e402710763afbb85cc3740f2c90684",
       "displayName": "Jordan Love",
+      "team": "GB",
+      "designation": "Active",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
+      "sourceInjuryId": "sha256:6ad803acbaf451f1c1b3cb9e50102c69295d1763b5859162e15602571dfa95ef",
+      "displayName": "Bo Melton",
       "team": "GB",
       "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
@@ -2340,24 +2340,8 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:94725f4a550d70611e808bbc2e87c546140c520e14efdd692b7b22c294ae1ae2",
-      "displayName": "Chris Brooks",
-      "team": "GB",
-      "designation": "Active",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
       "sourceInjuryId": "sha256:988a7b91764e5072c489e3ff43c216192ec5e0ad1b101aac68a060fffa1711f7",
       "displayName": "MarShawn Lloyd",
-      "team": "GB",
-      "designation": "Active",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
-      "sourceInjuryId": "sha256:9b78820668c904a433ed202317bdde074b852edf0f7cb85e5470475c2b675aeb",
-      "displayName": "Skyy Moore",
       "team": "GB",
       "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
@@ -2404,6 +2388,14 @@
     },
     {
       "espnId": null,
+      "sourceInjuryId": "sha256:c79b47452ac80af94a1d7f7cea6690248d67b8b7d506d48fdf4defbf114efac2",
+      "displayName": "Skyy Moore",
+      "team": "GB",
+      "designation": "Active",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
       "sourceInjuryId": "sha256:c89b8714bcc56f91f4128eadb8643c85c03b4d6c8cce5d15f02a5f576f01d704",
       "displayName": "Sean Rhyan",
       "team": "GB",
@@ -2420,7 +2412,7 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:e2f98ce063aaeab7b9bbf4a4da8b7e7fa6191f46bee8ac7ba08037c2b8099cec",
+      "sourceInjuryId": "sha256:e71ca90a5c6631d134707e0d039ec9c901c8a81850fea64c8c6d0e4ce9da4811",
       "displayName": "Savion Williams",
       "team": "GB",
       "designation": "Active",
@@ -2432,6 +2424,14 @@
       "displayName": "Donovan Jennings",
       "team": "GB",
       "designation": "Out",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
+      "sourceInjuryId": "sha256:f1a5e016ac3d4703220a2f5b532e9afdfa7a884a6eb36a85d74bb5b85a2be40e",
+      "displayName": "Trey Smack",
+      "team": "GB",
+      "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -2460,14 +2460,6 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:17f7b7939811ec5a18d2e365638d1d25db5272a467405400dbab96a2eb3d2f8e",
-      "displayName": "Jake Hummel",
-      "team": "HOU",
-      "designation": "Questionable",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
       "sourceInjuryId": "sha256:22b2ae743d8c32883223e4853b22fe608ad76ede89503d17d0dfe104c789f7ad",
       "displayName": "Foster Moreau",
       "team": "HOU",
@@ -2476,10 +2468,10 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:26ad6543724822c9dd92afa1d99fed13ecaae8a58818f43d472040db70d1406b",
-      "displayName": "Kayshon Boutte",
+      "sourceInjuryId": "sha256:24be526389a191864e068ed6af2b6b4b8f35423b1ca9dfeb18acae93e92befda",
+      "displayName": "Logan Hall",
       "team": "HOU",
-      "designation": "Questionable",
+      "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -2516,14 +2508,6 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:53280ee4a54ede00694f1617c007c4db5e5189cf1c32d7cb967b12495d165b07",
-      "displayName": "Marvin Harrison Jr.",
-      "team": "HOU",
-      "designation": "Questionable",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
       "sourceInjuryId": "sha256:64cc8278ee57429b41099395449bd99b560a83d961bf05264d2b456efb07a9e8",
       "displayName": "Will Anderson Jr.",
       "team": "HOU",
@@ -2548,6 +2532,14 @@
     },
     {
       "espnId": null,
+      "sourceInjuryId": "sha256:879282701fbdd06e007dcd7228c2b45dda35fb699d37730457b2a2c20a60f804",
+      "displayName": "Jake Hummel",
+      "team": "HOU",
+      "designation": "Active",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
       "sourceInjuryId": "sha256:8d6d204aed8088b5ad3b42c36fa7fedf57594ccb3f7dcbe3cc9baa03f715d26d",
       "displayName": "Sheldon Rankins",
       "team": "HOU",
@@ -2560,14 +2552,6 @@
       "displayName": "Wyatt Teller",
       "team": "HOU",
       "designation": "Questionable",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
-      "sourceInjuryId": "sha256:8f11651b1155926892b58c0e5c34c14befd549fe2b69b42e15f9ef64de337712",
-      "displayName": "Logan Hall",
-      "team": "HOU",
-      "designation": "Doubtful",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -2588,10 +2572,10 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:b166da4ec5ed8ccfbbcf38e2ef4152ae7bb6099ff495e13e33a3df45ee4634b5",
+      "sourceInjuryId": "sha256:a44d4816a9374f98093c0d0f0d2ca63bb98ed7338af7f423fc3909185040036c",
       "displayName": "Dalton Schultz",
       "team": "HOU",
-      "designation": "Active",
+      "designation": "Questionable",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -2608,6 +2592,14 @@
       "displayName": "Brevin Jordan",
       "team": "HOU",
       "designation": "Questionable",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
+      "sourceInjuryId": "sha256:c521b00e878ab33ec9a6e581ab1696d08fce9f530114002619bf4f600a56ec68",
+      "displayName": "Marvin Harrison Jr.",
+      "team": "HOU",
+      "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -2644,6 +2636,14 @@
     },
     {
       "espnId": null,
+      "sourceInjuryId": "sha256:ffad878df92f3100c10239a65526dc115f425699aeee3a693b0859f08689a0fa",
+      "displayName": "Kayshon Boutte",
+      "team": "HOU",
+      "designation": "Questionable",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
       "sourceInjuryId": "sha256:0b311373392cb9e2c5d492ca0748748c574af38de6b9e729308c1c75b4d69cc1",
       "displayName": "Caden Curry",
       "team": "IND",
@@ -2654,14 +2654,6 @@
       "espnId": null,
       "sourceInjuryId": "sha256:13b5b4cdba4c24e534e02b222c18418edde79d9d310c69ebbb0a9e6551c5388c",
       "displayName": "Charvarius Ward",
-      "team": "IND",
-      "designation": "Questionable",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
-      "sourceInjuryId": "sha256:1b9604225d328ec948e1126e82ab1386cccdfe7cc0f61f10e53a1dd5e5e4b0f5",
-      "displayName": "Drew Ogletree",
       "team": "IND",
       "designation": "Questionable",
       "rosterEvidence": "TEAM_UNVERIFIED"
@@ -2710,6 +2702,14 @@
       "espnId": null,
       "sourceInjuryId": "sha256:4d538e250fe3afb0441972074361f3be4ed409987351e4efbdc613ada7936f75",
       "displayName": "Deion Burks",
+      "team": "IND",
+      "designation": "Active",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
+      "sourceInjuryId": "sha256:4d5543a2030736755b9fe28ac3ab79dc82cc260ee84993743c02a8a09f8a971f",
+      "displayName": "Drew Ogletree",
       "team": "IND",
       "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
@@ -2860,10 +2860,10 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:13ac6ec30933646dbc9310f413314c89dd7fd72bc2c01fcfb280fa62d0cff149",
-      "displayName": "Bhayshul Tuten",
+      "sourceInjuryId": "sha256:135fe2f3773f0cd889165f32a950820de2dacbbffce677f37e1b5ec42487e896",
+      "displayName": "Danny Striggow",
       "team": "JAX",
-      "designation": "Questionable",
+      "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -2964,6 +2964,14 @@
     },
     {
       "espnId": null,
+      "sourceInjuryId": "sha256:a4c7e4088ddab80ef45fe0f3bf4a01d18e46a502f12a20eae961913a18c1b272",
+      "displayName": "Bhayshul Tuten",
+      "team": "JAX",
+      "designation": "Questionable",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
       "sourceInjuryId": "sha256:a66a42e3054e7035b879e5ffec6867b3697c9a68b3f5109bc8b04828f3943e34",
       "displayName": "Brenton Strange",
       "team": "JAX",
@@ -2996,14 +3004,6 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:bf2dd5f39c537a2c8f927442641780f2dcd27dd888ad9aba4d23d93eef75c6c2",
-      "displayName": "Trevor Lawrence",
-      "team": "JAX",
-      "designation": "Active",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
       "sourceInjuryId": "sha256:c59ded91089cadfdc24673472729b0f2c56451e2af9a4c23f6cffe52fc8839ed",
       "displayName": "LeQuint Allen Jr.",
       "team": "JAX",
@@ -3020,18 +3020,18 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:d75dbf3505a106ab87a1e14402e7ab492b2383dc9e094e88f8c198a291553585",
-      "displayName": "Danny Striggow",
-      "team": "JAX",
-      "designation": "Questionable",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
       "sourceInjuryId": "sha256:e46086752adc164b1e444c57d56b38082a1699e8660484b16e8335f1c4443fed",
       "displayName": "Brian Thomas Jr.",
       "team": "JAX",
       "designation": "Active",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
+      "sourceInjuryId": "sha256:ed124f1d09c7f1f9964e3723c4602f4a9c47b1ce37f711fb9cf6750e9e79e47c",
+      "displayName": "Parker Washington",
+      "team": "JAX",
+      "designation": "Questionable",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -3084,8 +3084,8 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:3d2b3f4bf1d526ada5e10d7cd6de63452b89876546ccc805fe8f7375333aa36e",
-      "displayName": "Jake Briningstool",
+      "sourceInjuryId": "sha256:522b5675fe883a1877f4450e48ee98370fdfa2704599afcb268f6c2fb09c48a5",
+      "displayName": "Nate Carter",
       "team": "KC",
       "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
@@ -3228,8 +3228,8 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:d92d7979cfb4a2cbd559bce7a22d6a394032b39ed066c427f9116f930db9705e",
-      "displayName": "Andrew Armstrong",
+      "sourceInjuryId": "sha256:e293f671e96e8c5b5835c849b4ca8a70ebfcec6b401507f4d6daada0ff2a1fa2",
+      "displayName": "John FitzPatrick",
       "team": "KC",
       "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
@@ -3292,6 +3292,22 @@
     },
     {
       "espnId": null,
+      "sourceInjuryId": "sha256:3787744b4d75a29db336e9bfd0aa742b88efb2d599e0ef4a33f05f64994dba56",
+      "displayName": "Jake Browning",
+      "team": "LAC",
+      "designation": "Active",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
+      "sourceInjuryId": "sha256:3fd58609c53fca8f02790fd8742896697d37ec4d06ae3c008d657bb18bbd9215",
+      "displayName": "Deane Leonard",
+      "team": "LAC",
+      "designation": "Injured Reserve",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
       "sourceInjuryId": "sha256:53ec92451ec4717bca7c9ecb0a167d903fde20daee4bbc4d2dcbcd65b53664e7",
       "displayName": "Alex Harkey",
       "team": "LAC",
@@ -3312,6 +3328,14 @@
       "displayName": "Tre' Harris",
       "team": "LAC",
       "designation": "Active",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
+      "sourceInjuryId": "sha256:67087af4c3fa575d9c859ae4d1faee2a84345a3b99f063d7da5606559701e0ca",
+      "displayName": "Justin Herbert",
+      "team": "LAC",
+      "designation": "Questionable",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -3340,14 +3364,6 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:8ae6d51dbf1ba72188f120520fd63686d4b7a000f760d4585e2c5925fb12388e",
-      "displayName": "David Njoku",
-      "team": "LAC",
-      "designation": "Questionable",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
       "sourceInjuryId": "sha256:995cc602be2e9ebefe19b7f46860478046404f3da413be9ad4385b3af4e41fc0",
       "displayName": "Isas Waxter",
       "team": "LAC",
@@ -3364,24 +3380,8 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:b520990ff28dc010b56eeee757fe2289e5fef8c03714b467f3faabc86f157b25",
-      "displayName": "Deane Leonard",
-      "team": "LAC",
-      "designation": "Questionable",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
       "sourceInjuryId": "sha256:bac1a902c5e21d8eab46d9b002b4c0c4f5b5452b719f589b7335e2ac1f80325c",
       "displayName": "Tuli Tuipulotu",
-      "team": "LAC",
-      "designation": "Questionable",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
-      "sourceInjuryId": "sha256:c069b7979b4d134915de6d67b7fbb687b24489329321eb6e79308310b42a52d7",
-      "displayName": "Justin Herbert",
       "team": "LAC",
       "designation": "Questionable",
       "rosterEvidence": "TEAM_UNVERIFIED"
@@ -3392,14 +3392,6 @@
       "displayName": "Akheem Mesidor",
       "team": "LAC",
       "designation": "Questionable",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
-      "sourceInjuryId": "sha256:d517ae02f8a554b6dfa37d2f97762a299b32038f65a65e1d6d5f45d0e87db118",
-      "displayName": "KeAndre Lambert-Smith",
-      "team": "LAC",
-      "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -3416,6 +3408,14 @@
       "displayName": "Kimani Vidal",
       "team": "LAC",
       "designation": "Active",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
+      "sourceInjuryId": "sha256:e5acc9e792792b1f7775d522a591eff1a8673b2ae2038f73779f1288edd3da9e",
+      "displayName": "David Njoku",
+      "team": "LAC",
+      "designation": "Questionable",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -3452,14 +3452,6 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:15daf239daf89d6f7b06fae0e57ffa01471d5549f0ea3cedcca5149e0a121613",
-      "displayName": "Terrance Ferguson",
-      "team": "LAR",
-      "designation": "Injured Reserve",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
       "sourceInjuryId": "sha256:178d19197506fc382821c073edcfe9e1a59529c9b157c27e6bae0c0e2835834c",
       "displayName": "Brennan Presley",
       "team": "LAR",
@@ -3476,8 +3468,8 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:26422bb4f46503f387316b4288056af250a20428e72414834cc9cfdaac7c217b",
-      "displayName": "Max Klare",
+      "sourceInjuryId": "sha256:21b03e119426cc5f005d2001760070988a91b703ccf9b76ea0a036c5bc1c6ed1",
+      "displayName": "Xavier Smith",
       "team": "LAR",
       "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
@@ -3540,8 +3532,8 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:6e562f7d2620973e1f7ed10af37e7d2235be6ccea43277b86fedf8c0f29dcf2d",
-      "displayName": "Quentin Lake",
+      "sourceInjuryId": "sha256:5b411e860767d2e3fd4c340e7faf4ec4acda0ca00a38e55711e77be24119f8e6",
+      "displayName": "CJ Daniels",
       "team": "LAR",
       "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
@@ -3564,18 +3556,18 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:82aa2bf5bdf79c9f1f387bc65ffb53a979ca25fa1bc99547859c04bb1082a62e",
-      "displayName": "Davante Adams",
+      "sourceInjuryId": "sha256:88bb3454406fb8196cafc094a484698852c5a315b06f1f1e0ce6c1ad027fa3f7",
+      "displayName": "Ronnie Rivers",
       "team": "LAR",
-      "designation": "Injured Reserve",
+      "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:a5a11cb848a7c4944b7c6bc584047d2da6ef69b407f7c8db2644f04533988ff8",
-      "displayName": "Puka Nacua",
+      "sourceInjuryId": "sha256:a1a183085654b7ba02e173c73648c2eab1470a20139edf0b1d6d249fc3f946b1",
+      "displayName": "Colby Parkinson",
       "team": "LAR",
-      "designation": "Injured Reserve",
+      "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -3588,8 +3580,8 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:d8a2d57ac7c2e8abbabd85ee06baaa8d018aecd6546303ecc9d71dbe614ba06e",
-      "displayName": "Joe Cardona",
+      "sourceInjuryId": "sha256:cf52788cfc68172faa031388c03500af71f2509eea1da07698b2d317e243ec30",
+      "displayName": "Brandon McManus",
       "team": "LAR",
       "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
@@ -3608,6 +3600,14 @@
       "displayName": "Steve Avila",
       "team": "LAR",
       "designation": "Out",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
+      "sourceInjuryId": "sha256:e01f1b506a27faa3442184efc045ef5ce691e5ecc3681da68e7b142c18fb9358",
+      "displayName": "Tutu Atwell",
+      "team": "LAR",
+      "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -3764,6 +3764,14 @@
     },
     {
       "espnId": null,
+      "sourceInjuryId": "sha256:8c72d32fd0f9c45c0e1f595313ae12aaf68862acc659530275ec1bb30d8b1fc3",
+      "displayName": "Brock Bowers",
+      "team": "LV",
+      "designation": "Questionable",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
       "sourceInjuryId": "sha256:9beb8b2ed23d0747ad08ceec3530bf3981b73c715669fe063501f7ccfeaacf48",
       "displayName": "Matt Gay",
       "team": "LV",
@@ -3784,14 +3792,6 @@
       "displayName": "Bryce Cabeldue",
       "team": "LV",
       "designation": "Active",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
-      "sourceInjuryId": "sha256:ae09e66fa009635d68a0e1cb243b670fb7959bc1c7b0f259024e73bfad361a01",
-      "displayName": "Brock Bowers",
-      "team": "LV",
-      "designation": "Questionable",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -4044,6 +4044,14 @@
     },
     {
       "espnId": null,
+      "sourceInjuryId": "sha256:0489cd350d4854949c894c100c560dfb97bae6eb438a2c976f6cc5dec98977b5",
+      "displayName": "Jordan Addison",
+      "team": "MIN",
+      "designation": "Doubtful",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
       "sourceInjuryId": "sha256:1ed692b257dffba9f1cb7ff830ddefeae970f6eadf9ac40063ad0d5c816ec09c",
       "displayName": "Max Brosmer",
       "team": "MIN",
@@ -4100,10 +4108,10 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:4fd03699b6746cb4803bb64adfb65b33f5a154e8d0174560833bf3fa2e2cd9bd",
+      "sourceInjuryId": "sha256:6bec020f5f947179e7fe79c1db583d22376076e935f29f6ea7258bdf57d5cd9c",
       "displayName": "Tai Felton",
       "team": "MIN",
-      "designation": "Questionable",
+      "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -4148,16 +4156,8 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:9c922bbf53faa2af2b97f93c09893253e4c97d686130981922193c36c5b7b81f",
-      "displayName": "Kyler Murray",
-      "team": "MIN",
-      "designation": "Questionable",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
-      "sourceInjuryId": "sha256:a4739752f9854844e6217d08ad860b78e68460aff5e69e5a095b0f77bf91b2d3",
-      "displayName": "Myles Price",
+      "sourceInjuryId": "sha256:b283a1bf94b1e6137da497decb192b69e50f2d58d7158c9246346035f0ec2263",
+      "displayName": "Harrison Smith",
       "team": "MIN",
       "designation": "Questionable",
       "rosterEvidence": "TEAM_UNVERIFIED"
@@ -4188,14 +4188,6 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:be1536ff764d3df199ec104c92a2016d3a67e5eed34fe948120ff24ea2cd9f98",
-      "displayName": "Harrison Smith",
-      "team": "MIN",
-      "designation": "Questionable",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
       "sourceInjuryId": "sha256:c21c73a0e8c7f1a50864c0306a7245cb89a14e095bb2b250a14fded7041fffde",
       "displayName": "T.J. Hockenson",
       "team": "MIN",
@@ -4204,10 +4196,18 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:e8865ff65d9df5f8da29c2f174fe054ae263c7b2d30db11bf46fa86178146079",
-      "displayName": "Jordan Addison",
+      "sourceInjuryId": "sha256:cb6ba38dd7006e784b024f384ebfb8e29d9d32040714ef8f21b0292b60430d41",
+      "displayName": "Myles Price",
       "team": "MIN",
-      "designation": "Doubtful",
+      "designation": "Questionable",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
+      "sourceInjuryId": "sha256:d041c361a304a2f3e061d08767655222277dce110a27bd2d96387394162286a3",
+      "displayName": "Kyler Murray",
+      "team": "MIN",
+      "designation": "Questionable",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -4300,6 +4300,14 @@
     },
     {
       "espnId": null,
+      "sourceInjuryId": "sha256:41d5a81423f181ee9941ee0459557c900e9321a310a12ef31cff3486ecf3ecd3",
+      "displayName": "Rhamondre Stevenson",
+      "team": "NE",
+      "designation": "Active",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
       "sourceInjuryId": "sha256:47aef3a0647323f1f915b853c750d232810b79549fba303d96de662aa7134535",
       "displayName": "Ben Brown",
       "team": "NE",
@@ -4364,15 +4372,15 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:84d8a62dec8902c82d028ae1a6bdfc2b1f6d567e0f26a9f06f93058a6b5a08eb",
-      "displayName": "Rhamondre Stevenson",
+      "sourceInjuryId": "sha256:7990fe3c1381cf61757172e927ea6f4549243e8bf62fdf3bd696f20432e3a0be",
+      "displayName": "A.J. Brown",
       "team": "NE",
-      "designation": "Active",
+      "designation": "Doubtful",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:856679f3b776c0470aa079a0f2e0038ea6e185070a38a27b496d06d1e1317bfe",
+      "sourceInjuryId": "sha256:832eb7a5eb8abf5e8f7a46b060caa72a6d40bc1c88d6d01f2d99e1672e7435c1",
       "displayName": "Romeo Doubs",
       "team": "NE",
       "designation": "Injured Reserve",
@@ -4420,14 +4428,6 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:ca9fc706fe2fe647b2d6a24535fc3d65b466ce5698124c2198f41147023952ee",
-      "displayName": "A.J. Brown",
-      "team": "NE",
-      "designation": "Doubtful",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
       "sourceInjuryId": "sha256:daa203d05a59f2b8d86c44c98554f3bbf228859df70c9e8c72ca1a27da9939aa",
       "displayName": "Andy Borregales",
       "team": "NE",
@@ -4454,6 +4454,14 @@
       "espnId": null,
       "sourceInjuryId": "sha256:1a4124dd863a62f97b7ac84ceadd182fab15783cf9577b15bc8af8d99d488d22",
       "displayName": "Audric Estime",
+      "team": "NO",
+      "designation": "Active",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
+      "sourceInjuryId": "sha256:1ad8d52a9b038c1c647774d6fd9bb9ecf0f9ee061d4fc05f82b1017e7eb89659",
+      "displayName": "Erik McCoy",
       "team": "NO",
       "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
@@ -4516,8 +4524,8 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:6988fca47da3706c3412f0322d7ce6af5e9dcf5ffc47aed5ee68bee4f17e7b5f",
-      "displayName": "Erik McCoy",
+      "sourceInjuryId": "sha256:5d3912b50cc9883f942241a05fd0989dbb663db4739cdfc280de28b382dd8e55",
+      "displayName": "Juwan Johnson",
       "team": "NO",
       "designation": "Questionable",
       "rosterEvidence": "TEAM_UNVERIFIED"
@@ -4596,14 +4604,6 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:adcad046dade9291497e8fef53b6dfa1fa72501a36379260ba96efef0826265a",
-      "displayName": "Juwan Johnson",
-      "team": "NO",
-      "designation": "Questionable",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
       "sourceInjuryId": "sha256:b0745a77c69bedda965ec5b06ea8f0855b38b9c3bf682810864cdd2b9e292c37",
       "displayName": "Bryce Lance",
       "team": "NO",
@@ -4676,14 +4676,6 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:49344daeb97d57544a92b2cd28b0242f3cb676c2a5ff06c1ec412117962cef45",
-      "displayName": "Abdul Carter",
-      "team": "NYG",
-      "designation": "Questionable",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
       "sourceInjuryId": "sha256:4d48db99fa225ab8b9b8e408196ca20cd23a2346d09a61704a2377c3d1e46cdd",
       "displayName": "Greg Desrosiers Jr.",
       "team": "NYG",
@@ -4704,14 +4696,6 @@
       "displayName": "Malachi Fields",
       "team": "NYG",
       "designation": "Active",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
-      "sourceInjuryId": "sha256:606aeb08b926b9bbca062b76da739dde76d9f976e62c4c8bf25ab5804cd995ff",
-      "displayName": "Isaiah Likely",
-      "team": "NYG",
-      "designation": "Questionable",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -4796,6 +4780,14 @@
     },
     {
       "espnId": null,
+      "sourceInjuryId": "sha256:9c389cbb9dd2863361544455982809f7cc1ce21af20981e522c5f5876fd3efa1",
+      "displayName": "Isaiah Likely",
+      "team": "NYG",
+      "designation": "Questionable",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
       "sourceInjuryId": "sha256:b99bdf0210e75ee4b5700b439db854200d149a6f5e5a29a3a974290f41595b49",
       "displayName": "Darnell Mooney",
       "team": "NYG",
@@ -4816,6 +4808,14 @@
       "displayName": "Devin Singletary",
       "team": "NYG",
       "designation": "Active",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
+      "sourceInjuryId": "sha256:c303be57d3f0c7a4cf5236bd52c938dcf8315deb8c85d92453bd8b3c2771cff1",
+      "displayName": "Abdul Carter",
+      "team": "NYG",
+      "designation": "Questionable",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -4844,6 +4844,14 @@
     },
     {
       "espnId": null,
+      "sourceInjuryId": "sha256:02b31d0259297f63d4414ee9f78fd503ade1cee108ce53ef005d08f1d901aad4",
+      "displayName": "Omar Cooper Jr.",
+      "team": "NYJ",
+      "designation": "Questionable",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
       "sourceInjuryId": "sha256:04c223579886a0083e153e51d83eddd60d4a88f9d5b0f068535c14e5329195ae",
       "displayName": "David Onyemata",
       "team": "NYJ",
@@ -4854,6 +4862,14 @@
       "espnId": null,
       "sourceInjuryId": "sha256:116a82bade36ba0ee8777225222994af1026ee98c8f30695c9408496637235fa",
       "displayName": "Demario Davis",
+      "team": "NYJ",
+      "designation": "Active",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
+      "sourceInjuryId": "sha256:18e16e992671fdac70820d7e30b1981d5d80585594dc25f4a84c2d4409a1c856",
+      "displayName": "Isaiah Williams",
       "team": "NYJ",
       "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
@@ -4872,14 +4888,6 @@
       "displayName": "Sterling Shepard",
       "team": "NYJ",
       "designation": "Active",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
-      "sourceInjuryId": "sha256:25fbdd82eada61e87455c2ebf9e4b966b618c8cab9627f8482fd12ff75b609d8",
-      "displayName": "Isaiah Williams",
-      "team": "NYJ",
-      "designation": "Questionable",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -5028,14 +5036,6 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:e7c946eac76010c0e9887af2d4a01ae6b79801914281405f6e72ede0981f649e",
-      "displayName": "Omar Cooper Jr.",
-      "team": "NYJ",
-      "designation": "Questionable",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
       "sourceInjuryId": "sha256:faa88e53c2c0544a0b5b5a8539e10fa1bafe3a0d7e60ed111477ce316a183a93",
       "displayName": "Braelon Allen",
       "team": "NYJ",
@@ -5068,24 +5068,8 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:130116d74725d9ad4af090c5496fd7bdbe9bef655b7c98e147fea4a80fd81079",
-      "displayName": "Ajani Cornelius",
-      "team": "PHI",
-      "designation": "Active",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
       "sourceInjuryId": "sha256:38cb22f879fa0148146ab50286de3735e03922c806505c4d6e56dbb6e32dd3a2",
       "displayName": "Quinyon Mitchell",
-      "team": "PHI",
-      "designation": "Active",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
-      "sourceInjuryId": "sha256:3a90213ef72fc52f6325c6849d9e954d13bd43fc4ad685e7f280d9fa66ccb73f",
-      "displayName": "Saquon Barkley",
       "team": "PHI",
       "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
@@ -5116,24 +5100,16 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:5afeabc4829b9ac2572539147d54ef800afc45e35c19a0ff8e70a15072f1a255",
-      "displayName": "Dallas Goedert",
+      "sourceInjuryId": "sha256:5e7790eb5978d543e1fcf6aa3a4045903b20f89574bba4a70b107a1b17c64f54",
+      "displayName": "Cole Payton",
       "team": "PHI",
-      "designation": "Active",
+      "designation": "Out",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
       "espnId": null,
       "sourceInjuryId": "sha256:6db90ae0829f358a34af65d5d530e2ab2fbc835c858c2b870db599cc77d502b1",
       "displayName": "Tanner McKee",
-      "team": "PHI",
-      "designation": "Active",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
-      "sourceInjuryId": "sha256:7841044782db4dda243a6a64d1b096099723c356cf552c220d2a0700e2457762",
-      "displayName": "Cole Payton",
       "team": "PHI",
       "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
@@ -5156,22 +5132,6 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:8e91ef38f2dd7b94bd07e63ab2cce32932b394f0b49250df4d520ec4c06ad53e",
-      "displayName": "Dontayvion Wicks",
-      "team": "PHI",
-      "designation": "Injured Reserve",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
-      "sourceInjuryId": "sha256:93b1f901e7ca59b8564e9f9ba4dfec3c9c1af6db1bde5f062356bea7339d50c5",
-      "displayName": "Nolan Smith Jr.",
-      "team": "PHI",
-      "designation": "Active",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
       "sourceInjuryId": "sha256:9cd9062e45cbbe0ee5c38cd7f6222c1f69e922054bc9f10684e3fba9089dce20",
       "displayName": "Jake Elliott",
       "team": "PHI",
@@ -5182,6 +5142,22 @@
       "espnId": null,
       "sourceInjuryId": "sha256:9f67c30f82e98cfed0092cb79848fb8cc2162ab181f4baed4ceda003d0488110",
       "displayName": "Arnold Ebiketie",
+      "team": "PHI",
+      "designation": "Out",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
+      "sourceInjuryId": "sha256:ac1ec9ffe493690e5d56ef94a5dba7feb75537e9176882cdd9b57a810966d62a",
+      "displayName": "Dallas Goedert",
+      "team": "PHI",
+      "designation": "Out",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
+      "sourceInjuryId": "sha256:aec9207f26485d03bebae132d1a8efb832930b8c32b442a11af221917f152101",
+      "displayName": "AJ Epenesa",
       "team": "PHI",
       "designation": "Out",
       "rosterEvidence": "TEAM_UNVERIFIED"
@@ -5212,10 +5188,42 @@
     },
     {
       "espnId": null,
+      "sourceInjuryId": "sha256:baa1283d9ce47b44c86cba75ab94e47d9dcdfb821a6815cb29fcbd12be0b8228",
+      "displayName": "Grant Calcaterra",
+      "team": "PHI",
+      "designation": "Out",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
+      "sourceInjuryId": "sha256:be3afab52987713fc9fe32aa087afdb64bbc94d5238586ca8bc71f0bc71458e1",
+      "displayName": "Saquon Barkley",
+      "team": "PHI",
+      "designation": "Questionable",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
       "sourceInjuryId": "sha256:cb4ea6be30320f5e4866d5c8a9b9987abaf5e06f4340c5cdf16942891261aedd",
       "displayName": "Mac McWilliams",
       "team": "PHI",
       "designation": "Active",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
+      "sourceInjuryId": "sha256:d7b7196b30901484d4340d49df79767850f0ac87ea2bfb7535297b41d1ca2176",
+      "displayName": "Cooper DeJean",
+      "team": "PHI",
+      "designation": "Questionable",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
+      "sourceInjuryId": "sha256:df69bc5c0e7197b91ec81007c855d419935d4d5f48c248f97b2c71ce40fe0aa0",
+      "displayName": "Ajani Cornelius",
+      "team": "PHI",
+      "designation": "Out",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -5230,14 +5238,6 @@
       "espnId": null,
       "sourceInjuryId": "sha256:ecbef858f9140af0f00a98d7d8c464aec6bff44820466fb1eaf7994fef628253",
       "displayName": "Jalen Carter",
-      "team": "PHI",
-      "designation": "Active",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
-      "sourceInjuryId": "sha256:fb55ce80ca976907147a47ef3562adb90ae5f842566b52a5395539b632eb79cd",
-      "displayName": "Michael Carter II",
       "team": "PHI",
       "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
@@ -5268,14 +5268,6 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:3b284a8b0038ef00321fad16353aed24b5a78c0d8546c0d0c51c4db07bb7de2a",
-      "displayName": "DeShon Elliott",
-      "team": "PIT",
-      "designation": "Questionable",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
       "sourceInjuryId": "sha256:4fa2ec2ff38d37f10e25d3143bdba4481c9f01329fb38d99ffc32a023fda9cec",
       "displayName": "Kaden Wetjen",
       "team": "PIT",
@@ -5284,16 +5276,40 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:6a82242ad1f712f37a6e6d4e296277eab3608e86459a3a4fdad1957c280d4ce4",
-      "displayName": "Michael Pittman Jr.",
+      "sourceInjuryId": "sha256:5561c62872cba21b1698e408cc4b54d122f0fe07f61d72fbe6bde5628b3c9884",
+      "displayName": "Ben Skowronek",
       "team": "PIT",
       "designation": "Injured Reserve",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
       "espnId": null,
+      "sourceInjuryId": "sha256:562e5654673513bc3b650fb0984dd912f8246f89ec03eda7181dbf4917f3278b",
+      "displayName": "Alex Highsmith",
+      "team": "PIT",
+      "designation": "Out",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
+      "sourceInjuryId": "sha256:710d83bcd2a7d0be1663efe0d2fbfb98e5e328899e2041db4c71141c5691e6d3",
+      "displayName": "Max Hurleman",
+      "team": "PIT",
+      "designation": "Active",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
       "sourceInjuryId": "sha256:7687dcfef40b62655ac2414576a7a5821bb5f5b923eaed2154240ff0db32004f",
       "displayName": "Germie Bernard",
+      "team": "PIT",
+      "designation": "Active",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
+      "sourceInjuryId": "sha256:8b8323ef652c027bcb7e0ab18791724c1897f65c199e868219ab36fe48552a91",
+      "displayName": "Nick Herbig",
       "team": "PIT",
       "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
@@ -5320,14 +5336,6 @@
       "displayName": "Mason Rudolph",
       "team": "PIT",
       "designation": "Active",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
-      "sourceInjuryId": "sha256:98ee400e19924c6c0a84059a4f61ea2b878f213a88be0ea412f596d6a66d01f2",
-      "displayName": "Ben Skowronek",
-      "team": "PIT",
-      "designation": "Questionable",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -5388,18 +5396,18 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:cf429beff367ffe0dd39da17601ad93787f9392f19ca379f13352236282ca2bb",
-      "displayName": "Max Hurleman",
-      "team": "PIT",
-      "designation": "Active",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
       "sourceInjuryId": "sha256:d4a778042f025a9787f3bb880e1931f06bb669fa0d98d981d8e560a40a46db96",
       "displayName": "Cole Holcomb",
       "team": "PIT",
       "designation": "Questionable",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
+      "sourceInjuryId": "sha256:d60944add24a5144a8695dc484ed499926fa1016b70f765eaf6476987e77649f",
+      "displayName": "Michael Pittman Jr.",
+      "team": "PIT",
+      "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -5412,18 +5420,10 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:e1aa2f39fb1450123d1b8937691fc5e116109856c04dd7fb7d8b109f2bcc78c1",
-      "displayName": "Nick Herbig",
+      "sourceInjuryId": "sha256:e795620b562e0c2ad034052d6c1b24cb33d2a8a33408b126d6ba276e7e161b90",
+      "displayName": "DeShon Elliott",
       "team": "PIT",
-      "designation": "Questionable",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
-      "sourceInjuryId": "sha256:e9f49eac3bc6b83d5d2336fd37f0ca81db60b51e975cd0c9eb49859cee6c8bf8",
-      "displayName": "Alex Highsmith",
-      "team": "PIT",
-      "designation": "Doubtful",
+      "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -5440,6 +5440,14 @@
       "displayName": "Chris Boswell",
       "team": "PIT",
       "designation": "Active",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
+      "sourceInjuryId": "sha256:07f912a66d329153ac9617d31d0225855d81577e891df319e594c7c23125731b",
+      "displayName": "Uchenna Nwosu",
+      "team": "SEA",
+      "designation": "Questionable",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -5492,14 +5500,6 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:35f5d97a5d77f9c43a4aa212d15b4338bf7c5b23818fd16b637ac2e4e0015392",
-      "displayName": "Emanuel Wilson",
-      "team": "SEA",
-      "designation": "Active",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
       "sourceInjuryId": "sha256:3914969663ac0d71e41265acfad2228af9ac969e6b2cbee2700dc42b42ddc425",
       "displayName": "Abraham Lucas",
       "team": "SEA",
@@ -5508,26 +5508,10 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:3f326c93d91fcb47e1a86cf7f0f1ac6e092da60a33810f518d232326ef3f36e0",
-      "displayName": "Jaxon Smith-Njigba",
+      "sourceInjuryId": "sha256:3aa2926d1579164aef6d48013a05a44e57071a40ba2ee704e2ba1f7d51aaa4b3",
+      "displayName": "Nick Kallerup",
       "team": "SEA",
-      "designation": "Questionable",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
-      "sourceInjuryId": "sha256:43f235982eac30bb1a7503cb3f4c631eb390562c700e4b81d0e8f1519457ae5a",
-      "displayName": "Drew Lock",
-      "team": "SEA",
-      "designation": "Questionable",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
-      "sourceInjuryId": "sha256:4745835c5dd4dbf448ed29c9246a802ecb0eca03128788ac9abb7db0f1d26666",
-      "displayName": "Charles Cross",
-      "team": "SEA",
-      "designation": "Questionable",
+      "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -5588,10 +5572,10 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:b62159274ac344c3401e5492963a95c3b8c52aa6d94f2e99979e3332fd3e33ef",
-      "displayName": "Brandon Pili",
+      "sourceInjuryId": "sha256:afb5071ab61396746f966f2a10a3a26b170b5b2a147d61aa009d29b91f1636e1",
+      "displayName": "Jaxon Smith-Njigba",
       "team": "SEA",
-      "designation": "Active",
+      "designation": "Questionable",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -5604,8 +5588,16 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:ce0b6632143b4d75665ad690c656dbb192c5c4fac1e58a36242d7ace6e5e72cc",
-      "displayName": "Nick Kallerup",
+      "sourceInjuryId": "sha256:e07f055e1da5a321ef19deba7822f4747351817871faa33bf844f85769ba5c9d",
+      "displayName": "Drew Lock",
+      "team": "SEA",
+      "designation": "Questionable",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
+      "sourceInjuryId": "sha256:e881e08133fd7764a4839522bc1125b5b171b928b944f1062c543fccf06bb51f",
+      "displayName": "Patrick O'Connell",
       "team": "SEA",
       "designation": "Questionable",
       "rosterEvidence": "TEAM_UNVERIFIED"
@@ -5638,6 +5630,14 @@
       "espnId": null,
       "sourceInjuryId": "sha256:f7cc6339dd952159001f31420e17b0a841209d1e517787b5d851bd96fc59b93d",
       "displayName": "Jason Myers",
+      "team": "SEA",
+      "designation": "Active",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
+      "sourceInjuryId": "sha256:fae1d9b0aa5ffb31f9f81b55e00350aa012405964ee28db159e06eb7a681bbf2",
+      "displayName": "Charles Cross",
       "team": "SEA",
       "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
@@ -5684,6 +5684,22 @@
     },
     {
       "espnId": null,
+      "sourceInjuryId": "sha256:5639ccafaf486b8b017796be3a4d5dd5b269d684598828b370962ae51d878253",
+      "displayName": "Brock Purdy",
+      "team": "SF",
+      "designation": "Questionable",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
+      "sourceInjuryId": "sha256:5e7d704e8465711d24521b487392351dae900e611f61591c75c46777c9afbe81",
+      "displayName": "Jordan Watkins",
+      "team": "SF",
+      "designation": "Questionable",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
       "sourceInjuryId": "sha256:663435cf383734b07f32093ba9160d806703911d23e47b7f067d0631248df889",
       "displayName": "Enrique Cruz Jr.",
       "team": "SF",
@@ -5704,6 +5720,14 @@
       "displayName": "Kyle Juszczyk",
       "team": "SF",
       "designation": "Active",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
+      "sourceInjuryId": "sha256:8650f62868fe226c1d6c5057c224b62cbfb190e92865a2cf98039616192df3c2",
+      "displayName": "Mike Evans",
+      "team": "SF",
+      "designation": "Questionable",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -5740,14 +5764,6 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:b0e87cc9a06d6766010e495a36c4f6d3ac3313f2a6d8a45cf0119da91a4a015c",
-      "displayName": "Brock Purdy",
-      "team": "SF",
-      "designation": "Questionable",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
       "sourceInjuryId": "sha256:b1a8530b87f87ffc906062c707bc260933f1d3ae87d7c4bbe05257bb72e0f047",
       "displayName": "Brayden Willis",
       "team": "SF",
@@ -5760,22 +5776,6 @@
       "displayName": "Luke Farrell",
       "team": "SF",
       "designation": "Active",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
-      "sourceInjuryId": "sha256:b3b18bdf5c6569de50e14bcc9563973b4054fe05b4e89c815c897a5a39ac59f2",
-      "displayName": "Mike Evans",
-      "team": "SF",
-      "designation": "Questionable",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
-      "sourceInjuryId": "sha256:b8a9d8b294bc221ea33c7651e87fb0e88ba20a84d10ff0ea72327778de74399e",
-      "displayName": "Jordan Watkins",
-      "team": "SF",
-      "designation": "Questionable",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -5908,6 +5908,22 @@
     },
     {
       "espnId": null,
+      "sourceInjuryId": "sha256:559a33c7182bfc9e9e704881b7e4615a558ae8dfc9db1e4866446407fe149711",
+      "displayName": "Jalen McMillan",
+      "team": "TB",
+      "designation": "Injured Reserve",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
+      "sourceInjuryId": "sha256:5eec1689c4d287c185ef696c583f20a6e08e30ff8e4bd7d7cd7ae6b294993fa7",
+      "displayName": "Josiah Trotter",
+      "team": "TB",
+      "designation": "Questionable",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
       "sourceInjuryId": "sha256:637094ce4d17de0f85eb809901b515a0edee561cb15af683d6c3f92370e9ba34",
       "displayName": "Cade Otton",
       "team": "TB",
@@ -5988,14 +6004,6 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:bed2d5a61c5cc33cc5d00717be0a92a851bb8883aee84913e6360dcc343ab98c",
-      "displayName": "Jalen McMillan",
-      "team": "TB",
-      "designation": "Injured Reserve",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
       "sourceInjuryId": "sha256:d37016e7657aa311c820d083c9f55be275a45629a0c0bcc8c78425a31b05d841",
       "displayName": "Ko Kieft",
       "team": "TB",
@@ -6008,14 +6016,6 @@
       "displayName": "Antoine Winfield Jr.",
       "team": "TB",
       "designation": "Questionable",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
-      "sourceInjuryId": "sha256:dee907a2e4e364b0a03b18c6968a7a3f6eb6e12a0b98f2ddb240afb9f0d42298",
-      "displayName": "Josiah Trotter",
-      "team": "TB",
-      "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -6054,6 +6054,14 @@
       "espnId": null,
       "sourceInjuryId": "sha256:1603cf61bd7cdd7f3d6fe6256055d3922762f014d1956ae272d5e1adda7de80d",
       "displayName": "Tony Pollard",
+      "team": "TEN",
+      "designation": "Active",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
+      "sourceInjuryId": "sha256:16f5af4fedea56c95f969d2a4c5a96c1eec3cb26c1859afff64c39d35d04ef9f",
+      "displayName": "John Franklin-Myers",
       "team": "TEN",
       "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
@@ -6196,6 +6204,14 @@
     },
     {
       "espnId": null,
+      "sourceInjuryId": "sha256:b2a7f346ccdaf99c1961ddffee734eb7bd13fde378c64ce8930c0c3b3e74f567",
+      "displayName": "Dorian Mausi",
+      "team": "TEN",
+      "designation": "Questionable",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
       "sourceInjuryId": "sha256:b662c433222f151696136cbe69f458bbf9c392b17dcf76b7f214091b30aa64c6",
       "displayName": "Carnell Tate",
       "team": "TEN",
@@ -6216,22 +6232,6 @@
       "displayName": "Gunnar Helm",
       "team": "TEN",
       "designation": "Active",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
-      "sourceInjuryId": "sha256:de37eb7cbd638de576b7e439ea730a7969f02d258be9b79682e868e9e315c7ff",
-      "displayName": "Dan Moore Jr.",
-      "team": "TEN",
-      "designation": "Questionable",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
-      "sourceInjuryId": "sha256:e036dcbcc61a33a58a7f7cf67b6851dd1f1dced14a78317cc5f5d2e388d0c2a4",
-      "displayName": "John Franklin-Myers",
-      "team": "TEN",
-      "designation": "Questionable",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
@@ -6332,6 +6332,14 @@
     },
     {
       "espnId": null,
+      "sourceInjuryId": "sha256:83c03ca90e5ac45d29d42adea731d2a9e361b594af7d4cdd2eb26d1274be2cc7",
+      "displayName": "Stefon Diggs",
+      "team": "WSH",
+      "designation": "Active",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
       "sourceInjuryId": "sha256:8485f19d0d58ec60266d9e4144d771930f23a667917597e45c91b8859ca16fb5",
       "displayName": "John Bates",
       "team": "WSH",
@@ -6340,7 +6348,7 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:a758b79f2e38f97b52e109a0f6ea12a8389f644f95ba419df4e3486ed7ac7df4",
+      "sourceInjuryId": "sha256:90e00236507b1e192b6cce7a88a19690a4999b271a7c3f8ea2cb336f18ea4d8c",
       "displayName": "Treylon Burks",
       "team": "WSH",
       "designation": "Questionable",
@@ -6360,14 +6368,6 @@
       "displayName": "Athan Kaliakmanis",
       "team": "WSH",
       "designation": "Active",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
-      "sourceInjuryId": "sha256:b824d00645c90a1b52db97181dff3bb8c8d9a8d7e0bfe519d0271d01ceefd14c",
-      "displayName": "Stefon Diggs",
-      "team": "WSH",
-      "designation": "Questionable",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {

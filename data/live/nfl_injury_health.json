@@ -5,9 +5,9 @@
   "source": "ESPN",
   "verification": "unverified",
   "state": "SUCCESS_CHANGED",
-  "lastAttemptAt": "2026-11-26T15:31:47Z",
-  "lastSuccessfulCheckAt": "2026-11-26T15:31:47Z",
-  "lastContentChangedAt": "2026-11-26T15:31:47Z",
+  "lastAttemptAt": "2026-11-26T23:59:19Z",
+  "lastSuccessfulCheckAt": "2026-11-26T23:59:19Z",
+  "lastContentChangedAt": "2026-11-26T23:59:19Z",
   "countAtLastAttempt": 800,
   "teamGroupsAtLastAttempt": 32,
   "notice": "Successful check is not an injury change, player identity verification or proof of availability."
