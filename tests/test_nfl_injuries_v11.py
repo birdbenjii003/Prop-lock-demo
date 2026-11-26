@@ -177,6 +177,56 @@ class InjuryPilotTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,"statusType=NoneType"):
             inj.normalized(payload,NOW,{})
 
+    def test_observed_athlete_without_id_kept_as_unlinked_injury_evidence(self):
+        payload={"injuries":[{"id":"1","displayName":"Atlanta Falcons","injuries":[
+          {"id":"456789","athlete":{"displayName":"Example Runner","firstName":"Example",
+            "lastName":"Runner","shortName":"E. Runner","team":{"id":"1"},
+            "status":{},"position":{"abbreviation":"RB"},"links":[],"notes":[],
+            "headshot":{}},
+           "date":"2026-11-25T12:00Z","status":"Questionable","type":{}}
+        ]}]}
+        result=inj.normalized(payload,NOW,{"456789":["ATL"]})
+        self.assertEqual(result["count"],1)
+        record=result["injuries"][0]
+        self.assertIsNone(record["espnId"])
+        self.assertEqual(record["sourceInjuryId"],"456789")
+        self.assertEqual(record["team"],"ATL")
+        self.assertEqual(record["designation"],"Questionable")
+        self.assertEqual(record["rosterEvidence"],"TEAM_UNVERIFIED")
+        self.assertNotIn("verifiedTeam",record)
+
+    def test_injury_event_id_never_substitutes_for_athlete_id(self):
+        payload={"injuries":[{"id":"2","displayName":"Buffalo Bills","injuries":[
+          {"id":"123456","athlete":{"displayName":"Example Player"},"status":"Out"}]}]}
+        record=inj.normalized(payload,NOW,{"123456":["BUF"]})["injuries"][0]
+        self.assertIsNone(record["espnId"])
+        self.assertEqual(record["rosterEvidence"],"TEAM_UNVERIFIED")
+
+    def test_missing_both_ids_stays_invalid_and_preserves_prior_data(self):
+        payload={"injuries":[{"id":"1","displayName":"Atlanta Falcons","injuries":[
+          {"athlete":{"displayName":"Example Player"},"status":"Out"}]}]}
+        with self.assertRaisesRegex(ValueError,"source identity"):
+            inj.normalized(payload,NOW,{})
+        with tempfile.TemporaryDirectory() as td:
+            path=Path(td)/"nfl_injuries.json"
+            path.write_bytes(b'{"lastGood":"unchanged"}')
+            before=path.read_bytes()
+            with self.assertRaises(ValueError):
+                candidate=inj.normalized(payload,NOW,{})
+                inj.publish_if_changed(path,candidate)
+            self.assertEqual(path.read_bytes(),before)
+
+    def test_duplicate_injury_event_id_rejected(self):
+        entry={"id":"998877","athlete":{"displayName":"Example Player"},"status":"Out"}
+        payload={"injuries":[{"id":"1","displayName":"Atlanta Falcons","injuries":[entry,dict(entry)]}]}
+        with self.assertRaisesRegex(ValueError,"Repeated injury"):
+            inj.normalized(payload,NOW,{})
+
+    def test_identified_athlete_without_injury_event_id_still_supported(self):
+        result=inj.normalized(source(),NOW,{"123456":["ATL"]})
+        self.assertEqual(result["injuries"][0]["espnId"],"123456")
+        self.assertIsNone(result["injuries"][0]["sourceInjuryId"])
+
     def test_size_and_count_bounds(self):
         src=source()
         src["injuries"]*=30
