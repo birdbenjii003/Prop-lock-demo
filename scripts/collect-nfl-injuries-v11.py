@@ -233,8 +233,13 @@ def normalized(payload, now, roster_ids):
             designation = status_text(member.get("status"))
             injury_id = member.get("id")
             source_injury_id = str(injury_id) if isinstance(injury_id, (str, int)) and not isinstance(injury_id, bool) else None
-            if source_injury_id is not None and not re.fullmatch(r"\d{1,20}", source_injury_id):
-                raise ValueError("Invalid injury event identifier: " + injury_entry_shape_summary(member, position, injury_position))
+            # ESPN's source injury event IDs are opaque: numeric-only was too strict.
+            # Never interpret these IDs as athlete identities. Bound their size and
+            # accept only a conservative printable ASCII token (no whitespace/markup).
+            if source_injury_id is not None and not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._:-]{0,127}", source_injury_id):
+                raise ValueError("Invalid injury event identifier (type=" + type(injury_id).__name__ +
+                                 ",length=" + str(len(source_injury_id)) + "): " +
+                                 injury_entry_shape_summary(member, position, injury_position))
             # The entry's top-level id is an INJURY EVENT identifier, never an athlete ID.
             # The observed ESPN athlete dict omits id. Keep its listing as unlinked
             # evidence only, provided the separate injury event id is valid.
