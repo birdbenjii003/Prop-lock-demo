@@ -162,7 +162,7 @@ class InjuryPilotTests(unittest.TestCase):
           {"athlete":{"uid":"secret-id","name":"Private Player"},
            "status":{"code":"PRIVATE_MEDICAL_STATUS"},
            "details":"PRIVATE_HEALTH_DETAIL"}]}]}
-        with self.assertRaisesRegex(ValueError,"Injury entry lacks athlete ID") as caught:
+        with self.assertRaisesRegex(ValueError,"Injury entry lacks valid name, status or source identity") as caught:
             inj.normalized(payload,NOW,{})
         message=str(caught.exception)
         self.assertIn("group=0,entry=0",message)
