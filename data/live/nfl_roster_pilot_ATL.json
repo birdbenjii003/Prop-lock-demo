@@ -4,9 +4,9 @@
   "type": "roster",
   "source": "ESPN",
   "verification": "unverified",
-  "scope": "single_team_pilot",
+  "scope": "controlled_batch",
   "team": "ATL",
-  "fetchedAt": "2026-11-24T15:25:19Z",
+  "fetchedAt": "2026-11-26T09:41:16Z",
   "count": 79,
   "athletes": [
     {
@@ -405,5 +405,5 @@
       "position": "QB"
     }
   ],
-  "notice": "Roster listing from third party. Current-team identity, eligibility and game participation are not independently verified."
+  "notice": "Unverified third-party roster listing; not a player eligibility or team identity confirmation."
 }

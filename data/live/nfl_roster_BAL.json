@@ -6,8 +6,8 @@
   "verification": "unverified",
   "scope": "controlled_batch",
   "team": "BAL",
-  "fetchedAt": "2026-11-24T15:58:06Z",
-  "count": 81,
+  "fetchedAt": "2026-11-26T09:41:16Z",
+  "count": 79,
   "athletes": [
     {
       "espnId": "11284",
@@ -195,11 +195,6 @@
       "position": "LB"
     },
     {
-      "espnId": "4428512",
-      "displayName": "Kedon Slovis",
-      "position": "QB"
-    },
-    {
       "espnId": "4429582",
       "displayName": "Joe Fagnano",
       "position": "QB"
@@ -303,11 +298,6 @@
       "espnId": "4690013",
       "displayName": "Rasheen Ali",
       "position": "RB"
-    },
-    {
-      "espnId": "4690143",
-      "displayName": "LaJohntay Wester",
-      "position": "WR"
     },
     {
       "espnId": "4690179",
@@ -415,5 +405,5 @@
       "position": "DT"
     }
   ],
-  "notice": "Third-party team roster. Player identities, current-team assignment, health and game eligibility are not independently verified."
+  "notice": "Unverified third-party roster listing; not a player eligibility or team identity confirmation."
 }

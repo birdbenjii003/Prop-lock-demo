@@ -4,14 +4,14 @@
   "type": "roster_index",
   "verification": "unverified",
   "source": "published_ESPN_snapshots",
-  "generatedAt": "2026-11-26T02:18:31Z",
+  "generatedAt": "2026-11-26T09:41:20Z",
   "freshnessThresholdHours": 36,
   "coverage": {
     "teamsExpected": 32,
     "teamsTracked": 32,
     "teamsPresent": 32,
-    "teamsCurrent": 32,
-    "teamsStale": 0,
+    "teamsCurrent": 29,
+    "teamsStale": 3,
     "teamsMissing": 0,
     "teamsInvalid": 0,
     "unresolvedCrossTeamIds": 0
@@ -27,13 +27,13 @@
       "team": "ATL",
       "state": "CURRENT",
       "count": 79,
-      "fetchedAt": "2026-11-24T15:25:19Z"
+      "fetchedAt": "2026-11-26T09:41:16Z"
     },
     {
       "team": "BAL",
       "state": "CURRENT",
-      "count": 81,
-      "fetchedAt": "2026-11-24T15:58:06Z"
+      "count": 79,
+      "fetchedAt": "2026-11-26T09:41:16Z"
     },
     {
       "team": "BUF",
@@ -79,7 +79,7 @@
     },
     {
       "team": "DET",
-      "state": "CURRENT",
+      "state": "STALE",
       "count": 85,
       "fetchedAt": "2026-11-24T15:58:06Z"
     },
@@ -169,7 +169,7 @@
     },
     {
       "team": "PHI",
-      "state": "CURRENT",
+      "state": "STALE",
       "count": 77,
       "fetchedAt": "2026-11-24T15:39:06Z"
     },
@@ -187,7 +187,7 @@
     },
     {
       "team": "SF",
-      "state": "CURRENT",
+      "state": "STALE",
       "count": 87,
       "fetchedAt": "2026-11-24T15:58:06Z"
     },
