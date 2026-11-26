@@ -1,0 +1,72 @@
+name: Refresh NFL injury listings — controlled v11
+on:
+  schedule:
+    # Twice per day, deliberately away from the roster cohort jobs.
+    # GitHub scheduled workflow delivery is best-effort, not guaranteed.
+    - cron: '41 3,15 * * *'
+  workflow_dispatch:
+    inputs:
+      force:
+        description: Force a single injury check even inside the six-hour cooldown
+        type: boolean
+        default: false
+permissions:
+  contents: write
+concurrency:
+  group: prop-lock-nfl-injury-pilot
+  cancel-in-progress: false
+jobs:
+  injury-refresh:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Offline v11 injury schema and scheduled refresh regressions
+        run: |
+          python -m unittest discover -s tests -p test_nfl_injuries_v11.py -v
+          python -m unittest discover -s tests -p test_nfl_injury_refresh_v11.py -v
+      - name: Fetch at most one eligible league injury response
+        id: collect
+        continue-on-error: true
+        env:
+          FORCE_REFRESH: ${{ inputs.force }}
+        run: |
+          if [[ "$FORCE_REFRESH" == "true" ]]; then
+            python scripts/refresh-nfl-injuries-v11.py --force
+          else
+            python scripts/refresh-nfl-injuries-v11.py
+          fi
+      - name: Publish only changed injury data and minimal check audit
+        if: always() && steps.collect.outcome != 'skipped'
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if [[ -f data/live/nfl_injuries.json ]]; then
+            git add -- data/live/nfl_injuries.json
+          fi
+          if [[ -f data/live/nfl_injury_health.json ]]; then
+            git add -- data/live/nfl_injury_health.json
+          fi
+          if git diff --cached --quiet; then
+            echo "Within cooldown or no changed content: no commit."
+          else
+            git commit -m "data: record bounded NFL injury collection and check health"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
+      - name: Keep unsuccessful injury retrieval visible as a failed job
+        if: always()
+        env:
+          COLLECT_OUTCOME: ${{ steps.collect.outcome }}
+        run: |
+          if [[ "$COLLECT_OUTCOME" == "failure" ]]; then
+            echo "Injury check failed; last-good source data was not overwritten."
+            exit 1
+          fi
