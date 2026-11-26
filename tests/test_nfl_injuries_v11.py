@@ -251,7 +251,7 @@ class InjuryPilotTests(unittest.TestCase):
                 self.assertNotIn(event_id, str(record))
 
     def test_empty_control_or_oversized_event_ids_still_fail_closed(self):
-        for event_id in ("", "\\n", "\\x00", "X"*129):
+        for event_id in ("", chr(10), chr(0), "X"*129):
             with self.subTest(event_id=event_id):
                 payload={"injuries":[{"id":"1","displayName":"Atlanta Falcons","injuries":[
                     {"id":event_id,"athlete":{"displayName":"Example Runner"},"status":"Out"}]}]}
