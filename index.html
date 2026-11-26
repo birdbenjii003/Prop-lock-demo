@@ -296,7 +296,7 @@ async function loadPublishedNflInjuryPilot(){
      data.verification!=='unverified'||!Number.isFinite(Date.parse(data.fetchedAt))||
      !Array.isArray(data.injuries)||!Array.isArray(data.teamsReported)||
      data.injuries.length!==data.count||data.count>1000||data.teamsReported.length>40||
-     data.injuries.some(x=>!(x.espnId===null&&/^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$/.test(String(x.sourceInjuryId))&&x.rosterEvidence==='TEAM_UNVERIFIED')&&
+     data.injuries.some(x=>!(x.espnId===null&&/^sha256:[0-9a-f]{64}$/.test(String(x.sourceInjuryId))&&x.rosterEvidence==='TEAM_UNVERIFIED')&&
        !(/^\d{1,12}$/.test(String(x.espnId)))||
        !x.displayName||!x.team||!x.designation||
        !['ROSTER_MATCH','ROSTER_CONFLICT','TEAM_UNVERIFIED'].includes(x.rosterEvidence)))

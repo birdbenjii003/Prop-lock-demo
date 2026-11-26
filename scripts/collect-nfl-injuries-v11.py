@@ -232,14 +232,23 @@ def normalized(payload, now, roster_ids):
             name = (athlete.get("displayName") or athlete.get("fullName")) if isinstance(athlete, dict) else None
             designation = status_text(member.get("status"))
             injury_id = member.get("id")
-            source_injury_id = str(injury_id) if isinstance(injury_id, (str, int)) and not isinstance(injury_id, bool) else None
-            # ESPN's source injury event IDs are opaque: numeric-only was too strict.
-            # Never interpret these IDs as athlete identities. Bound their size and
-            # accept only a conservative printable ASCII token (no whitespace/markup).
-            if source_injury_id is not None and not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._:-]{0,127}", source_injury_id):
-                raise ValueError("Invalid injury event identifier (type=" + type(injury_id).__name__ +
-                                 ",length=" + str(len(source_injury_id)) + "): " +
-                                 injury_entry_shape_summary(member, position, injury_position))
+            # The source event identifier is opaque, not an athlete ID.
+            # Allow any bounded UTF-8 text without control/surrogate characters;
+            # store only a deterministic digest, not the raw source token.
+            source_injury_id = None
+            if injury_id is not None:
+                if isinstance(injury_id, bool) or not isinstance(injury_id, (str, int)):
+                    raise ValueError("Invalid injury event identifier type: " +
+                                     injury_entry_shape_summary(member, position, injury_position))
+                raw = str(injury_id)
+                encoded = raw.encode("utf-8")
+                if not 1 <= len(raw) <= 128 or len(encoded) > 512 or any(
+                    ord(c) < 32 or ord(c) == 127 or 0xD800 <= ord(c) <= 0xDFFF for c in raw
+                ):
+                    raise ValueError("Invalid injury event identifier bounds (type=" +
+                                     type(injury_id).__name__ + ",length=" + str(len(raw)) +
+                                     "): " + injury_entry_shape_summary(member, position, injury_position))
+                source_injury_id = "sha256:" + hashlib.sha256(encoded).hexdigest()
             # The entry's top-level id is an INJURY EVENT identifier, never an athlete ID.
             # The observed ESPN athlete dict omits id. Keep its listing as unlinked
             # evidence only, provided the separate injury event id is valid.
