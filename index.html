@@ -296,12 +296,12 @@ async function loadPublishedNflInjuryPilot(){
      data.verification!=='unverified'||!Number.isFinite(Date.parse(data.fetchedAt))||
      !Array.isArray(data.injuries)||!Array.isArray(data.teamsReported)||
      data.injuries.length!==data.count||data.count>1000||data.teamsReported.length>40||
-     data.injuries.some(x=>!/^\d{1,12}$/.test(String(x.espnId))||
+     data.injuries.some(x=>!(x.espnId===null&&/^\d{1,20}$/.test(String(x.sourceInjuryId))&&x.rosterEvidence==='TEAM_UNVERIFIED')&&\n       !(/^\d{1,12}$/.test(String(x.espnId)))||
        !x.displayName||!x.team||!x.designation||
        !['ROSTER_MATCH','ROSTER_CONFLICT','TEAM_UNVERIFIED'].includes(x.rosterEvidence)))
     throw Error('INVALID_INJURY_SNAPSHOT');
   const age=Math.max(0,(Date.now()-Date.parse(data.fetchedAt))/3600000);
-  plInjuryPilotStatus='NFL injury pilot: '+data.count+' reported entries from '+
+  plInjuryPilotStatus='NFL injury pilot: '+data.count+' reported entries ('+data.injuries.filter(x=>x.espnId===null).length+' without verified player ID) from '+
    data.teamsReported.length+' team groups · source fetched '+data.fetchedAt+
    (age>12?' · STALE PILOT (>12h)':' · recent pilot (<12h)')+
    ' · source unverified; absence from report does not mean healthy or active.';
