@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "sport": "NFL",
+  "type": "injury_refresh_health",
+  "source": "ESPN",
+  "verification": "unverified",
+  "state": "SUCCESS_CHANGED",
+  "lastAttemptAt": "2026-11-26T15:31:47Z",
+  "lastSuccessfulCheckAt": "2026-11-26T15:31:47Z",
+  "lastContentChangedAt": "2026-11-26T15:31:47Z",
+  "countAtLastAttempt": 800,
+  "teamGroupsAtLastAttempt": 32,
+  "notice": "Successful check is not an injury change, player identity verification or proof of availability."
+}

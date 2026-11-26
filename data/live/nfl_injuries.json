@@ -5,7 +5,7 @@
   "source": "ESPN",
   "verification": "unverified",
   "scope": "league_injury_pilot",
-  "fetchedAt": "2026-11-26T14:42:51Z",
+  "fetchedAt": "2026-11-26T15:31:47Z",
   "teamsReported": [
     "ARI",
     "ATL",
@@ -2252,14 +2252,6 @@
     },
     {
       "espnId": null,
-      "sourceInjuryId": "sha256:36e797923ba38fd1712d94df30591bb0edeedd5a50e2d2b32bef6fabac81e0db",
-      "displayName": "J. Michael Sturdivant",
-      "team": "GB",
-      "designation": "Active",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
       "sourceInjuryId": "sha256:43f2ff593238e461e7d62652899749660804b0063ee02ffbf3780d2d235e8b4f",
       "displayName": "Tucker Kraft",
       "team": "GB",
@@ -2350,6 +2342,14 @@
       "espnId": null,
       "sourceInjuryId": "sha256:94725f4a550d70611e808bbc2e87c546140c520e14efdd692b7b22c294ae1ae2",
       "displayName": "Chris Brooks",
+      "team": "GB",
+      "designation": "Active",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
+      "sourceInjuryId": "sha256:988a7b91764e5072c489e3ff43c216192ec5e0ad1b101aac68a060fffa1711f7",
+      "displayName": "MarShawn Lloyd",
       "team": "GB",
       "designation": "Active",
       "rosterEvidence": "TEAM_UNVERIFIED"
@@ -3556,6 +3556,14 @@
     },
     {
       "espnId": null,
+      "sourceInjuryId": "sha256:816c030317d190dd5c42ae323e33f75056f846aed6c9793608f2672309668fe6",
+      "displayName": "Bill Murray",
+      "team": "LAR",
+      "designation": "Questionable",
+      "rosterEvidence": "TEAM_UNVERIFIED"
+    },
+    {
+      "espnId": null,
       "sourceInjuryId": "sha256:82aa2bf5bdf79c9f1f387bc65ffb53a979ca25fa1bc99547859c04bb1082a62e",
       "displayName": "Davante Adams",
       "team": "LAR",
@@ -3600,14 +3608,6 @@
       "displayName": "Steve Avila",
       "team": "LAR",
       "designation": "Out",
-      "rosterEvidence": "TEAM_UNVERIFIED"
-    },
-    {
-      "espnId": null,
-      "sourceInjuryId": "sha256:e0792e1708fbe28573d16a1434b1cfb0ea279a375050eb4812c289c9d41856de",
-      "displayName": "Bill Murray",
-      "team": "LAR",
-      "designation": "Questionable",
       "rosterEvidence": "TEAM_UNVERIFIED"
     },
     {
