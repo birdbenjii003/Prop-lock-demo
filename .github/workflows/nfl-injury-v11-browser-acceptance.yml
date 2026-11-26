@@ -1,0 +1,44 @@
+name: NFL injury v11 browser and fail-safe acceptance
+on:
+  push:
+    paths:
+      - 'index.html'
+      - 'tests/nfl-injury-v11-browser-acceptance.cjs'
+      - '.github/workflows/nfl-injury-v11-browser-acceptance.yml'
+      - 'tests/test_nfl_injury_refresh_v11.py'
+      - 'scripts/refresh-nfl-injuries-v11.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  browser-acceptance:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate source checks and failure retention offline
+        run: |
+          python -m unittest discover -s tests -p test_nfl_injuries_v11.py -v
+          python -m unittest discover -s tests -p test_nfl_injury_refresh_v11.py -v
+      - name: Install Chromium browser test
+        run: |
+          npm init -y
+          npm install --no-save --package-lock=false playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Exercise actual site markup with isolated source fixtures
+        run: |
+          python -m http.server 8765 --bind 127.0.0.1 > /tmp/prop-lock-injury-v11-browser.log 2>&1 &
+          node tests/nfl-injury-v11-browser-acceptance.cjs
+      - name: Save evidence for review
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nfl-injury-v11-browser-evidence
+          path: test-results/
+          if-no-files-found: ignore
