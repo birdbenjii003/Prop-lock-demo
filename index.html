@@ -296,7 +296,8 @@ async function loadPublishedNflInjuryPilot(){
      data.verification!=='unverified'||!Number.isFinite(Date.parse(data.fetchedAt))||
      !Array.isArray(data.injuries)||!Array.isArray(data.teamsReported)||
      data.injuries.length!==data.count||data.count>1000||data.teamsReported.length>40||
-     data.injuries.some(x=>!(x.espnId===null&&/^\d{1,20}$/.test(String(x.sourceInjuryId))&&x.rosterEvidence==='TEAM_UNVERIFIED')&&\n       !(/^\d{1,12}$/.test(String(x.espnId)))||
+     data.injuries.some(x=>!(x.espnId===null&&/^\d{1,20}$/.test(String(x.sourceInjuryId))&&x.rosterEvidence==='TEAM_UNVERIFIED')&&
+       !(/^\d{1,12}$/.test(String(x.espnId)))||
        !x.displayName||!x.team||!x.designation||
        !['ROSTER_MATCH','ROSTER_CONFLICT','TEAM_UNVERIFIED'].includes(x.rosterEvidence)))
     throw Error('INVALID_INJURY_SNAPSHOT');
