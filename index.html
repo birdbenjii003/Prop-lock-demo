@@ -286,6 +286,33 @@ async function loadPublishedNflRosterIndex(){
 }
 // NFL injury pilot is informational and intentionally does not alter model projections.
 let plInjuryPilotStatus='NFL injury pilot not checked. No player availability claims.';
+// Last successful provider check is separate from the age of last changed injury data.
+let plInjuryRefreshHealth='NFL injury refresh: no validated check audit available.';
+async function loadPublishedNflInjuryHealth(){
+ try {
+  const response=await fetch('./data/live/nfl_injury_health.json',{cache:'no-cache'});
+  if(!response.ok)throw Error('HTTP '+response.status);
+  const data=await response.json();
+  if(data?.schemaVersion!==1||data.sport!=='NFL'||data.type!=='injury_refresh_health'||
+     data.source!=='ESPN'||data.verification!=='unverified'||
+     !['SUCCESS_CHANGED','SUCCESS_UNCHANGED','FAILED'].includes(data.state)||
+     !Number.isFinite(Date.parse(data.lastAttemptAt))||
+     (data.lastSuccessfulCheckAt!==null&&!Number.isFinite(Date.parse(data.lastSuccessfulCheckAt))))
+   throw Error('INVALID_INJURY_REFRESH_HEALTH');
+  const checked=data.lastSuccessfulCheckAt;
+  const age=checked?Math.max(0,(Date.now()-Date.parse(checked))/3600000):Infinity;
+  plInjuryRefreshHealth='NFL injury source check: '+data.state+
+    ' · last attempt '+data.lastAttemptAt+
+    ' · last successful check '+(checked||'not verified')+
+    (age>12?' · CHECK STALE (>12h)':' · recently checked (<12h)')+
+    ' · last changed report '+(data.lastContentChangedAt||'unknown')+
+    ' · unverified third-party source, not proof of player availability.';
+ }catch(e){
+  plInjuryRefreshHealth='NFL injury refresh audit unavailable: '+(e.message||String(e))+
+   '. No current source-check claim.';
+ }
+ renderLiveFeedMonitor();
+}
 async function loadPublishedNflInjuryPilot(){
  try{
   const response=await fetch('./data/live/nfl_injuries.json',{cache:'no-cache'});
@@ -323,6 +350,7 @@ function renderLiveFeedMonitor(){
   (sport==='NFL'?'<p class="scenario-note" id="batchRosterStatus">'+escapeHtml(plBatchRosterStatus)+'</p>':'')+
   (sport==='NFL'?'<p class="scenario-note" id="rosterIndexStatus">'+escapeHtml(plRosterIndexStatus)+'</p>':'')+
   (sport==='NFL'?'<p class="scenario-note" id="injuryPilotStatus">'+escapeHtml(plInjuryPilotStatus)+'</p>':'')+
+  (sport==='NFL'?'<p class="scenario-note" id="injuryRefreshHealth">'+escapeHtml(plInjuryRefreshHealth)+'</p>':'')+
   (sport==='NFL'?'<button type="button" id="liveRefreshNflSchedule" '+(plScheduleRefreshing?'disabled':'')+'>Check NFL schedule feed</button> <button type="button" id="liveToggleAutomatic">'+(plAutoRefresh?'Disable':'Enable')+' automatic checks</button><p class="scenario-note">Automatic checks are '+(plAutoRefresh?'enabled':'disabled')+' for this browser only, while the page is open. Schedule cache target: 12 hours; failures enforce cooldown.</p><p id="liveScheduleRefreshStatus" class="scenario-note">'+escapeHtml(plScheduleRefreshStatus)+'</p><p class="scenario-note">Recent checks: '+escapeHtml(plRefreshHistory.slice(-4).map(x=>x.status+' '+x.at+' '+x.detail).join(' | ')||'None')+'</p>':'')+
   '<div class="validation-overflow"><table class="validation-table"><thead><tr><th>Source type</th><th>Freshness</th><th>Evidence</th><th>Retrieved</th></tr></thead><tbody>'+
   status.map(x=>'<tr><td>'+escapeHtml(x.type)+'</td><td>'+escapeHtml(x.state)+'</td><td>'+escapeHtml(x.verification)+'</td><td>'+escapeHtml(x.lastRetrieved||'Never')+'</td></tr>').join('')+
@@ -1173,6 +1201,7 @@ loadPublishedNflRosterPilot();
 loadPublishedNflRosterBatch();
 loadPublishedNflRosterIndex();
 loadPublishedNflInjuryPilot();
+loadPublishedNflInjuryHealth();
 document.addEventListener('visibilitychange',()=>{if(plAutoRefresh)plScheduleTick()});
 if(plAutoRefresh)plScheduleTick();
 renderLiveFeedMonitor();
