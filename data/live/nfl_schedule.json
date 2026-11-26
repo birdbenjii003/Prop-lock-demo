@@ -4,7 +4,7 @@
   "type": "schedule",
   "source": "ESPN",
   "verification": "unverified",
-  "fetchedAt": "2026-11-26T02:52:50Z",
+  "fetchedAt": "2026-11-26T18:27:55Z",
   "windowDays": null,
   "scope": "provider_default_scoreboard",
   "count": 16,
@@ -22,7 +22,7 @@
           "homeAway": "away"
         }
       ],
-      "state": "in"
+      "state": "post"
     },
     {
       "id": "401873081",
@@ -37,7 +37,7 @@
           "homeAway": "away"
         }
       ],
-      "state": "pre"
+      "state": "in"
     },
     {
       "id": "401873080",
