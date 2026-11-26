@@ -6,7 +6,7 @@
   "verification": "unverified",
   "scope": "controlled_batch",
   "team": "JAX",
-  "fetchedAt": "2026-11-25T03:01:42Z",
+  "fetchedAt": "2026-11-26T17:48:48Z",
   "count": 83,
   "athletes": [
     {
@@ -425,5 +425,5 @@
       "position": "WR"
     }
   ],
-  "notice": "Third-party roster listing, not a verified active team or game-status record."
+  "notice": "Unverified third-party roster listing; not a player eligibility or team identity confirmation."
 }

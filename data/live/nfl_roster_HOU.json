@@ -6,8 +6,8 @@
   "verification": "unverified",
   "scope": "controlled_batch",
   "team": "HOU",
-  "fetchedAt": "2026-11-25T02:59:10Z",
-  "count": 85,
+  "fetchedAt": "2026-11-26T17:48:48Z",
+  "count": 86,
   "athletes": [
     {
       "espnId": "16734",
@@ -33,11 +33,6 @@
       "espnId": "2976560",
       "displayName": "Danielle Hunter",
       "position": "DE"
-    },
-    {
-      "espnId": "2983509",
-      "displayName": "Dare Ogunbowale",
-      "position": "RB"
     },
     {
       "espnId": "3043109",
@@ -370,6 +365,11 @@
       "position": "LS"
     },
     {
+      "espnId": "4695607",
+      "displayName": "Junior Tafuna",
+      "position": "DT"
+    },
+    {
       "espnId": "4695705",
       "displayName": "Marlin Klein",
       "position": "TE"
@@ -410,6 +410,11 @@
       "position": "WR"
     },
     {
+      "espnId": "4878293",
+      "displayName": "Daniel Sobkowicz",
+      "position": "WR"
+    },
+    {
       "espnId": "4879242",
       "displayName": "Sam Hagen",
       "position": "G"
@@ -435,5 +440,5 @@
       "position": "RB"
     }
   ],
-  "notice": "Third-party roster listing, not a verified active team or game-status record."
+  "notice": "Unverified third-party roster listing; not a player eligibility or team identity confirmation."
 }

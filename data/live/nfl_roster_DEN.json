@@ -6,8 +6,8 @@
   "verification": "unverified",
   "scope": "controlled_batch",
   "team": "DEN",
-  "fetchedAt": "2026-11-25T02:59:10Z",
-  "count": 80,
+  "fetchedAt": "2026-11-26T17:48:48Z",
+  "count": 81,
   "athletes": [
     {
       "espnId": "2612151",
@@ -33,6 +33,11 @@
       "espnId": "3121541",
       "displayName": "Michael Deiter",
       "position": "C"
+    },
+    {
+      "espnId": "3121634",
+      "displayName": "Khalen Saunders",
+      "position": "DT"
     },
     {
       "espnId": "3128429",
@@ -410,5 +415,5 @@
       "position": "WR"
     }
   ],
-  "notice": "Third-party roster listing, not a verified active team or game-status record."
+  "notice": "Unverified third-party roster listing; not a player eligibility or team identity confirmation."
 }

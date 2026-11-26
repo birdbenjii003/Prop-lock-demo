@@ -4,14 +4,14 @@
   "type": "roster_index",
   "verification": "unverified",
   "source": "published_ESPN_snapshots",
-  "generatedAt": "2026-11-26T09:41:20Z",
+  "generatedAt": "2026-11-26T17:49:03Z",
   "freshnessThresholdHours": 36,
   "coverage": {
     "teamsExpected": 32,
     "teamsTracked": 32,
     "teamsPresent": 32,
-    "teamsCurrent": 29,
-    "teamsStale": 3,
+    "teamsCurrent": 12,
+    "teamsStale": 20,
     "teamsMissing": 0,
     "teamsInvalid": 0,
     "unresolvedCrossTeamIds": 0
@@ -19,7 +19,7 @@
   "teams": [
     {
       "team": "ARI",
-      "state": "CURRENT",
+      "state": "STALE",
       "count": 88,
       "fetchedAt": "2026-11-25T02:59:10Z"
     },
@@ -43,25 +43,25 @@
     },
     {
       "team": "CAR",
-      "state": "CURRENT",
+      "state": "STALE",
       "count": 83,
       "fetchedAt": "2026-11-25T02:59:10Z"
     },
     {
       "team": "CHI",
-      "state": "CURRENT",
+      "state": "STALE",
       "count": 82,
       "fetchedAt": "2026-11-25T02:59:10Z"
     },
     {
       "team": "CIN",
-      "state": "CURRENT",
+      "state": "STALE",
       "count": 74,
       "fetchedAt": "2026-11-25T02:59:10Z"
     },
     {
       "team": "CLE",
-      "state": "CURRENT",
+      "state": "STALE",
       "count": 79,
       "fetchedAt": "2026-11-25T02:59:10Z"
     },
@@ -69,31 +69,31 @@
       "team": "DAL",
       "state": "CURRENT",
       "count": 77,
-      "fetchedAt": "2026-11-25T02:59:10Z"
+      "fetchedAt": "2026-11-26T17:48:48Z"
     },
     {
       "team": "DEN",
       "state": "CURRENT",
-      "count": 80,
-      "fetchedAt": "2026-11-25T02:59:10Z"
+      "count": 81,
+      "fetchedAt": "2026-11-26T17:48:48Z"
     },
     {
       "team": "DET",
-      "state": "STALE",
+      "state": "CURRENT",
       "count": 85,
-      "fetchedAt": "2026-11-24T15:58:06Z"
+      "fetchedAt": "2026-11-26T17:48:48Z"
     },
     {
       "team": "GB",
       "state": "CURRENT",
       "count": 81,
-      "fetchedAt": "2026-11-25T02:59:10Z"
+      "fetchedAt": "2026-11-26T17:48:48Z"
     },
     {
       "team": "HOU",
       "state": "CURRENT",
-      "count": 85,
-      "fetchedAt": "2026-11-25T02:59:10Z"
+      "count": 86,
+      "fetchedAt": "2026-11-26T17:48:48Z"
     },
     {
       "team": "IND",
@@ -105,7 +105,7 @@
       "team": "JAX",
       "state": "CURRENT",
       "count": 83,
-      "fetchedAt": "2026-11-25T03:01:42Z"
+      "fetchedAt": "2026-11-26T17:48:48Z"
     },
     {
       "team": "KC",
@@ -115,55 +115,55 @@
     },
     {
       "team": "LAC",
-      "state": "CURRENT",
+      "state": "STALE",
       "count": 78,
       "fetchedAt": "2026-11-25T03:01:42Z"
     },
     {
       "team": "LAR",
-      "state": "CURRENT",
+      "state": "STALE",
       "count": 83,
       "fetchedAt": "2026-11-25T03:01:42Z"
     },
     {
       "team": "LV",
-      "state": "CURRENT",
+      "state": "STALE",
       "count": 76,
       "fetchedAt": "2026-11-25T03:01:42Z"
     },
     {
       "team": "MIA",
-      "state": "CURRENT",
+      "state": "STALE",
       "count": 76,
       "fetchedAt": "2026-11-25T03:01:42Z"
     },
     {
       "team": "MIN",
-      "state": "CURRENT",
+      "state": "STALE",
       "count": 81,
       "fetchedAt": "2026-11-25T03:01:42Z"
     },
     {
       "team": "NE",
-      "state": "CURRENT",
+      "state": "STALE",
       "count": 80,
       "fetchedAt": "2026-11-25T03:01:42Z"
     },
     {
       "team": "NO",
-      "state": "CURRENT",
+      "state": "STALE",
       "count": 77,
       "fetchedAt": "2026-11-25T03:01:42Z"
     },
     {
       "team": "NYG",
-      "state": "CURRENT",
+      "state": "STALE",
       "count": 83,
       "fetchedAt": "2026-11-25T03:04:13Z"
     },
     {
       "team": "NYJ",
-      "state": "CURRENT",
+      "state": "STALE",
       "count": 82,
       "fetchedAt": "2026-11-25T03:04:13Z"
     },
@@ -175,7 +175,7 @@
     },
     {
       "team": "PIT",
-      "state": "CURRENT",
+      "state": "STALE",
       "count": 79,
       "fetchedAt": "2026-11-25T03:04:13Z"
     },
@@ -193,19 +193,19 @@
     },
     {
       "team": "TB",
-      "state": "CURRENT",
+      "state": "STALE",
       "count": 73,
       "fetchedAt": "2026-11-25T03:04:13Z"
     },
     {
       "team": "TEN",
-      "state": "CURRENT",
+      "state": "STALE",
       "count": 81,
       "fetchedAt": "2026-11-25T03:04:13Z"
     },
     {
       "team": "WSH",
-      "state": "CURRENT",
+      "state": "STALE",
       "count": 79,
       "fetchedAt": "2026-11-25T03:04:13Z"
     }

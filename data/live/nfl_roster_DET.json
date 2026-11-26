@@ -6,7 +6,7 @@
   "verification": "unverified",
   "scope": "controlled_batch",
   "team": "DET",
-  "fetchedAt": "2026-11-24T15:58:06Z",
+  "fetchedAt": "2026-11-26T17:48:48Z",
   "count": 85,
   "athletes": [
     {
@@ -435,5 +435,5 @@
       "position": "OT"
     }
   ],
-  "notice": "Third-party team roster. Player identities, current-team assignment, health and game eligibility are not independently verified."
+  "notice": "Unverified third-party roster listing; not a player eligibility or team identity confirmation."
 }
