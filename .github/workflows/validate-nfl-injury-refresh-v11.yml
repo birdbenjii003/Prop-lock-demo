@@ -1,0 +1,43 @@
+name: Validate NFL injury scheduled refresh v11
+on:
+  push:
+    paths:
+      - 'scripts/refresh-nfl-injuries-v11.py'
+      - 'scripts/collect-nfl-injuries-v11.py'
+      - 'tests/test_nfl_injury_refresh_v11.py'
+      - 'tests/test_nfl_injuries_v11.py'
+      - 'index.html'
+      - '.github/workflows/refresh-nfl-injuries-v11.yml'
+      - '.github/workflows/validate-nfl-injury-refresh-v11.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  offline-regressions:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Test schema, source safety and scheduled refresh without network
+        run: |
+          python -m unittest discover -s tests -p test_nfl_injuries_v11.py -v
+          python -m unittest discover -s tests -p test_nfl_injury_refresh_v11.py -v
+      - name: Validate website source-check display syntax
+        run: |
+          node - <<'NODE'
+          const fs=require('node:fs'),vm=require('node:vm');
+          const html=fs.readFileSync('index.html','utf8');
+          const main=html.match(/<script>\s*([\s\S]*?)<\/script>/);
+          if(!main)throw Error('Main application script not found');
+          new vm.Script(main[1]);
+          for(const field of ['injuryRefreshHealth','lastSuccessfulCheckAt','lastContentChangedAt']){
+            if(!html.includes(field))throw Error('Missing health display: '+field);
+          }
+          console.log('NFL injury refresh status UI: PASS');
+          NODE
