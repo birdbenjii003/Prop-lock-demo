@@ -300,11 +300,22 @@ async function loadPublishedNflInjuryHealth(){
      (data.lastSuccessfulCheckAt!==null&&!Number.isFinite(Date.parse(data.lastSuccessfulCheckAt))))
    throw Error('INVALID_INJURY_REFRESH_HEALTH');
   const checked=data.lastSuccessfulCheckAt;
-  const age=checked?Math.max(0,(Date.now()-Date.parse(checked))/3600000):Infinity;
+  const attemptMs=Date.parse(data.lastAttemptAt);
+  const successMs=checked?Date.parse(checked):null;
+  const changedMs=data.lastContentChangedAt?Date.parse(data.lastContentChangedAt):null;
+  const now=Date.now();
+  if(attemptMs>now+5*60000||successMs!==null&&(successMs>attemptMs||successMs>now+5*60000)||
+     changedMs!==null&&(!Number.isFinite(changedMs)||changedMs>now+5*60000)||
+     (data.state!=='FAILED'&&successMs!==attemptMs)||
+     (data.state==='FAILED'&&typeof data.failureCode!=='string'))
+    throw Error('INVALID_INJURY_REFRESH_TIMELINE');
+  const age=successMs===null?Infinity:Math.max(0,(now-successMs)/3600000);
+  const stale=age>12;
   plInjuryRefreshHealth='NFL injury source check: '+data.state+
     ' · last attempt '+data.lastAttemptAt+
     ' · last successful check '+(checked||'not verified')+
-    (age>12?' · CHECK STALE (>12h)':' · recently checked (<12h)')+
+    (data.state==='FAILED'?' · LATEST CHECK FAILED — previous report retained':'')+
+    (stale?' · CHECK STALE / NOT CURRENT (>12h)':' · last successful check within 12h')+
     ' · last changed report '+(data.lastContentChangedAt||'unknown')+
     ' · unverified third-party source, not proof of player availability.';
  }catch(e){
@@ -321,6 +332,7 @@ async function loadPublishedNflInjuryPilot(){
   if(data?.schemaVersion!==1||data.sport!=='NFL'||data.type!=='injuries'||
      data.source!=='ESPN'||data.scope!=='league_injury_pilot'||
      data.verification!=='unverified'||!Number.isFinite(Date.parse(data.fetchedAt))||
+     Date.parse(data.fetchedAt)>Date.now()+5*60000||
      !Array.isArray(data.injuries)||!Array.isArray(data.teamsReported)||
      data.injuries.length!==data.count||data.count>1000||data.teamsReported.length>40||
      data.injuries.some(x=>!(x.espnId===null&&/^sha256:[0-9a-f]{64}$/.test(String(x.sourceInjuryId))&&x.rosterEvidence==='TEAM_UNVERIFIED')&&
