@@ -227,6 +227,31 @@ class InjuryPilotTests(unittest.TestCase):
         self.assertEqual(result["injuries"][0]["espnId"],"123456")
         self.assertIsNone(result["injuries"][0]["sourceInjuryId"])
 
+    def test_alphanumeric_and_uuid_like_event_ids_remain_unlinked(self):
+        for event_id in ("NFL-2026:ATL.22","c14f832e-3f58-4ac5-a019-0ce6d8456923"):
+            with self.subTest(event_id=event_id):
+                payload={"injuries":[{"id":"1","displayName":"Atlanta Falcons","injuries":[
+                    {"id":event_id,"athlete":{"displayName":"Example Runner"},"status":"Questionable"}]}]}
+                result=inj.normalized(payload,NOW,{event_id:["ATL"]})
+                record=result["injuries"][0]
+                self.assertEqual(record["sourceInjuryId"],event_id)
+                self.assertIsNone(record["espnId"])
+                self.assertEqual(record["rosterEvidence"],"TEAM_UNVERIFIED")
+
+    def test_unsafe_or_oversized_event_ids_still_fail_closed(self):
+        for event_id in ("not safe", "<script>", "\\n", "", "X"*129, "/private/path", "🚫"):
+            with self.subTest(event_id=event_id):
+                payload={"injuries":[{"id":"1","displayName":"Atlanta Falcons","injuries":[
+                    {"id":event_id,"athlete":{"displayName":"Example Runner"},"status":"Out"}]}]}
+                with self.assertRaises(ValueError):
+                    inj.normalized(payload,NOW,{})
+
+    def test_duplicate_opaque_event_ids_are_rejected(self):
+        injury={"id":"A-123:report","athlete":{"displayName":"Example Runner"},"status":"Out"}
+        payload={"injuries":[{"id":"1","displayName":"Atlanta Falcons","injuries":[injury,dict(injury)]}]}
+        with self.assertRaisesRegex(ValueError,"Repeated injury"):
+            inj.normalized(payload,NOW,{})
+
     def test_size_and_count_bounds(self):
         src=source()
         src["injuries"]*=30
