@@ -6,7 +6,7 @@
   "verification": "unverified",
   "scope": "controlled_batch",
   "team": "MIN",
-  "fetchedAt": "2026-11-25T03:01:42Z",
+  "fetchedAt": "2026-11-26T22:25:41Z",
   "count": 81,
   "athletes": [
     {
@@ -415,5 +415,5 @@
       "position": "DB"
     }
   ],
-  "notice": "Third-party roster listing, not a verified active team or game-status record."
+  "notice": "Unverified third-party roster listing; not a player eligibility or team identity confirmation."
 }

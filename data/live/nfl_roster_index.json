@@ -4,14 +4,14 @@
   "type": "roster_index",
   "verification": "unverified",
   "source": "published_ESPN_snapshots",
-  "generatedAt": "2026-11-26T19:48:17Z",
+  "generatedAt": "2026-11-26T22:26:03Z",
   "freshnessThresholdHours": 36,
   "coverage": {
     "teamsExpected": 32,
     "teamsTracked": 32,
     "teamsPresent": 32,
-    "teamsCurrent": 12,
-    "teamsStale": 20,
+    "teamsCurrent": 20,
+    "teamsStale": 12,
     "teamsMissing": 0,
     "teamsInvalid": 0,
     "unresolvedCrossTeamIds": 0
@@ -115,51 +115,51 @@
     },
     {
       "team": "LAC",
-      "state": "STALE",
-      "count": 78,
-      "fetchedAt": "2026-11-25T03:01:42Z"
+      "state": "CURRENT",
+      "count": 79,
+      "fetchedAt": "2026-11-26T22:25:41Z"
     },
     {
       "team": "LAR",
-      "state": "STALE",
+      "state": "CURRENT",
       "count": 83,
-      "fetchedAt": "2026-11-25T03:01:42Z"
+      "fetchedAt": "2026-11-26T22:25:41Z"
     },
     {
       "team": "LV",
-      "state": "STALE",
+      "state": "CURRENT",
       "count": 76,
-      "fetchedAt": "2026-11-25T03:01:42Z"
+      "fetchedAt": "2026-11-26T22:25:41Z"
     },
     {
       "team": "MIA",
-      "state": "STALE",
-      "count": 76,
-      "fetchedAt": "2026-11-25T03:01:42Z"
+      "state": "CURRENT",
+      "count": 77,
+      "fetchedAt": "2026-11-26T22:25:41Z"
     },
     {
       "team": "MIN",
-      "state": "STALE",
+      "state": "CURRENT",
       "count": 81,
-      "fetchedAt": "2026-11-25T03:01:42Z"
+      "fetchedAt": "2026-11-26T22:25:41Z"
     },
     {
       "team": "NE",
-      "state": "STALE",
+      "state": "CURRENT",
       "count": 80,
-      "fetchedAt": "2026-11-25T03:01:42Z"
+      "fetchedAt": "2026-11-26T22:25:41Z"
     },
     {
       "team": "NO",
-      "state": "STALE",
+      "state": "CURRENT",
       "count": 77,
-      "fetchedAt": "2026-11-25T03:01:42Z"
+      "fetchedAt": "2026-11-26T22:25:41Z"
     },
     {
       "team": "NYG",
-      "state": "STALE",
+      "state": "CURRENT",
       "count": 83,
-      "fetchedAt": "2026-11-25T03:04:13Z"
+      "fetchedAt": "2026-11-26T22:25:41Z"
     },
     {
       "team": "NYJ",

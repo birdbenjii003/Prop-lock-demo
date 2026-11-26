@@ -6,7 +6,7 @@
   "verification": "unverified",
   "scope": "controlled_batch",
   "team": "NYG",
-  "fetchedAt": "2026-11-25T03:04:13Z",
+  "fetchedAt": "2026-11-26T22:25:41Z",
   "count": 83,
   "athletes": [
     {
@@ -425,5 +425,5 @@
       "position": "FB"
     }
   ],
-  "notice": "Third-party roster listing, not a verified active team or game-status record."
+  "notice": "Unverified third-party roster listing; not a player eligibility or team identity confirmation."
 }

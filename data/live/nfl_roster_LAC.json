@@ -6,8 +6,8 @@
   "verification": "unverified",
   "scope": "controlled_batch",
   "team": "LAC",
-  "fetchedAt": "2026-11-25T03:01:42Z",
-  "count": 78,
+  "fetchedAt": "2026-11-26T22:25:41Z",
+  "count": 79,
   "athletes": [
     {
       "espnId": "15151",
@@ -375,6 +375,11 @@
       "position": "C"
     },
     {
+      "espnId": "5082331",
+      "displayName": "Avery Smith",
+      "position": "CB"
+    },
+    {
       "espnId": "5082660",
       "displayName": "Alex Harkey",
       "position": "G"
@@ -400,5 +405,5 @@
       "position": "OT"
     }
   ],
-  "notice": "Third-party roster listing, not a verified active team or game-status record."
+  "notice": "Unverified third-party roster listing; not a player eligibility or team identity confirmation."
 }

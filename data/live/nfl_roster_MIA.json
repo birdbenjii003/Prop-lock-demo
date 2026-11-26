@@ -6,8 +6,8 @@
   "verification": "unverified",
   "scope": "controlled_batch",
   "team": "MIA",
-  "fetchedAt": "2026-11-25T03:01:42Z",
-  "count": 76,
+  "fetchedAt": "2026-11-26T22:25:41Z",
+  "count": 77,
   "athletes": [
     {
       "espnId": "2977680",
@@ -255,6 +255,11 @@
       "position": "RB"
     },
     {
+      "espnId": "4683101",
+      "displayName": "Max Llewellyn",
+      "position": "DE"
+    },
+    {
       "espnId": "4683276",
       "displayName": "Zeek Biggers",
       "position": "DT"
@@ -390,5 +395,5 @@
       "position": "OT"
     }
   ],
-  "notice": "Third-party roster listing, not a verified active team or game-status record."
+  "notice": "Unverified third-party roster listing; not a player eligibility or team identity confirmation."
 }
