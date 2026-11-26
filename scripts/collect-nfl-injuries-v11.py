@@ -233,13 +233,13 @@ def normalized(payload, now, roster_ids):
             designation = status_text(member.get("status"))
             injury_id = member.get("id")
             source_injury_id = str(injury_id) if isinstance(injury_id, (str, int)) and not isinstance(injury_id, bool) else None
-            if source_injury_id is not None and not re.fullmatch(r"\\d{1,20}", source_injury_id):
+            if source_injury_id is not None and not re.fullmatch(r"\d{1,20}", source_injury_id):
                 raise ValueError("Invalid injury event identifier: " + injury_entry_shape_summary(member, position, injury_position))
             # The entry's top-level id is an INJURY EVENT identifier, never an athlete ID.
             # The observed ESPN athlete dict omits id. Keep its listing as unlinked
             # evidence only, provided the separate injury event id is valid.
-            has_athlete_id = bool(re.fullmatch(r"\\d{1,12}", athlete_id))
-            if not isinstance(name, str) or not 2 <= len(name.strip()) <= 100 or \\
+            has_athlete_id = bool(re.fullmatch(r"\d{1,12}", athlete_id))
+            if not isinstance(name, str) or not 2 <= len(name.strip()) <= 100 or \
                designation is None or (not has_athlete_id and source_injury_id is None):
                 raise ValueError("Injury entry lacks valid name, status or source identity: " + injury_entry_shape_summary(member, position, injury_position))
             # Multiple injury reports can exist for one athlete. Prefer the unique
