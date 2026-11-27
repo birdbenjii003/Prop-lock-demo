@@ -6,8 +6,8 @@
   "verification": "unverified",
   "scope": "controlled_batch",
   "team": "IND",
-  "fetchedAt": "2026-11-25T13:03:32Z",
-  "count": 78,
+  "fetchedAt": "2026-11-27T17:33:03Z",
+  "count": 79,
   "athletes": [
     {
       "espnId": "2566045",
@@ -260,6 +260,11 @@
       "position": "RB"
     },
     {
+      "espnId": "4570577",
+      "displayName": "Wanya Morris",
+      "position": "OT"
+    },
+    {
       "espnId": "4571557",
       "displayName": "Spencer Shrader",
       "position": "PK"
@@ -400,5 +405,5 @@
       "position": "RB"
     }
   ],
-  "notice": "Rechecked team roster listing; does not certify athlete's current team."
+  "notice": "Unverified third-party roster listing; not a player eligibility or team identity confirmation."
 }

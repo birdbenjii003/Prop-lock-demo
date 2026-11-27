@@ -4,14 +4,14 @@
   "type": "roster_index",
   "verification": "unverified",
   "source": "published_ESPN_snapshots",
-  "generatedAt": "2026-11-27T09:45:55Z",
+  "generatedAt": "2026-11-27T17:33:06Z",
   "freshnessThresholdHours": 36,
   "coverage": {
     "teamsExpected": 32,
     "teamsTracked": 32,
     "teamsPresent": 32,
-    "teamsCurrent": 30,
-    "teamsStale": 2,
+    "teamsCurrent": 32,
+    "teamsStale": 0,
     "teamsMissing": 0,
     "teamsInvalid": 0,
     "unresolvedCrossTeamIds": 0
@@ -97,9 +97,9 @@
     },
     {
       "team": "IND",
-      "state": "STALE",
-      "count": 78,
-      "fetchedAt": "2026-11-25T13:03:32Z"
+      "state": "CURRENT",
+      "count": 79,
+      "fetchedAt": "2026-11-27T17:33:03Z"
     },
     {
       "team": "JAX",
@@ -109,9 +109,9 @@
     },
     {
       "team": "KC",
-      "state": "STALE",
+      "state": "CURRENT",
       "count": 78,
-      "fetchedAt": "2026-11-25T13:03:32Z"
+      "fetchedAt": "2026-11-27T17:33:03Z"
     },
     {
       "team": "LAC",

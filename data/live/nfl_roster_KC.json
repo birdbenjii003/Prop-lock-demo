@@ -6,7 +6,7 @@
   "verification": "unverified",
   "scope": "controlled_batch",
   "team": "KC",
-  "fetchedAt": "2026-11-25T13:03:32Z",
+  "fetchedAt": "2026-11-27T17:33:03Z",
   "count": 78,
   "athletes": [
     {
@@ -400,5 +400,5 @@
       "position": "CB"
     }
   ],
-  "notice": "Rechecked team roster listing; does not certify athlete's current team."
+  "notice": "Unverified third-party roster listing; not a player eligibility or team identity confirmation."
 }
