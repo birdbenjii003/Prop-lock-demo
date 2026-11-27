@@ -1,0 +1,37 @@
+name: Publish NFL injury identity audit — read only Phase 12
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: prop-lock-nfl-injury-identity-audit
+  cancel-in-progress: false
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate offline identity tests
+        run: python -m unittest discover -s tests -p test_nfl_injury_identity_v12.py -v
+      - name: Audit published ESPN injury and roster snapshots without provider calls
+        run: python scripts/audit-nfl-injury-identity-v12.py
+      - name: Commit only the separate identity audit
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- data/live/nfl_injury_identity_audit.json
+          if git diff --cached --quiet; then
+            echo "No changed audit."
+          else
+            git commit -m "data: publish read-only NFL injury identity coverage audit"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
