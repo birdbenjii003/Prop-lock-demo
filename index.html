@@ -285,6 +285,39 @@ async function loadPublishedNflRosterIndex(){
  renderLiveFeedMonitor();
 }
 // NFL injury pilot is informational and intentionally does not alter model projections.
+let plInjuryIdentityAuditStatus='NFL injury identity audit unavailable. No athlete matching claims.';
+async function loadPublishedNflInjuryIdentityAudit(){
+ try{
+  const response=await fetch('./data/live/nfl_injury_identity_audit.json',{cache:'no-cache'});
+  if(!response.ok)throw Error('HTTP '+response.status);
+  const data=await response.json();
+  const t=data?.totals;
+  const expected=['UNLINKED_NO_ATHLETE_ID','STALE_INJURY_REPORT','TEAM_ROSTER_STALE_OR_MISSING',
+   'ATHLETE_NOT_IN_ROSTER','CROSS_TEAM_ID_CONFLICT','TEAM_ID_MISMATCH','ID_NAME_MISMATCH',
+   'ID_CROSS_SOURCE_MATCH_UNVERIFIED'];
+  if(data.schemaVersion!==1||data.sport!=='NFL'||data.type!=='injury_identity_audit'||
+     data.verification!=='unverified'||data.source!=='published_ESPN_snapshots'||
+     !Number.isFinite(Date.parse(data.generatedAt))||Date.parse(data.generatedAt)>Date.now()+300000||
+     !t||!Number.isInteger(t.entries)||t.entries<1||t.entries>1000||
+     !expected.every(k=>Number.isInteger(t[k])&&t[k]>=0)||
+     expected.reduce((sum,k)=>sum+t[k],0)!==t.entries||!Array.isArray(data.records)||
+     data.records.length!==t.entries)
+     throw Error('INVALID_INJURY_IDENTITY_AUDIT');
+  const age=(Date.now()-Date.parse(data.generatedAt))/3600000;
+  plInjuryIdentityAuditStatus='NFL injury identity: '+t.ID_CROSS_SOURCE_MATCH_UNVERIFIED+
+    ' exact ID/name/team roster matches (still source-unverified) · '+
+    t.UNLINKED_NO_ATHLETE_ID+' missing player IDs · '+
+    (t.entries-t.UNLINKED_NO_ATHLETE_ID-t.ID_CROSS_SOURCE_MATCH_UNVERIFIED)+
+    ' stale, conflicting or unmatched entries · roster coverage '+t.rosterTeamsCurrent+
+    '/32 current · identity audit '+data.generatedAt+
+    (age>12?' · STALE IDENTITY AUDIT':' · recent identity audit')+
+    ' · no injury eligibility or projection adjustment.';
+ }catch(e){
+  plInjuryIdentityAuditStatus='NFL injury identity audit unavailable: '+(e.message||String(e))+
+   '. No athlete matching or availability claims.';
+ }
+ renderLiveFeedMonitor();
+}
 let plInjuryPilotStatus='NFL injury pilot not checked. No player availability claims.';
 // Last successful provider check is separate from the age of last changed injury data.
 let plInjuryRefreshHealth='NFL injury refresh: no validated check audit available.';
@@ -362,6 +395,7 @@ function renderLiveFeedMonitor(){
   (sport==='NFL'?'<p class="scenario-note" id="batchRosterStatus">'+escapeHtml(plBatchRosterStatus)+'</p>':'')+
   (sport==='NFL'?'<p class="scenario-note" id="rosterIndexStatus">'+escapeHtml(plRosterIndexStatus)+'</p>':'')+
   (sport==='NFL'?'<p class="scenario-note" id="injuryPilotStatus">'+escapeHtml(plInjuryPilotStatus)+'</p>':'')+
+  (sport==='NFL'?'<p class="scenario-note" id="injuryIdentityAuditStatus">'+escapeHtml(plInjuryIdentityAuditStatus)+'</p>':'')+
   (sport==='NFL'?'<p class="scenario-note" id="injuryRefreshHealth">'+escapeHtml(plInjuryRefreshHealth)+'</p>':'')+
   (sport==='NFL'?'<button type="button" id="liveRefreshNflSchedule" '+(plScheduleRefreshing?'disabled':'')+'>Check NFL schedule feed</button> <button type="button" id="liveToggleAutomatic">'+(plAutoRefresh?'Disable':'Enable')+' automatic checks</button><p class="scenario-note">Automatic checks are '+(plAutoRefresh?'enabled':'disabled')+' for this browser only, while the page is open. Schedule cache target: 12 hours; failures enforce cooldown.</p><p id="liveScheduleRefreshStatus" class="scenario-note">'+escapeHtml(plScheduleRefreshStatus)+'</p><p class="scenario-note">Recent checks: '+escapeHtml(plRefreshHistory.slice(-4).map(x=>x.status+' '+x.at+' '+x.detail).join(' | ')||'None')+'</p>':'')+
   '<div class="validation-overflow"><table class="validation-table"><thead><tr><th>Source type</th><th>Freshness</th><th>Evidence</th><th>Retrieved</th></tr></thead><tbody>'+
@@ -1213,6 +1247,7 @@ loadPublishedNflRosterPilot();
 loadPublishedNflRosterBatch();
 loadPublishedNflRosterIndex();
 loadPublishedNflInjuryPilot();
+loadPublishedNflInjuryIdentityAudit();
 loadPublishedNflInjuryHealth();
 document.addEventListener('visibilitychange',()=>{if(plAutoRefresh)plScheduleTick()});
 if(plAutoRefresh)plScheduleTick();
