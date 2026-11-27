@@ -124,7 +124,7 @@ def audit(injuries, by_id, team_status, now):
                    "rosterTeamsStaleOrMissing": len(plan.ALL_TEAMS)-sum(x == "CURRENT" for x in team_status.values()),
                    **statuses},
         "records": records,
-        "notice": "Read-only identity evidence. Exact athlete ESPN ID + same current team + same name required. No name-only match; no injury-based projections, health or eligibility claims."
+        "notice": "Read-only, source-unverified identity evidence. Exact athlete ESPN ID + same current team + same name required. No name-only match; no injury-based projections, health or eligibility claims."
     }
 
 def main():
