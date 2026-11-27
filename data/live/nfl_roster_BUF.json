@@ -6,7 +6,7 @@
   "verification": "unverified",
   "scope": "controlled_batch",
   "team": "BUF",
-  "fetchedAt": "2026-11-25T13:03:32Z",
+  "fetchedAt": "2026-11-27T09:45:38Z",
   "count": 72,
   "athletes": [
     {
@@ -370,5 +370,5 @@
       "position": "OT"
     }
   ],
-  "notice": "Rechecked team roster listing; does not certify athlete's current team."
+  "notice": "Unverified third-party roster listing; not a player eligibility or team identity confirmation."
 }

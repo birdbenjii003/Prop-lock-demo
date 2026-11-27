@@ -6,8 +6,8 @@
   "verification": "unverified",
   "scope": "controlled_batch",
   "team": "ARI",
-  "fetchedAt": "2026-11-25T02:59:10Z",
-  "count": 88,
+  "fetchedAt": "2026-11-27T09:45:38Z",
+  "count": 89,
   "athletes": [
     {
       "espnId": "11394",
@@ -260,6 +260,11 @@
       "position": "OT"
     },
     {
+      "espnId": "4428512",
+      "displayName": "Kedon Slovis",
+      "position": "QB"
+    },
+    {
       "espnId": "4428633",
       "displayName": "Dadrion Taylor-Demerson",
       "position": "S"
@@ -450,5 +455,5 @@
       "position": "QB"
     }
   ],
-  "notice": "Third-party roster listing, not a verified active team or game-status record."
+  "notice": "Unverified third-party roster listing; not a player eligibility or team identity confirmation."
 }

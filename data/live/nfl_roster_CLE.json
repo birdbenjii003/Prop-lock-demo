@@ -6,7 +6,7 @@
   "verification": "unverified",
   "scope": "controlled_batch",
   "team": "CLE",
-  "fetchedAt": "2026-11-25T02:59:10Z",
+  "fetchedAt": "2026-11-27T09:45:38Z",
   "count": 79,
   "athletes": [
     {
@@ -405,5 +405,5 @@
       "position": "CB"
     }
   ],
-  "notice": "Third-party roster listing, not a verified active team or game-status record."
+  "notice": "Unverified third-party roster listing; not a player eligibility or team identity confirmation."
 }

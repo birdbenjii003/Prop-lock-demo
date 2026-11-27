@@ -4,14 +4,14 @@
   "type": "roster_index",
   "verification": "unverified",
   "source": "published_ESPN_snapshots",
-  "generatedAt": "2026-11-27T02:18:41Z",
+  "generatedAt": "2026-11-27T09:45:55Z",
   "freshnessThresholdHours": 36,
   "coverage": {
     "teamsExpected": 32,
     "teamsTracked": 32,
     "teamsPresent": 32,
-    "teamsCurrent": 24,
-    "teamsStale": 8,
+    "teamsCurrent": 30,
+    "teamsStale": 2,
     "teamsMissing": 0,
     "teamsInvalid": 0,
     "unresolvedCrossTeamIds": 0
@@ -19,9 +19,9 @@
   "teams": [
     {
       "team": "ARI",
-      "state": "STALE",
-      "count": 88,
-      "fetchedAt": "2026-11-25T02:59:10Z"
+      "state": "CURRENT",
+      "count": 89,
+      "fetchedAt": "2026-11-27T09:45:38Z"
     },
     {
       "team": "ATL",
@@ -37,33 +37,33 @@
     },
     {
       "team": "BUF",
-      "state": "STALE",
+      "state": "CURRENT",
       "count": 72,
-      "fetchedAt": "2026-11-25T13:03:32Z"
+      "fetchedAt": "2026-11-27T09:45:38Z"
     },
     {
       "team": "CAR",
-      "state": "STALE",
-      "count": 83,
-      "fetchedAt": "2026-11-25T02:59:10Z"
+      "state": "CURRENT",
+      "count": 82,
+      "fetchedAt": "2026-11-27T09:45:38Z"
     },
     {
       "team": "CHI",
-      "state": "STALE",
+      "state": "CURRENT",
       "count": 82,
-      "fetchedAt": "2026-11-25T02:59:10Z"
+      "fetchedAt": "2026-11-27T09:45:38Z"
     },
     {
       "team": "CIN",
-      "state": "STALE",
+      "state": "CURRENT",
       "count": 74,
-      "fetchedAt": "2026-11-25T02:59:10Z"
+      "fetchedAt": "2026-11-27T09:45:38Z"
     },
     {
       "team": "CLE",
-      "state": "STALE",
+      "state": "CURRENT",
       "count": 79,
-      "fetchedAt": "2026-11-25T02:59:10Z"
+      "fetchedAt": "2026-11-27T09:45:38Z"
     },
     {
       "team": "DAL",

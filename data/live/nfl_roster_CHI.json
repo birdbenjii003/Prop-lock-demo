@@ -6,7 +6,7 @@
   "verification": "unverified",
   "scope": "controlled_batch",
   "team": "CHI",
-  "fetchedAt": "2026-11-25T02:59:10Z",
+  "fetchedAt": "2026-11-27T09:45:38Z",
   "count": 82,
   "athletes": [
     {
@@ -195,14 +195,14 @@
       "position": "RB"
     },
     {
+      "espnId": "4360203",
+      "displayName": "Elijah Jones",
+      "position": "CB"
+    },
+    {
       "espnId": "4360319",
       "displayName": "Jordan McFadden",
       "position": "G"
-    },
-    {
-      "espnId": "4360335",
-      "displayName": "Elijah Jones",
-      "position": "DB"
     },
     {
       "espnId": "4361093",
@@ -420,5 +420,5 @@
       "position": "WR"
     }
   ],
-  "notice": "Third-party roster listing, not a verified active team or game-status record."
+  "notice": "Unverified third-party roster listing; not a player eligibility or team identity confirmation."
 }
