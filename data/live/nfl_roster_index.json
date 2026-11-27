@@ -4,14 +4,14 @@
   "type": "roster_index",
   "verification": "unverified",
   "source": "published_ESPN_snapshots",
-  "generatedAt": "2026-11-27T19:38:03Z",
+  "generatedAt": "2026-11-27T22:05:36Z",
   "freshnessThresholdHours": 36,
   "coverage": {
     "teamsExpected": 32,
     "teamsTracked": 32,
     "teamsPresent": 32,
-    "teamsCurrent": 32,
-    "teamsStale": 0,
+    "teamsCurrent": 30,
+    "teamsStale": 2,
     "teamsMissing": 0,
     "teamsInvalid": 0,
     "unresolvedCrossTeamIds": 0
@@ -25,13 +25,13 @@
     },
     {
       "team": "ATL",
-      "state": "CURRENT",
+      "state": "STALE",
       "count": 79,
       "fetchedAt": "2026-11-26T09:41:16Z"
     },
     {
       "team": "BAL",
-      "state": "CURRENT",
+      "state": "STALE",
       "count": 79,
       "fetchedAt": "2026-11-26T09:41:16Z"
     },
