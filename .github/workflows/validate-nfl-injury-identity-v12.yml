@@ -1,0 +1,39 @@
+name: Validate Phase 12 NFL injury identity audit
+on:
+  push:
+    paths:
+      - 'scripts/audit-nfl-injury-identity-v12.py'
+      - 'tests/test_nfl_injury_identity_v12.py'
+      - 'index.html'
+      - '.github/workflows/validate-nfl-injury-identity-v12.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  no-network-identity-gates:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Test verified-ID-only gate and existing injury regressions offline
+        run: |
+          python -m unittest discover -s tests -p test_nfl_injury_identity_v12.py -v
+          python -m unittest discover -s tests -p test_nfl_injuries_v11.py -v
+      - name: Verify app JavaScript parses and audit displays only as read-only
+        run: |
+          node - <<'NODE'
+          const fs=require('fs'),vm=require('vm');
+          const html=fs.readFileSync('index.html','utf8');
+          const match=html.match(/<script>\s*([\s\S]*?)<\/script>/);
+          if(!match)throw Error('main app script unavailable');
+          new vm.Script(match[1]);
+          if(!html.includes('injuryIdentityAuditStatus')||!html.includes('UNLINKED_NO_ATHLETE_ID'))
+            throw Error('Phase 12 read-only panel absent');
+          console.log('Phase 12 read-only status UI: syntax PASS');
+          NODE
