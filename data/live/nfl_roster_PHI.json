@@ -6,8 +6,8 @@
   "verification": "unverified",
   "scope": "controlled_batch",
   "team": "PHI",
-  "fetchedAt": "2026-11-24T15:39:06Z",
-  "count": 77,
+  "fetchedAt": "2026-11-27T02:18:19Z",
+  "count": 76,
   "athletes": [
     {
       "espnId": "15835",
@@ -210,11 +210,6 @@
       "position": "DT"
     },
     {
-      "espnId": "4430814",
-      "displayName": "Jake Majors",
-      "position": "C"
-    },
-    {
       "espnId": "4431545",
       "displayName": "Will Shipley",
       "position": "RB"
@@ -395,5 +390,5 @@
       "position": "DT"
     }
   ],
-  "notice": "Third-party team roster. Player identities, current-team assignment, health and game eligibility are not independently verified."
+  "notice": "Unverified third-party roster listing; not a player eligibility or team identity confirmation."
 }

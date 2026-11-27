@@ -6,8 +6,8 @@
   "verification": "unverified",
   "scope": "controlled_batch",
   "team": "PIT",
-  "fetchedAt": "2026-11-25T03:04:13Z",
-  "count": 79,
+  "fetchedAt": "2026-11-27T02:18:19Z",
+  "count": 78,
   "athletes": [
     {
       "espnId": "13977",
@@ -398,12 +398,7 @@
       "espnId": "5192448",
       "displayName": "Cole Burgess",
       "position": "WR"
-    },
-    {
-      "espnId": "8439",
-      "displayName": "Aaron Rodgers",
-      "position": "QB"
     }
   ],
-  "notice": "Third-party roster listing, not a verified active team or game-status record."
+  "notice": "Unverified third-party roster listing; not a player eligibility or team identity confirmation."
 }

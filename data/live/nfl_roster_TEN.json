@@ -6,7 +6,7 @@
   "verification": "unverified",
   "scope": "controlled_batch",
   "team": "TEN",
-  "fetchedAt": "2026-11-25T03:04:13Z",
+  "fetchedAt": "2026-11-27T02:18:19Z",
   "count": 81,
   "athletes": [
     {
@@ -18,11 +18,6 @@
       "espnId": "13848",
       "displayName": "Morgan Cox",
       "position": "LS"
-    },
-    {
-      "espnId": "2982313",
-      "displayName": "Tanoh Kpassagnon",
-      "position": "DE"
     },
     {
       "espnId": "3039707",
@@ -245,6 +240,11 @@
       "position": "WR"
     },
     {
+      "espnId": "4431426",
+      "displayName": "Corey Thornton",
+      "position": "CB"
+    },
+    {
       "espnId": "4431437",
       "displayName": "JC Latham",
       "position": "OT"
@@ -415,5 +415,5 @@
       "position": "DT"
     }
   ],
-  "notice": "Third-party roster listing, not a verified active team or game-status record."
+  "notice": "Unverified third-party roster listing; not a player eligibility or team identity confirmation."
 }

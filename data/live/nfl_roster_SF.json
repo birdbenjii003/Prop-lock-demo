@@ -6,7 +6,7 @@
   "verification": "unverified",
   "scope": "controlled_batch",
   "team": "SF",
-  "fetchedAt": "2026-11-24T15:58:06Z",
+  "fetchedAt": "2026-11-27T02:18:19Z",
   "count": 87,
   "athletes": [
     {
@@ -28,6 +28,11 @@
       "espnId": "16002",
       "displayName": "Kyle Juszczyk",
       "position": "FB"
+    },
+    {
+      "espnId": "16731",
+      "displayName": "Brandin Cooks",
+      "position": "WR"
     },
     {
       "espnId": "16737",
@@ -208,11 +213,6 @@
       "espnId": "4259147",
       "displayName": "Jake Tonges",
       "position": "TE"
-    },
-    {
-      "espnId": "4259558",
-      "displayName": "Robert Beal Jr.",
-      "position": "DE"
     },
     {
       "espnId": "4360290",
@@ -445,5 +445,5 @@
       "position": "G"
     }
   ],
-  "notice": "Third-party team roster. Player identities, current-team assignment, health and game eligibility are not independently verified."
+  "notice": "Unverified third-party roster listing; not a player eligibility or team identity confirmation."
 }

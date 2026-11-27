@@ -6,7 +6,7 @@
   "verification": "unverified",
   "scope": "controlled_batch",
   "team": "SEA",
-  "fetchedAt": "2026-11-25T13:03:32Z",
+  "fetchedAt": "2026-11-27T02:18:19Z",
   "count": 82,
   "athletes": [
     {
@@ -420,5 +420,5 @@
       "position": "WR"
     }
   ],
-  "notice": "Rechecked team roster listing; does not certify athlete's current team."
+  "notice": "Unverified third-party roster listing; not a player eligibility or team identity confirmation."
 }

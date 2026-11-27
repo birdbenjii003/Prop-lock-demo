@@ -6,8 +6,8 @@
   "verification": "unverified",
   "scope": "controlled_batch",
   "team": "WSH",
-  "fetchedAt": "2026-11-25T03:04:13Z",
-  "count": 79,
+  "fetchedAt": "2026-11-27T02:18:19Z",
+  "count": 80,
   "athletes": [
     {
       "espnId": "16166",
@@ -178,6 +178,11 @@
       "espnId": "4360378",
       "displayName": "Quan Martin",
       "position": "S"
+    },
+    {
+      "espnId": "4360438",
+      "displayName": "Brandon Aiyuk",
+      "position": "WR"
     },
     {
       "espnId": "4360635",
@@ -405,5 +410,5 @@
       "position": "DE"
     }
   ],
-  "notice": "Third-party roster listing, not a verified active team or game-status record."
+  "notice": "Unverified third-party roster listing; not a player eligibility or team identity confirmation."
 }
