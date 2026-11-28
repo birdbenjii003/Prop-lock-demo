@@ -287,6 +287,13 @@ class InjuryPilotTests(unittest.TestCase):
                 self.assertEqual(record["espnId"],"123456")
                 self.assertEqual(record["espnIdEvidence"],evidence)
 
+    def test_canonical_core_espn_athlete_reference_only(self):
+        athlete={"displayName":"Example Athlete","$ref":
+          "https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/athletes/123456"}
+        self.assertEqual(inj.explicit_athlete_id(athlete),("123456","ATHLETE_API_REF"))
+        athlete["$ref"]="https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/123456"
+        self.assertEqual(inj.explicit_athlete_id(athlete),(None,None))
+
     def test_unsafe_or_unrelated_links_never_become_player_ids(self):
         urls=("https://evil.espn.com/nfl/player/_/id/123456/example",
               "http://www.espn.com/nfl/player/_/id/123456/example",
