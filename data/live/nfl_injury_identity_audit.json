@@ -1,0 +1,4027 @@
+{
+  "schemaVersion": 1,
+  "sport": "NFL",
+  "type": "injury_identity_audit",
+  "verification": "unverified",
+  "source": "published_ESPN_snapshots",
+  "generatedAt": "2026-11-28T02:43:04Z",
+  "injuryFetchedAt": "2026-11-27T23:43:28Z",
+  "injuryReportCurrent": true,
+  "totals": {
+    "entries": 800,
+    "teamsReported": 32,
+    "rosterTeamsCurrent": 30,
+    "rosterTeamsStaleOrMissing": 2,
+    "UNLINKED_NO_ATHLETE_ID": 800,
+    "STALE_INJURY_REPORT": 0,
+    "TEAM_ROSTER_STALE_OR_MISSING": 0,
+    "ATHLETE_NOT_IN_ROSTER": 0,
+    "CROSS_TEAM_ID_CONFLICT": 0,
+    "TEAM_ID_MISMATCH": 0,
+    "ID_NAME_MISMATCH": 0,
+    "ID_CROSS_SOURCE_MATCH_UNVERIFIED": 0
+  },
+  "records": [
+    {
+      "team": "ARI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "ARI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "ARI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "ARI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "ARI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "ARI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "ARI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "ARI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "ARI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "ARI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "ARI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "ARI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "ARI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "ARI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "ARI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "ARI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "ARI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "ARI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "ARI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "ARI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "ARI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "ARI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "ARI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "ARI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "ARI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "ATL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "ATL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "ATL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "ATL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "ATL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "ATL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "ATL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "ATL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "ATL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "ATL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "ATL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "ATL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "ATL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "ATL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "ATL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "ATL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "ATL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "ATL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "ATL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "ATL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "ATL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "ATL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "ATL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "ATL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "ATL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "BAL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "BAL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "BAL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "BAL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "BAL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "BAL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "BAL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "BAL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "BAL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "BAL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "BAL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "BAL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "BAL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "BAL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "BAL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "BAL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "BAL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "BAL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "BAL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "BAL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "BAL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "BAL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "BAL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "BAL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "BAL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "BUF",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "BUF",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "BUF",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "BUF",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "BUF",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "BUF",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "BUF",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "BUF",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "BUF",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "BUF",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "BUF",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "BUF",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "BUF",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "BUF",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "BUF",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "BUF",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "BUF",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "BUF",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "BUF",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "BUF",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "BUF",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "BUF",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "BUF",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "BUF",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "BUF",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CAR",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CAR",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CAR",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CAR",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CAR",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CAR",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CAR",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CAR",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CAR",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CAR",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CAR",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CAR",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CAR",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CAR",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CAR",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CAR",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CAR",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CAR",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CAR",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CAR",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CAR",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CAR",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CAR",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CAR",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CAR",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CHI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CHI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CHI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CHI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CHI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CHI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CHI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CHI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CHI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CHI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CHI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CHI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CHI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CHI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CHI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CHI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CHI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CHI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CHI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CHI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CHI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CHI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CHI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CHI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CHI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CIN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CIN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CIN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CIN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CIN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CIN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CIN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CIN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CIN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CIN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CIN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CIN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CIN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CIN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CIN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CIN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CIN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CIN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CIN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CIN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CIN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CIN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CIN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CIN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CIN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CLE",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CLE",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CLE",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CLE",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CLE",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CLE",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CLE",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CLE",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CLE",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CLE",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CLE",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CLE",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CLE",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CLE",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CLE",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CLE",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CLE",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CLE",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CLE",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CLE",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CLE",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CLE",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CLE",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CLE",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "CLE",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DAL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DAL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DAL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DAL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DAL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DAL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DAL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DAL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DAL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DAL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DAL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DAL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DAL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DAL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DAL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DAL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DAL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DAL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DAL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DAL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DAL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DAL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DAL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DAL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DAL",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DEN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DEN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DEN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DEN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DEN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DEN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DEN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DEN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DEN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DEN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DEN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DEN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DEN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DEN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DEN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DEN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DEN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DEN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DEN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DEN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DEN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DEN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DEN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DEN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DEN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DET",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DET",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DET",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DET",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DET",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DET",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DET",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DET",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DET",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DET",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DET",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DET",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DET",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DET",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DET",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DET",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DET",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DET",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DET",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DET",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DET",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DET",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DET",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DET",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "DET",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "GB",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "GB",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "GB",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "GB",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "GB",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "GB",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "GB",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "GB",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "GB",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "GB",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "GB",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "GB",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "GB",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "GB",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "GB",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "GB",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "GB",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "GB",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "GB",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "GB",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "GB",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "GB",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "GB",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "GB",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "GB",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "HOU",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "HOU",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "HOU",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "HOU",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "HOU",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "HOU",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "HOU",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "HOU",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "HOU",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "HOU",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "HOU",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "HOU",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "HOU",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "HOU",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "HOU",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "HOU",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "HOU",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "HOU",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "HOU",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "HOU",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "HOU",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "HOU",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "HOU",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "HOU",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "HOU",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "IND",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "IND",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "IND",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "IND",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "IND",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "IND",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "IND",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "IND",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "IND",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "IND",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "IND",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "IND",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "IND",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "IND",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "IND",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "IND",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "IND",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "IND",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "IND",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "IND",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "IND",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "IND",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "IND",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "IND",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "IND",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "JAX",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "JAX",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "JAX",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "JAX",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "JAX",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "JAX",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "JAX",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "JAX",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "JAX",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "JAX",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "JAX",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "JAX",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "JAX",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "JAX",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "JAX",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "JAX",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "JAX",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "JAX",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "JAX",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "JAX",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "JAX",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "JAX",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "JAX",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "JAX",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "JAX",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "KC",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "KC",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "KC",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "KC",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "KC",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "KC",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "KC",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "KC",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "KC",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "KC",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "KC",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "KC",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "KC",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "KC",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "KC",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "KC",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "KC",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "KC",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "KC",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "KC",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "KC",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "KC",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "KC",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "KC",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "KC",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LAC",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LAC",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LAC",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LAC",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LAC",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LAC",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LAC",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LAC",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LAC",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LAC",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LAC",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LAC",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LAC",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LAC",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LAC",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LAC",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LAC",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LAC",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LAC",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LAC",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LAC",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LAC",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LAC",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LAC",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LAC",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LAR",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LAR",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LAR",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LAR",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LAR",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LAR",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LAR",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LAR",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LAR",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LAR",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LAR",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LAR",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LAR",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LAR",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LAR",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LAR",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LAR",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LAR",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LAR",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LAR",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LAR",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LAR",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LAR",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LAR",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LAR",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LV",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LV",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LV",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LV",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LV",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LV",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LV",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LV",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LV",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LV",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LV",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LV",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LV",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LV",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LV",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LV",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LV",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LV",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LV",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LV",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LV",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LV",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LV",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LV",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "LV",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "MIA",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "MIA",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "MIA",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "MIA",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "MIA",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "MIA",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "MIA",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "MIA",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "MIA",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "MIA",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "MIA",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "MIA",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "MIA",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "MIA",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "MIA",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "MIA",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "MIA",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "MIA",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "MIA",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "MIA",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "MIA",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "MIA",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "MIA",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "MIA",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "MIA",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "MIN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "MIN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "MIN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "MIN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "MIN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "MIN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "MIN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "MIN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "MIN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "MIN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "MIN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "MIN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "MIN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "MIN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "MIN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "MIN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "MIN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "MIN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "MIN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "MIN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "MIN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "MIN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "MIN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "MIN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "MIN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NE",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NE",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NE",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NE",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NE",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NE",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NE",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NE",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NE",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NE",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NE",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NE",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NE",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NE",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NE",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NE",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NE",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NE",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NE",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NE",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NE",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NE",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NE",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NE",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NE",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NO",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NO",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NO",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NO",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NO",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NO",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NO",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NO",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NO",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NO",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NO",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NO",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NO",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NO",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NO",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NO",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NO",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NO",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NO",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NO",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NO",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NO",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NO",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NO",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NO",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NYG",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NYG",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NYG",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NYG",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NYG",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NYG",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NYG",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NYG",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NYG",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NYG",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NYG",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NYG",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NYG",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NYG",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NYG",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NYG",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NYG",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NYG",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NYG",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NYG",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NYG",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NYG",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NYG",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NYG",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NYG",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NYJ",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NYJ",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NYJ",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NYJ",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NYJ",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NYJ",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NYJ",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NYJ",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NYJ",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NYJ",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NYJ",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NYJ",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NYJ",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NYJ",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NYJ",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NYJ",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NYJ",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NYJ",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NYJ",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NYJ",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NYJ",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NYJ",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NYJ",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NYJ",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "NYJ",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "PHI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "PHI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "PHI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "PHI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "PHI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "PHI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "PHI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "PHI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "PHI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "PHI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "PHI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "PHI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "PHI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "PHI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "PHI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "PHI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "PHI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "PHI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "PHI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "PHI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "PHI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "PHI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "PHI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "PHI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "PHI",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "PIT",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "PIT",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "PIT",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "PIT",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "PIT",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "PIT",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "PIT",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "PIT",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "PIT",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "PIT",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "PIT",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "PIT",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "PIT",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "PIT",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "PIT",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "PIT",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "PIT",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "PIT",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "PIT",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "PIT",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "PIT",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "PIT",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "PIT",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "PIT",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "PIT",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "SEA",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "SEA",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "SEA",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "SEA",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "SEA",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "SEA",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "SEA",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "SEA",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "SEA",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "SEA",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "SEA",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "SEA",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "SEA",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "SEA",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "SEA",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "SEA",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "SEA",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "SEA",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "SEA",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "SEA",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "SEA",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "SEA",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "SEA",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "SEA",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "SEA",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "SF",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "SF",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "SF",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "SF",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "SF",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "SF",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "SF",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "SF",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "SF",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "SF",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "SF",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "SF",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "SF",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "SF",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "SF",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "SF",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "SF",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "SF",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "SF",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "SF",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "SF",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "SF",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "SF",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "SF",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "SF",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "TB",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "TB",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "TB",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "TB",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "TB",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "TB",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "TB",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "TB",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "TB",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "TB",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "TB",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "TB",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "TB",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "TB",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "TB",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "TB",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "TB",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "TB",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "TB",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "TB",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "TB",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "TB",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "TB",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "TB",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "TB",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "TEN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "TEN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "TEN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "TEN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "TEN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "TEN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "TEN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "TEN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "TEN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "TEN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "TEN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "TEN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "TEN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "TEN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "TEN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "TEN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "TEN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "TEN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "TEN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "TEN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "TEN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "TEN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "TEN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "TEN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "TEN",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "WSH",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "WSH",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "WSH",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "WSH",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "WSH",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "WSH",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "WSH",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "WSH",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "WSH",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "WSH",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "WSH",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "WSH",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "WSH",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "WSH",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "WSH",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "WSH",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "WSH",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "WSH",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "WSH",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "WSH",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "WSH",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "WSH",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "WSH",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "WSH",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    },
+    {
+      "team": "WSH",
+      "identityStatus": "UNLINKED_NO_ATHLETE_ID",
+      "athleteIdPresent": false
+    }
+  ],
+  "notice": "Read-only, source-unverified identity evidence. Exact athlete ESPN ID + same current team + same name required. No name-only match; no injury-based projections, health or eligibility claims."
+}
