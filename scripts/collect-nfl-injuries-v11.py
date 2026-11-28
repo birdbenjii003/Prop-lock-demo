@@ -15,6 +15,7 @@ from pathlib import Path
 import re
 import urllib.error
 import urllib.request
+from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parent.parent
 URL = "https://site.api.espn.com/apis/site/v2/sports/football/nfl/injuries"
@@ -203,6 +204,84 @@ def injury_entry_shape_summary(member, group_position, injury_position):
             f"athleteFullNamePresent={isinstance(athlete,dict) and bool(athlete.get('fullName'))})")
 
 
+def explicit_athlete_id(athlete):
+    """Only ESPN athlete-scoped canonical identifiers; never the injury event ID.
+
+    Conflicting canonical references are intentionally left UNLINKED rather
+    than choosing a winner. Ignore unrelated URLs, names, photos or team IDs.
+    """
+    if not isinstance(athlete, dict):
+        return None, None
+    claims = []
+    athlete_id = athlete.get("id")
+    if isinstance(athlete_id, (str, int)) and not isinstance(athlete_id, bool):
+        raw = str(athlete_id)
+        if re.fullmatch(r"[0-9]{1,12}", raw):
+            claims.append((raw, "ATHLETE_FIELD"))
+        elif raw:
+            # A malformed direct identity must not be overridden by a URL.
+            return None, None
+    elif athlete_id is not None:
+        return None, None
+
+    uid = athlete.get("uid")
+    if uid is not None:
+        if not isinstance(uid, str) or len(uid) > 100:
+            return None, None
+        matched = re.fullmatch(r"s:20~l:28~a:([0-9]{1,12})", uid)
+        if matched:
+            claims.append((matched.group(1), "ATHLETE_UID"))
+        elif uid:
+            return None, None
+
+    def linked_id(url):
+        if not isinstance(url, str) or len(url) > 350:
+            return None
+        try:
+            parsed = urlsplit(url)
+            if (parsed.scheme != "https" or parsed.username is not None or
+                parsed.password is not None or parsed.port is not None or
+                parsed.query or parsed.fragment):
+                return None
+            host = parsed.hostname
+            if host in ("www.espn.com", "espn.com"):
+                found = re.fullmatch(r"/nfl/player/_/id/([0-9]{1,12})(?:/[a-z0-9-]+)?/?", parsed.path)
+            elif host == "site.api.espn.com":
+                found = re.fullmatch(r"/apis/site/v2/sports/football/nfl/athletes/([0-9]{1,12})/?", parsed.path)
+            elif host == "sports.core.api.espn.com":
+                found = re.fullmatch(r"/v2/sports/football/leagues/nfl/athletes/([0-9]{1,12})/?", parsed.path)
+            else:
+                return None
+            return found.group(1) if found else None
+        except ValueError:
+            return None
+
+    # ESPN injury responses can carry an athlete profile in links or a
+    # canonical athlete $ref. Never inspect headshot, notes or member links.
+    refs = []
+    if isinstance(athlete.get("links"), list):
+        refs = athlete["links"][:12]
+    for link in refs:
+        if not isinstance(link, dict):
+            continue
+        for field in ("href", "url"):
+            ident = linked_id(link.get(field))
+            if ident is not None:
+                claims.append((ident, "ATHLETE_PROFILE_LINK"))
+    ident = linked_id(athlete.get("$ref"))
+    if ident is not None:
+        claims.append((ident, "ATHLETE_API_REF"))
+
+    if not claims or len({c[0] for c in claims}) != 1:
+        return None, None
+    # Prefer a direct ID, then ESPN UID, then athlete-scoped canonical URLs.
+    for method in ("ATHLETE_FIELD", "ATHLETE_UID", "ATHLETE_API_REF", "ATHLETE_PROFILE_LINK"):
+        match = next((c for c in claims if c[1] == method), None)
+        if match:
+            return match
+    return None, None
+
+
 def normalized(payload, now, roster_ids):
     if not isinstance(payload, dict) or not isinstance(payload.get("injuries"), list):
         raise ValueError("Unknown injury source schema: requires injuries array")
@@ -228,7 +307,8 @@ def normalized(payload, now, roster_ids):
             if not isinstance(member, dict):
                 raise ValueError("Invalid injury entry: " + injury_entry_shape_summary(member, position, injury_position))
             athlete = member.get("athlete")
-            athlete_id = str(athlete.get("id") or "") if isinstance(athlete, dict) else ""
+            athlete_id, athlete_id_source = explicit_athlete_id(athlete)
+            athlete_id = athlete_id or ""
             name = (athlete.get("displayName") or athlete.get("fullName")) if isinstance(athlete, dict) else None
             designation = status_text(member.get("status"))
             injury_id = member.get("id")
@@ -267,6 +347,7 @@ def normalized(payload, now, roster_ids):
                         "ROSTER_CONFLICT" if len(matches) > 1 else "TEAM_UNVERIFIED")
             output.append({"espnId": athlete_id if has_athlete_id else None,
                            "sourceInjuryId": source_injury_id,
+                           "espnIdEvidence": athlete_id_source,
                            "displayName": name.strip(), "team": code,
                            "designation": designation, "rosterEvidence": evidence})
             if len(output) > MAX_RECORDS:

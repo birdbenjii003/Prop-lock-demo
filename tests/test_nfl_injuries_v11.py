@@ -264,6 +264,69 @@ class InjuryPilotTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,"Repeated injury"):
             inj.normalized(payload,NOW,{})
 
+    def test_canonical_athlete_profile_url_yields_exact_espn_id_only(self):
+        payload={"injuries":[{"id":"1","displayName":"Atlanta Falcons","injuries":[
+            {"id":"opaque-event-1","athlete":{"displayName":"Example Athlete",
+              "links":[{"href":"https://www.espn.com/nfl/player/_/id/123456/example-athlete"}]},
+             "status":"Questionable"}]}]}
+        record=inj.normalized(payload,NOW,{"123456":["ATL"]})["injuries"][0]
+        self.assertEqual(record["espnId"],"123456")
+        self.assertEqual(record["espnIdEvidence"],"ATHLETE_PROFILE_LINK")
+        self.assertEqual(record["rosterEvidence"],"ROSTER_MATCH")
+        self.assertNotEqual(record["espnId"],"opaque-event-1")
+
+    def test_explicit_uid_and_athlete_api_reference_supported(self):
+        for field, value, evidence in (
+            ("uid","s:20~l:28~a:123456","ATHLETE_UID"),
+            ("$ref","https://site.api.espn.com/apis/site/v2/sports/football/nfl/athletes/123456",
+             "ATHLETE_API_REF")):
+            with self.subTest(field=field):
+                record=inj.normalized({"injuries":[{"id":"1","displayName":"Atlanta Falcons",
+                    "injuries":[{"id":"event-a","athlete":{"displayName":"Example Athlete",field:value},
+                                 "status":"Out"}]}]},NOW,{"123456":["ATL"]})["injuries"][0]
+                self.assertEqual(record["espnId"],"123456")
+                self.assertEqual(record["espnIdEvidence"],evidence)
+
+    def test_canonical_core_espn_athlete_reference_only(self):
+        athlete={"displayName":"Example Athlete","$ref":
+          "https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/athletes/123456"}
+        self.assertEqual(inj.explicit_athlete_id(athlete),("123456","ATHLETE_API_REF"))
+        athlete["$ref"]="https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/123456"
+        self.assertEqual(inj.explicit_athlete_id(athlete),(None,None))
+
+    def test_unsafe_or_unrelated_links_never_become_player_ids(self):
+        urls=("https://evil.espn.com/nfl/player/_/id/123456/example",
+              "http://www.espn.com/nfl/player/_/id/123456/example",
+              "https://www.espn.com/nfl/player/_/id/123456/example?foo=bar",
+              "https://www.espn.com/nfl/team/_/name/atl",
+              "https://www.espn.com/nfl/player/_/id/123456@evil.example",
+              "https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/1",
+              "https://www.espn.com/nfl/player/_/id/123456/example#x")
+        for url in urls:
+            with self.subTest(url=url):
+                athlete={"displayName":"Example Athlete","links":[{"href":url}]}
+                self.assertEqual(inj.explicit_athlete_id(athlete),(None,None))
+
+    def test_conflicts_block_name_and_roster_matching(self):
+        athlete={"id":"123456","displayName":"Example Athlete",
+                 "links":[{"href":"https://www.espn.com/nfl/player/_/id/999999/not-example"}]}
+        self.assertEqual(inj.explicit_athlete_id(athlete),(None,None))
+        entry={"id":"same-event","athlete":athlete,"status":"Questionable"}
+        result=inj.normalized({"injuries":[{"id":"1","displayName":"Atlanta Falcons",
+            "injuries":[entry]}]},NOW,{"123456":["ATL"]})
+        self.assertIsNone(result["injuries"][0]["espnId"])
+        self.assertIsNone(result["injuries"][0]["espnIdEvidence"])
+        self.assertEqual(result["injuries"][0]["rosterEvidence"],"TEAM_UNVERIFIED")
+
+    def test_missing_reference_still_unlinked_even_with_exact_name(self):
+        athlete={"displayName":"Example Athlete","headshot":{"href":
+          "https://www.espn.com/nfl/player/_/id/123456/example-athlete"},
+          "team":{"id":"1"}}
+        self.assertEqual(inj.explicit_athlete_id(athlete),(None,None))
+        self.assertEqual(inj.explicit_athlete_id({"id":True,"displayName":"Example Athlete"}),(None,None))
+        self.assertEqual(inj.explicit_athlete_id({"id":"not-a-player","links":[
+            {"href":"https://www.espn.com/nfl/player/_/id/123456/example-athlete"}]}),(None,None))
+
     def test_size_and_count_bounds(self):
         src=source()
         src["injuries"]*=30
