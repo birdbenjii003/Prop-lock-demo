@@ -248,6 +248,8 @@ def explicit_athlete_id(athlete):
                 found = re.fullmatch(r"/nfl/player/_/id/([0-9]{1,12})(?:/[a-z0-9-]+)?/?", parsed.path)
             elif host == "site.api.espn.com":
                 found = re.fullmatch(r"/apis/site/v2/sports/football/nfl/athletes/([0-9]{1,12})/?", parsed.path)
+            elif host == "sports.core.api.espn.com":
+                found = re.fullmatch(r"/v2/sports/football/leagues/nfl/athletes/([0-9]{1,12})/?", parsed.path)
             else:
                 return None
             return found.group(1) if found else None
